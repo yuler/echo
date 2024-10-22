@@ -11,4 +11,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  post "/terminal", to: "terminal#execute"
+  get "/terminal", to: "terminal#execute"
 end
