@@ -2,7 +2,8 @@ source "https://rubygems.org"
 
 ruby file: ".ruby-version"
 
-gem "rails", github: "rails/rails", branch: "main"
+gem "rails", "~> 8.0.0.rc1"
+# gem "rails", github: "rails/rails", branch: "main"
 
 # Drivers
 gem "sqlite3", ">= 2.1"
@@ -18,7 +19,6 @@ gem "propshaft"
 gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
-gem "tailwindcss-rails"
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache"
