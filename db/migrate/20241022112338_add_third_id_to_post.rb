@@ -1,4 +1,4 @@
-class AddThirdIdToPost < ActiveRecord::Migration[8.1]
+class AddThirdIdToPost < ActiveRecord::Migration[8.0]
   def change
     add_column :posts, :third_id, :string
     add_column :posts, :title_english, :string
