@@ -1,18 +1,33 @@
 class Post < ApplicationRecord
-  has_rich_text :content
+  before_save :generate_slug, if: :title_english_changed?
 
   has_one_attached :poster
+  has_one_attached :cover
   has_one_attached :audio
 
+  has_rich_text :content
+  has_rich_text :notes
+
   validates :third_id, presence: true, uniqueness: true
+  validates :title, :title_english, presence: true
+  # validates :slug, presence: true, uniqueness: true
 
   def download_poster
     poster_data = URI.open(metadata["posterUrl"])
     poster.attach(io: poster_data, filename: id, content_type: "image/jpeg")
   end
 
+  def download_cover
+    cover_data = URI.open(metadata["content"]["coverUrl"])
+    cover.attach(io: cover_data, filename: id, content_type: "image/jpeg")
+  end
+
   def download_audio
     audio_data = URI.open(metadata["voice"]["url"])
     audio.attach(io: audio_data, filename: id, content_type: "audio/mpeg")
+  end
+
+  def generate_slug
+    self.slug = title_english.parameterize
   end
 end

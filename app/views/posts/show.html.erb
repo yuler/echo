@@ -1,0 +1,13 @@
+<main>
+	<h1><%= @post.title %></h1>
+
+	<article>
+		<%= image_tag @post.cover, alt: "#{@post.title} cover", class: "post__cover" if @post.cover.attached? %>
+		<h2><%= @post.title_english %></h2>
+		<div class="post__content"><%= @post.content %></div>
+	</article>
+
+	<h3>Notes</h3>
+	<div class="post__notes"><%= @post.notes %></div>
+	<%= audio_tag @post.audio, controls: true, class: "post__audio" if @post.audio.attached? %>
+</main>

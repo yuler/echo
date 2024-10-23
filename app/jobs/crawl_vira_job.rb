@@ -25,19 +25,23 @@ class CrawlViraJob < ApplicationJob
   def perform(*args)
     latest = crawlLatestPost
     post = Post.create(
+      title: latest["title"],
+      title_english: latest["engTitle"],
       third_id: latest["id"],
       topics: latest["topics"].map { |topic| topic["name"] }.join(","),
     )
 
     detail = crawlPostDetail(post.third_id)
     post.update(
-      title: detail["title"],
-      title_english: detail["engTitle"],
-      content: detail["notes"].flatten.join,
       guide: detail["guide"],
+      content: detail["content"]["text"],
+      notes: detail["notes"].flatten.join,
       metadata: detail
     )
+
+    # TODO: Refactor to a single parse metadata
     post.download_poster
+    post.download_cover
     post.download_audio
   end
 

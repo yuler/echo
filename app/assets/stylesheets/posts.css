@@ -12,7 +12,15 @@
   padding: var(--block-space);
   border: 1px solid var(--color-border, #ccc);
   border-radius: var(--border-radius, 0.5rem);
-  cursor: pointer;
+  text-decoration: none;
+  color: var(--color-text, #000);
+  &:visited {
+    color: var(--color-text, #000);
+  }
+}
+
+.trix-content > div {
+  margin: 1em 0;
 }
 
 .post__poster {
@@ -37,4 +45,12 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.post__audio {
+  width: 100%;
+  margin-top: 1rem;
+  position: sticky;
+  bottom: 1rem;
+  padding: 0 1rem;
 }
