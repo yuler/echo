@@ -1,4 +1,4 @@
-require 'open-uri'
+require "open-uri"
 
 class CrawlViraJob < ApplicationJob
   queue_as :default
@@ -26,15 +26,18 @@ class CrawlViraJob < ApplicationJob
     latest = crawlLatestPost
     post = Post.create(
       third_id: latest["id"],
-      title: latest["title"],
-      poster: latest["posterUrl"],
       topics: latest["topics"].map { |topic| topic["name"] }.join(","),
-      metadata: latest
     )
 
-    detail = crawlPostDetail(post)
-    post.update(title_english: detail["engTitle"], content: detail["notes"].flatten.join, metadata: detail)
-    # TODO: Download poster, audio
+    detail = crawlPostDetail(post.third_id)
+    post.update(
+      title: detail["title"],
+      title_english: detail["engTitle"],
+      content: detail["notes"].flatten.join,
+      guide: detail["guide"],
+      metadata: detail
+    )
+    post.download_poster
     post.download_audio
   end
 
@@ -53,8 +56,8 @@ class CrawlViraJob < ApplicationJob
     response.body["items"].first # => json
   end
 
-  def crawlPostDetail(post)
-    response = client.get("api/v2/readings/#{post["metadata"]["id"]}/explanation")
+  def crawlPostDetail(id)
+    response = client.get("api/v2/readings/#{id}/explanation")
     raise "response.status is not 200" if response.status != 200
     response.body
   end

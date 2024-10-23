@@ -1,0 +1,40 @@
+.posts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--block-space);
+}
+
+.post {
+  display: flex;
+  gap: var(--block-space-half);
+  justify-content: center;
+  align-items: center;
+  padding: var(--block-space);
+  border: 1px solid var(--color-border, #ccc);
+  border-radius: var(--border-radius, 0.5rem);
+  cursor: pointer;
+}
+
+.post__poster {
+  width: 200px;
+  height: 200px;
+}
+
+.post__title {
+  margin: 1rem 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.post__title-english {
+  font-size: var(--font-small-responsive);
+}
+
+.post__guide {
+  font-size: var(--font-small-responsive);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
