@@ -1,9 +1,9 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.all
+    @posts = Post.newest.all
   end
 
   def show
-    @post = Post.newest.find_by(slug: params[:slug])
+    @post = Post.find_by(slug: params[:slug])
   end
 end
