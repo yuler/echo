@@ -12,6 +12,8 @@ class Post < ApplicationRecord
   validates :title, :title_english, presence: true
   # validates :slug, presence: true, uniqueness: true
 
+  scope :newest, -> { order(created_at: :desc) }
+
   def download_poster
     poster_data = URI.open(metadata["posterUrl"])
     poster.attach(io: poster_data, filename: id, content_type: "image/jpeg")
