@@ -64,6 +64,10 @@ RUN groupadd --system --gid 1000 rails && \
     chown -R rails:rails db log storage tmp
 USER 1000:1000
 
+# Set git revision
+ARG GIT_REVISION
+ENV GIT_REVISION=$GIT_REVISION
+
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 

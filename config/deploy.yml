@@ -67,6 +67,8 @@ asset_path: /rails/public/assets
 # Configure the image builder.
 builder:
   arch: amd64
+  args:
+    GIT_REVISION: <%= `git rev-parse HEAD`.chomp %>
 
   # # Build image via remote server (useful for faster amd64 builds on arm64 computers)
   # remote: ssh://docker@docker-builder-server
