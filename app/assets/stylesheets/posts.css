@@ -6,7 +6,7 @@
 
 .post {
   display: flex;
-  gap: var(--block-space-half);
+  gap: var(--block-space);
   justify-content: center;
   align-items: center;
   padding: var(--block-space);
@@ -17,26 +17,29 @@
   &:visited {
     color: var(--color-text, #000);
   }
-}
-
-.trix-content > div {
-  margin: 1em 0;
+  @media (max-width: 70ch) {
+    flex-direction: column;
+  }
 }
 
 .post__poster {
   width: 200px;
   height: 200px;
+  @media (max-width: 70ch) {
+    width: 100%;
+    height: auto;
+  }
 }
 
 .post__title {
   margin: 1rem 0;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: var(--font-large-responsive);
 }
 
 .post__title-english {
-  font-size: var(--font-small-responsive);
+  font-size: var(--font-medium-responsive);
 }
 
 .post__guide {
@@ -53,4 +56,8 @@
   position: sticky;
   bottom: 1rem;
   padding: 0 1rem;
+}
+
+.trix-content > div {
+  margin: 1em 0;
 }
