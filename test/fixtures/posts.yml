@@ -2,14 +2,10 @@
 
 one:
   title: MyString
-  poster: MyString
   topics: MyString
   published: 2024-10-22
-  meta: 
-
-two:
-  title: MyString
-  poster: MyString
-  topics: MyString
-  published: 2024-10-22
-  meta: 
+  metadata: {}
+  title_english: MyString
+  guide: MyString
+  slug: MyString
+  third_id: MyString
