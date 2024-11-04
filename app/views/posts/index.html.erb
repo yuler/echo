@@ -1,8 +1,6 @@
-<main>
-  <h1>Posts</h1>
-  <div class="posts">
-    <% @posts.each do |post| %>
-      <%= render "posts/post", post: post %>
-    <% end %>
-  </div>
-</main>
+<h1>Posts</h1>
+<div class="posts">
+  <% @posts.each do |post| %>
+    <%= render "posts/post", post: post %>
+  <% end %>
+</div>

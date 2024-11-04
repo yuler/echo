@@ -3,11 +3,21 @@
 
 	<article>
 		<%= image_tag @post.cover, alt: "#{@post.title} cover", class: "post__cover" if @post.cover.attached? %>
+
+		
 		<h2><%= @post.title_english %></h2>
 		<div class="post__content"><%= @post.content %></div>
 	</article>
 
-	<h3>Notes</h3>
+	<h2>Notes</h2>
 	<div class="post__notes"><%= @post.notes %></div>
-	<%= audio_tag @post.audio, controls: true, class: "post__audio" if @post.audio.attached? %>
+
+	<a
+		href="<%= url_for(@post.audio) %>"
+		class="post__player-button"
+		style="visibility: hidden;"
+		title="<%= @post.title %>"
+		data-audio-player-target="playButton"
+		data-action="load->audio-player#play"
+	/>Auto Load</a>
 </main>

@@ -3,10 +3,8 @@ require "open-uri"
 class CrawlViraJob < ApplicationJob
   queue_as :default
 
-  FEED_URL = "https://vira.llsapp.com/api/v2/readings?size=1".freeze
-
   # TODO: Move to .env
-  TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzA5OTY4NzAsInBvb2xfaWQiOiIxZTEyOTM1MjM2NGY3Y2Y1NTQ0MDAwYWIyNjgyZmUyMyIsInVzZXJfaWQiOjc2MDE0NTM0fQ._uwPoY6T-3TWR5JwCFhyet4dv_Yx6vX9BpsinBHHxzU".freeze
+  TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzI0NTg5MTMsInBvb2xfaWQiOiIxZTEyOTM1MjM2NGY3Y2Y1NTQ0MDAwYWIyNjgyZmUyMyIsInVzZXJfaWQiOjc2MDE0NTM0fQ.0Pn9KxnwsUiIiL0uMeQNeY0a6Tnu1J_SbUC9o6JI8eE".freeze
   LOGIN_ID = "3485123782".freeze
   DEVICE_ID = "96b92b8800bc40a6a7421cc6fc25726e5decc7cb".freeze
 

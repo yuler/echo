@@ -1,0 +1,58 @@
+<div
+	id="player"
+	class="player player--hidden"
+	data-audio-player-target="playerElement"
+	data-turbo-permanent
+>
+	<audio
+		class="player__audio-element"
+		controls
+		data-audio-player-target="audioElement"
+		data-action="
+			loadedmetadata->audio-player#setup
+			timeupdate->audio-player#update
+			play->audio-player#updateAllPlayControls
+			pause->audio-player#updateAllPlayControls
+		"
+	>
+		<source data-audio-player-target="sourceElement" type="audio/mp3" />
+	</audio>
+	
+	<div class="player__progress-track" data-audio-player-target="playerProgressTrack" data-action="click->audio-player#seek"></div>
+	<div class="player__progress" data-audio-player-target="playerProgress" style="width: 0%"></div>
+
+	<button
+		type="button"
+		class="player__step player__step--back"
+		data-audio-player-target="playerStepBack"
+		data-action="click->audio-player#stepBack"
+		aria-label="step 10 seconds back"
+	></button>
+
+	<button
+		type="button"
+		class="player__play"
+		data-audio-player-target="playerPlayButton"
+		data-action="
+			click->audio-player#togglePlayPause 
+			pause->audio-player#updatePlayControl
+			play->audio-player#updatePlayControl
+		"
+		aria-label="play"
+		aria-pressed="false"
+	></button>
+
+	<button
+		type="button"
+		class="player__step player__step--forward"
+		data-audio-player-target="playerStepForward"
+		data-action="click->audio-player#stepForward"
+		aria-label="step 10 seconds forward"
+	></button>
+
+	<p class="player__title" data-audio-player-target="playerTitle"><a>This is audio title</a></p>
+
+	<div class="player__time">
+		<span data-audio-player-target="playerCurrentTime">00:00</span> / <span data-audio-player-target="playerTotalTime">00:00</span>
+	</div>
+</div>

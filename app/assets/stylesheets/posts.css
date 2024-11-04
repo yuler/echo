@@ -1,4 +1,5 @@
 .posts {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   gap: var(--block-space);
@@ -48,14 +49,6 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-}
-
-.post__audio {
-  width: 100%;
-  margin-top: 1rem;
-  position: sticky;
-  bottom: 1rem;
-  padding: 0 1rem;
 }
 
 .trix-content > div {

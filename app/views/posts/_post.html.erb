@@ -1,14 +1,14 @@
 <%= link_to post_path(post.slug), class: "post" do %>
   <%= image_tag post.poster, alt: "#{post.title} poster", class: "post__poster" if post.poster.attached? %>
   <div>
-      <h3 class="post__title">
-        <%= post.title %>
-      </h3>
-      <span class="post__title-english">
-        <%= post.title_english %>
-      </span>
-      <p class="post__guide">
-        <%= post.guide %>
+    <h3 class="post__title">
+      <%= post.title %>
+    </h3>
+    <span class="post__title-english">
+      <%= post.title_english %>
+    </span>
+    <p class="post__guide">
+      <%= post.guide %>
     </p>
   </div>
 <% end %>
