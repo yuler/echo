@@ -21,8 +21,8 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <!-- Simple CSS, refs: https://github.com/kevquirk/simple.css -->
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+    <!-- Livereload -->
+    <%= hotwire_livereload_tags if Rails.env.development? %>
 
     <%# Includes all stylesheet files in app/views/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>

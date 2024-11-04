@@ -1,24 +1,12 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project is for learning English.
 
-Things you may want to cover:
+## Development
 
-* Ruby version
+- All in [Rails](https://rubyonrails.org/)
+- Icons from [Lucide](https://lucide.dev/icons)
 
-* System dependencies
+## Features
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Crawl article from [vira](https://m.liulishuo.com/en/vira.html) daily.
