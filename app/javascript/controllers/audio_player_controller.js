@@ -22,6 +22,10 @@ export default class extends Controller {
     'playerTotalTime',
   ]
 
+  error(event) {
+    window.alert(JSON.stringify(event))
+  }
+
   setup() {
     this.playerTotalTimeTarget.innerText = this.#formatSeconds(this.audioElementTarget.duration)
     // this.playerTitleTarget.innerText = this.sourceElementTarget.dataset.title
@@ -51,17 +55,17 @@ export default class extends Controller {
   // }
 
   // Actions
-  // play(event) {
-  //   event.preventDefault()
-  //   event.stopImmediatePropagation()
-  //   if (this.playButtonTarget.href == this.sourceElementTarget.src) {
-  //     this.togglePlayPause()
-  //   } else {
-  //     this.playerTitleTarget.textContent = this.playButtonTarget.title
-  //     this.sourceElementTarget.src = this.playButtonTarget.href
-  //     this.audioElementTarget.load()
-  //   }
-  // }
+  play(event) {
+    event.preventDefault()
+    event.stopImmediatePropagation()
+    if (this.playButtonTarget.href == this.sourceElementTarget.src) {
+      this.togglePlayPause()
+    } else {
+      this.playerTitleTarget.textContent = this.playButtonTarget.title
+      this.sourceElementTarget.src = this.playButtonTarget.href
+      this.audioElementTarget.load()
+    }
+  }
   togglePlayPause() {
     if (this.audioElementTarget.paused) {
       this.playerPlayButtonTarget.classList.add("player__play--playing")

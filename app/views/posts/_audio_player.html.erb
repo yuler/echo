@@ -15,7 +15,7 @@
 			pause->audio-player#updateAllPlayControls
 		"
 	>
-		<source data-audio-player-target="sourceElement" src="<%= src %>" type="audio/mp3" />
+		<source data-audio-player-target="sourceElement" src="<%= src %>" type="audio/mp3" data-action="error->audio-player#error"/>
 	</audio>
 	
 	<div class="player__progress-track" data-audio-player-target="playerProgressTrack" data-action="click->audio-player#seek"></div>

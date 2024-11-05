@@ -10,14 +10,6 @@
 <h2>Notes</h2>
 <div class="post__notes"><%= @post.notes %></div>
 
-<!-- <a
-href="<%= url_for(@post.audio) %>"
-class="post__player-button"
-style="visibility: hidden;"
-title="<%= @post.title %>"
-data-audio-player-target="playButton"
-data-action="load->audio-player#play"
-/>Auto Load</a> -->
-
-<%= render "audio_player", src: url_for(@post.audio), title: @post.title %>
-
+<% content_for :player do %>
+	<%= render "audio_player", src: url_for(@post.audio), title: @post.title %>
+<% end %>
