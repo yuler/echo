@@ -27,14 +27,14 @@ export default class extends Controller {
   }
 
   setup() {
-    this.playerTotalTimeTarget.innerText = this.#formatSeconds(this.audioElementTarget.duration)
-    // this.playerTitleTarget.innerText = this.sourceElementTarget.dataset.title
-
     this.playerElementTarget.classList.remove('player--hidden')
     setTimeout(() => {
       this.playerElementTarget.classList.add('player--visible')
-      // this.togglePlayPause()
     }, 50)
+  }
+
+  load() {
+    this.playerTotalTimeTarget.innerText = this.#formatSeconds(this.audioElementTarget.duration)
   }
   update() {
     let r = (this.audioElementTarget.currentTime / this.audioElementTarget.duration) * 100
@@ -89,6 +89,6 @@ export default class extends Controller {
   #formatSeconds(duration) {
     const minutes = Math.floor(duration / 60)
     const seconds = Math.floor(duration % 60)
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
   }
 }

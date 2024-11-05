@@ -21,12 +21,13 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <!-- Livereload -->
-    <%= hotwire_livereload_tags if Rails.env.development? %>
-
     <%# Includes all stylesheet files in app/views/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
+
+    <%#  Livereload %>
+    <%= hotwire_livereload_tags if Rails.env.development? %>
   </head>
 
   <body>
