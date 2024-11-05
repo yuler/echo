@@ -71,6 +71,12 @@
     grid-column: 5;
   }
 
+  @media (max-width: 768px) {
+    .player__title {
+      display: none;
+    }
+  }
+
   .player__time {
 		grid-row: 2;
     grid-column: 6;

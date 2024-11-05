@@ -41,15 +41,14 @@ export default class extends Controller {
   // drag
   seek() { }
 
+  // async playButtonTargetConnected() {
+  //   await nextEventLoopTick()
+  //   if (this.#exist) return
 
-  async playButtonTargetConnected() {
-    await nextEventLoopTick()
-    if (this.#exist) return
-
-    this.playerTitleTarget.textContent = this.playButtonTarget.title
-    this.sourceElementTarget.src = this.playButtonTarget.href
-    this.audioElementTarget.load()
-  }
+  //   this.playerTitleTarget.textContent = this.playButtonTarget.title
+  //   this.sourceElementTarget.src = this.playButtonTarget.href
+  //   this.audioElementTarget.load()
+  // }
 
   // Actions
   // play(event) {

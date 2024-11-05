@@ -1,23 +1,23 @@
-<main>
-	<h1><%= @post.title %></h1>
+<h1><%= @post.title %></h1>
 
-	<article>
-		<%= image_tag @post.cover, alt: "#{@post.title} cover", class: "post__cover" if @post.cover.attached? %>
+<article>
+	<%= image_tag @post.cover, alt: "#{@post.title} cover", class: "post__cover" if @post.cover.attached? %>
 
-		
-		<h2><%= @post.title_english %></h2>
-		<div class="post__content"><%= @post.content %></div>
-	</article>
+	<h2><%= @post.title_english %></h2>
+	<div class="post__content"><%= @post.content %></div>
+</article>
 
-	<h2>Notes</h2>
-	<div class="post__notes"><%= @post.notes %></div>
+<h2>Notes</h2>
+<div class="post__notes"><%= @post.notes %></div>
 
-	<a
-		href="<%= url_for(@post.audio) %>"
-		class="post__player-button"
-		style="visibility: hidden;"
-		title="<%= @post.title %>"
-		data-audio-player-target="playButton"
-		data-action="load->audio-player#play"
-	/>Auto Load</a>
-</main>
+<!-- <a
+href="<%= url_for(@post.audio) %>"
+class="post__player-button"
+style="visibility: hidden;"
+title="<%= @post.title %>"
+data-audio-player-target="playButton"
+data-action="load->audio-player#play"
+/>Auto Load</a> -->
+
+<%= render "audio_player", src: url_for(@post.audio), title: @post.title %>
+

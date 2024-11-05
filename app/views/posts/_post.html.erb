@@ -1,5 +1,5 @@
 <%= link_to post_path(post.slug), class: "post" do %>
-  <%= image_tag post.poster, alt: "#{post.title} poster", class: "post__poster" if post.poster.attached? %>
+  <%= image_tag post.poster, alt: "#{post.title} poster", loading: "lazy", class: "post__poster" if post.poster.attached? %>
   <div>
     <h3 class="post__title">
       <%= post.title %>
