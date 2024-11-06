@@ -24,5 +24,8 @@ module Reads
     # Timezone for UTC+8
     config.time_zone = "Asia/Shanghai"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Use proxy mode for Active Storage
+    config.active_storage.resolve_model_to_route = :rails_storage_proxy
   end
 end
