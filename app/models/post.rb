@@ -16,20 +16,32 @@ class Post < ApplicationRecord
 
   def download_poster
     poster_data = URI.open(metadata["posterUrl"])
-    poster.attach(io: poster_data, filename: id, content_type: "image/jpeg")
+    extension = extension(metadata["posterUrl"])
+    filename = "#{id}.#{extension}"
+    poster.attach(io: poster_data, filename: filename, content_type: "image/jpeg")
   end
 
   def download_cover
     cover_data = URI.open(metadata["content"]["coverUrl"])
-    cover.attach(io: cover_data, filename: id, content_type: "image/jpeg")
+    extension = extension(metadata["content"]["coverUrl"])
+    filename = "#{id}.#{extension}"
+    cover.attach(io: cover_data, filename: filename, content_type: "image/jpeg")
   end
 
   def download_audio
     audio_data = URI.open(metadata["voice"]["url"])
-    audio.attach(io: audio_data, filename: id, content_type: "audio/mpeg")
+    extension = extension(metadata["voice"]["url"])
+    filename = "#{id}.#{extension}"
+    audio.attach(io: audio_data, filename: filename, content_type: "audio/mpeg")
   end
 
   def generate_slug
     self.slug = title_english.parameterize
+  end
+
+  private
+
+  def extension(url)
+    url.split(".").last
   end
 end
