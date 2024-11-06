@@ -4,6 +4,8 @@
   left: 0;
   right: 0;
   z-index: 10;
+  /* padding-bottom: 20px; */
+  padding-bottom: env(safe-area-inset-bottom, 0);
   background: white;
   border-top: 1px solid #ccc;
   display: grid;

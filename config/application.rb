@@ -26,6 +26,7 @@ module Reads
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Use proxy mode for Active Storage
+    # Note: the default redirect mode will be cached by some apps, like WeChat, causing load failures
     config.active_storage.resolve_model_to_route = :rails_storage_proxy
   end
 end
