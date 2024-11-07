@@ -14,6 +14,8 @@ class Post < ApplicationRecord
 
   scope :newest, -> { order(created_at: :desc) }
 
+  alias_attribute :introduce, :guide
+
   def download_poster
     poster_data = URI.open(metadata["posterUrl"])
     extension = extension(metadata["posterUrl"])

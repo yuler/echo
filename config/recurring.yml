@@ -4,3 +4,8 @@ production:
     queue: background
     args: []
     schedule: at 1am every day
+  daily_send_wechat_group:
+    class: SendWechatGroupJob
+    queue: background
+    args: []
+    schedule: at 9am every day
