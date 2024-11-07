@@ -2,6 +2,8 @@ class SendWechatGroupJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
+    Rails.logger.info "Starting SendWechatGroupJob"
+
     post = Post.last
 
     if 1.day.ago > post.created_at
@@ -14,7 +16,7 @@ class SendWechatGroupJob < ApplicationJob
       builder.headers["Content-Type"] = "application/json"
     end
 
-    response = client.post("/webhook/msg/v2?token=X1fnxltX.DqD") do |req|
+    response = client.post("/webhook/msg/v2?token=WEBHOOK_TOKEN") do |req|
       req.body = {
         to: "Fighting for IELTS🔥",
         isRoom: true,
@@ -34,6 +36,11 @@ class SendWechatGroupJob < ApplicationJob
       }.to_json
     end
 
-    raise "response.status is not 200" if response.status != 200
+    if response.status == 200
+      Rails.logger.info "Successfully sent WeChat notification"
+    else
+      Rails.logger.error "Failed to send WeChat notification. Status: #{response.status}"
+      raise "response.status is not 200"
+    end
   end
 end
