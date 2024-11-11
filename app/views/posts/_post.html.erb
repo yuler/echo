@@ -1,6 +1,7 @@
 <%= link_to post_path(post.slug), class: "post" do %>
-  <%= image_tag post.poster, alt: "#{post.title} poster", loading: "lazy", class: "post__poster" if post.poster.attached? %>
-  <div class="flex flex-column">
+  <div class="post__poster" style="background-image: url('<%= url_for(post.poster) %>'); background-size: cover; background-position: center;">
+  </div>
+  <div class="flex flex-column flex-1">
     <h3 class="post__title">
       <%= post.title %>
     </h3>

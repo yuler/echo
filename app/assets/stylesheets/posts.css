@@ -26,9 +26,10 @@
 .post__poster {
   width: 200px;
   height: 200px;
+  border-radius: var(--border-radius, 0.25rem);
   @media (max-width: 70ch) {
     width: 100%;
-    height: auto;
+    height: 150px;
   }
 }
 

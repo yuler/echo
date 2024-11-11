@@ -32,6 +32,7 @@
 .flex-column { flex-direction: column; }
 .flex-wrap { flex-wrap: wrap; }
 
+.flex-1 { flex: 1; }
 .flex-item-grow { flex-grow: 1; }
 .flex-item-shrink { flex-shrink: 1; }
 .flex-item-no-shrink { flex-shrink: 0; }
