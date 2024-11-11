@@ -1,9 +1,8 @@
-<h1><%= @post.title %></h1>
+<h1><%= @post.title_english %></h1>
+<h2><%= @post.title %></h2>
 
 <article>
 	<%= image_tag @post.cover, alt: "#{@post.title} cover", class: "post__cover" if @post.cover.attached? %>
-
-	<h2><%= @post.title_english %></h2>
 	<div class="post__content"><%= @post.content %></div>
 </article>
 

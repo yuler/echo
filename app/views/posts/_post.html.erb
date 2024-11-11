@@ -1,12 +1,15 @@
 <%= link_to post_path(post.slug), class: "post" do %>
   <%= image_tag post.poster, alt: "#{post.title} poster", loading: "lazy", class: "post__poster" if post.poster.attached? %>
-  <div>
+  <div class="flex flex-column">
     <h3 class="post__title">
       <%= post.title %>
     </h3>
-    <span class="post__title-english">
-      <%= post.title_english %>
-    </span>
+    <p class="post__meta">
+      <span class="post__date"><%= post.created_at.strftime("%Y-%m-%d") %></span>
+      <% post.topics.split(',').map(&:strip).each do |topic| %>
+        <span class="post__topic"><%= topic %></span>
+      <% end %>
+    </p>
     <p class="post__guide">
       <%= post.guide %>
     </p>
