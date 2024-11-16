@@ -26,7 +26,7 @@ gem "solid_queue"
 gem "solid_cable"
 
 # Jobs Dashboard
-gem "mission_control-jobs", github: "rails/mission_control-jobs", branch: "main"
+gem "mission_control-jobs"
 
 # Other
 gem "jbuilder"
