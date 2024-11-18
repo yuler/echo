@@ -12,8 +12,8 @@
 		data-action="
 			loadedmetadata->audio-player#load
 			timeupdate->audio-player#update
-			play->audio-player#updateAllPlayControls
-			pause->audio-player#updateAllPlayControls
+			play->audio-player#updateControls
+			pause->audio-player#updateControls
 		"
 	>
 		<source data-audio-player-target="sourceElement" src="<%= src %>" type="audio/mp3" data-action="error->audio-player#error"/>
@@ -54,6 +54,6 @@
 	<p class="player__title" data-audio-player-target="playerTitle"><a><%= title %></a></p>
 
 	<div class="player__time">
-		<span data-audio-player-target="playerCurrentTime">00:00</span> / <span data-audio-player-target="playerTotalTime">--:--</span>
+		<span data-audio-player-target="playerCurrentTime">00:00</span> / <span data-audio-player-target="playerTotalTime"><%= duration || "--" %></span>
 	</div>
 </div>

@@ -45,14 +45,13 @@ export default class extends Controller {
   // drag
   seek() { }
 
-  // async playButtonTargetConnected() {
-  //   await nextEventLoopTick()
-  //   if (this.#exist) return
-
-  //   this.playerTitleTarget.textContent = this.playButtonTarget.title
-  //   this.sourceElementTarget.src = this.playButtonTarget.href
-  //   this.audioElementTarget.load()
-  // }
+  updateControls() {
+    if (this.audioElementTarget.paused) {
+      this.playerPlayButtonTarget.classList.remove("player__play--playing")
+    } else {
+      this.playerPlayButtonTarget.classList.add("player__play--playing")
+    }
+  }
 
   // Actions
   play(event) {

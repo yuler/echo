@@ -2,13 +2,13 @@
 <h2><%= @post.title %></h2>
 
 <article>
-	<%= image_tag @post.cover, alt: "#{@post.title} cover", class: "post__cover" if @post.cover.attached? %>
-	<div class="post__content"><%= @post.content %></div>
+  <%= image_tag @post.cover, alt: "#{@post.title} cover", class: "post__cover" if @post.cover.attached? %>
+  <div class="post__content"><%= @post.content %></div>
 </article>
 
 <h2>Notes</h2>
 <div class="post__notes"><%= @post.notes %></div>
 
 <% content_for :player do %>
-	<%= render "audio_player", src: url_for(@post.audio), title: @post.title %>
+  <%= render "audio_player", src: url_for(@post.audio), title: @post.title, duration: format_duration(@post.audio.metadata["duration"]) %>
 <% end %>
