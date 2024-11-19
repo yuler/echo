@@ -1,0 +1,24 @@
+:root {
+  /* Basic Color Variables */
+  --lch-black: 0% 0 0;
+  --lch-white: 100% 0 0;
+  --lch-always-black: 0% 0 0;
+  --lch-always-white: 100% 0 0;
+  --lch-gray-light: 96% 0.005 96;
+  --lch-gray: 92% 0.005 96;
+  --lch-gray-dark: 75% 0.005 96;
+  --lch-blue: 54% 0.15 255;
+  --lch-blue-light: 95% 0.03 255;
+  --lch-blue-dark: 80% 0.08 255;
+  --lch-orange: 70% 0.2 44;
+  --lch-red: 51% 0.2 31;
+  --lch-green: 65.59% 0.234 142.49;
+  --lch-green-light: 95% 0.03 142.49;
+  --lch-yellow: 92.62% 0.1 91.5;
+
+  /* Color Variables */
+  --color-background: oklch(var(--lch-white));
+  --color-foreground: oklch(var(--lch-black));
+  --color-border: oklch(var(--lch-gray));
+}
+

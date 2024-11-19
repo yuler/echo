@@ -1,0 +1,21 @@
+<nav id="nav">
+  <%# <input class="nav-active" hidden id="nav-active" type="checkbox"> %>
+  <%# <label class="nav-underlay" for="nav-active"></label> %>
+
+  <div class="nav__main">
+    <a class="nav__logo" href="/">
+      <%= image_tag "notebook.svg", alt: "logo" %>
+      <span>READS</span>
+    </a>
+    <dl class="nav__links">
+      <dd><%= link_to "Posts", posts_path %></dd>
+      <dd><%= link_to "About", about_path %></dd>
+      <%# <dd class="selected"><a href="/writebook/changelog" aria-label="Writebook Changelog">Changelog</a></dd> %>
+    </dl>
+    <%# <div class="nav__toggle">
+      <label for="nav-active">
+        <span>Menu</span>
+      </label>
+    </div> %>
+  </div>
+</nav>
