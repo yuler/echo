@@ -32,6 +32,7 @@ gem "bcrypt", "~> 3.1.7"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "image_processing", "~> 1.2"
 gem "faraday"
+gem "rails-settings-cached"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"

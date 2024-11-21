@@ -281,6 +281,9 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
+    rails-settings-cached (2.9.5)
+      activerecord (>= 5.0.0)
+      railties (>= 5.0.0)
     railties (8.0.0.rc1)
       actionpack (= 8.0.0.rc1)
       activesupport (= 8.0.0.rc1)
@@ -439,6 +442,7 @@ DEPENDENCIES
   propshaft
   puma (>= 5.0)
   rails (~> 8.0.0.rc1)
+  rails-settings-cached
   rubocop-rails-omakase
   selenium-webdriver
   solid_cable
