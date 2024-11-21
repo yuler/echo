@@ -13,7 +13,7 @@
   padding-inline: clamp(var(--inline-space), 5%, calc(var(--inline-space) * 3));
 
   @media (max-width: 70ch) {
-    padding-inline: var(--inline-space);
+    padding-inline: var(--block-space) ;
   }
 
   @media print {

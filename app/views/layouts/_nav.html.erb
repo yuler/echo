@@ -1,4 +1,7 @@
-<nav id="nav">
+<nav id="nav" data-controller="nav" 
+  data-nav-threshold-value="50" data-nav-hidden-class-value="nav--hidden"
+  data-action="scroll@window->nav#scroll"
+  >
   <%# <input class="nav-active" hidden id="nav-active" type="checkbox"> %>
   <%# <label class="nav-underlay" for="nav-active"></label> %>
 
@@ -8,7 +11,6 @@
       <span>READS</span>
     </a>
     <dl class="nav__links">
-      <dd><%= link_to "Posts", posts_path %></dd>
       <dd><%= link_to "About", about_path %></dd>
       <%# <dd class="selected"><a href="/writebook/changelog" aria-label="Writebook Changelog">Changelog</a></dd> %>
     </dl>
