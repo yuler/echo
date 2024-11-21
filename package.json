@@ -1,0 +1,11 @@
+{
+  "name": "reads",
+  "description": "This package.json only use npm scripts alias some commands for quickly running.",
+  "private": true,
+  "scripts": {
+    "deploy": "./bin/kamal deploy",
+    "test": "./bin/rails test",
+    "server:console": "./bin/kamal console",
+    "server:logs": "./bin/kamal logs"
+  }
+}
