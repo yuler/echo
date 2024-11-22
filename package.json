@@ -3,9 +3,12 @@
   "description": "This package.json only use npm scripts alias some commands for quickly running.",
   "private": true,
   "scripts": {
-    "deploy": "./bin/kamal deploy",
+    "dev": "./bin/dev",
     "test": "./bin/rails test",
+    "deploy": "./bin/kamal deploy",
     "server:console": "./bin/kamal console",
-    "server:logs": "./bin/kamal logs"
+    "server:logs": "./bin/kamal logs",
+    "backup:download": "./bin/rake backup:download",
+    "backup:import": "./bin/rake backup:import"
   }
 }
