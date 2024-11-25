@@ -1,10 +1,12 @@
 import { Controller } from '@hotwired/stimulus'
-import { nextEventLoopTick } from 'helpers/timing_helpers'
+import { nextEventLoopTick, throttle } from 'helpers/timing_helpers'
+import { readCookie, setCookie } from "helpers/cookie_helpers"
 
 // Connects to data-controller="audio-player"
 export default class extends Controller {
   connect() {
-    console.log('player controller connected', this)
+    this.dragging = false;
+    this.offsetX = 0
   }
 
   static targets = [
@@ -20,7 +22,12 @@ export default class extends Controller {
     'playerTitle',
     'playerCurrentTime',
     'playerTotalTime',
+    'playerKnob'
   ]
+
+  static values = {
+    id: String,
+  }
 
   error(event) {
     window.alert(JSON.stringify(event))
@@ -31,6 +38,11 @@ export default class extends Controller {
     setTimeout(() => {
       this.playerElementTarget.classList.add('player--visible')
     }, 50)
+
+    const progress = readCookie(this.#progressCookieName)
+    if (progress) {
+      this.audioElementTarget.currentTime = progress
+    }
   }
 
   load() {
@@ -39,10 +51,30 @@ export default class extends Controller {
   update() {
     let r = (this.audioElementTarget.currentTime / this.audioElementTarget.duration) * 100
     this.playerProgressTarget.style.width = `${r}%`
+    this.playerKnobTarget.style.left = `${r}%`
     this.playerCurrentTimeTarget.textContent = this.#formatSeconds(this.audioElementTarget.currentTime)
+
+    // Save progress to cookie
+    setCookie(this.#progressCookieName, Math.trunc(this.audioElementTarget.currentTime), 7)
   }
-  updateAllPlayControls() { }
+
   // drag
+  down(event) {
+    this.dragging = true
+    const rect = this.playerKnobTarget.getBoundingClientRect()
+    this.offsetX = event.clientX - rect.left
+    document.body.style.cursor = 'grabbing'
+  }
+  up() {
+    this.dragging = false
+    document.body.style.cursor = 'default'
+  }
+  move(event) {
+    if (!this.dragging) return
+
+    this.playerKnobTarget.style.left = (event.clientX - this.offsetX) + 'px'
+    this.audioElementTarget.currentTime = (event.clientX - this.offsetX) / this.playerProgressTrackTarget.clientWidth * this.audioElementTarget.duration
+  }
   seek() { }
 
   updateControls() {
@@ -83,6 +115,10 @@ export default class extends Controller {
 
   get #exist() {
     this.playerElementTarget?.classList.contains('player--visible')
+  }
+
+  get #progressCookieName() {
+    return `audio_player_progress_id_${this.idValue}`
   }
 
   #formatSeconds(duration) {

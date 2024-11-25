@@ -10,5 +10,5 @@
 <div class="post__notes"><%= @post.notes %></div>
 
 <% content_for :player do %>
-  <%= render "audio_player", src: url_for(@post.audio), title: @post.title, duration: format_duration(@post.audio.metadata["duration"] || 0) %>
+  <%= render "audio_player", id: @post.id, src: url_for(@post.audio), title: @post.title, duration: format_duration(@post.audio.metadata["duration"] || 0) %>
 <% end %>

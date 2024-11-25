@@ -13,10 +13,10 @@ This project is for learning English.
 
 ## Roadmap
 
+- [x] Save progress in cookie?
 - [ ] Posts 页面添加分页, Home page, footer
 - [ ] Write a script to sync production database & storage
 - [ ] Post, #words, Create word table
-- [ ] Save progress in cookie?
 - [-] Polish custom audio player
 - [ ] 签到, Share Image
 - [ ] Set web site host
