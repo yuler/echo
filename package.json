@@ -7,6 +7,7 @@
     "test": "./bin/rails test",
     "open:dev:db": "open storage/development.sqlite3",
     "app:deploy": "./bin/kamal deploy",
+    "app:shell": "./bin/kamal shell",
     "app:console": "./bin/kamal console",
     "app:logs": "./bin/kamal logs",
     "backup:download": "./bin/rake backup:download",

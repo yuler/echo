@@ -24,7 +24,9 @@ gem "stimulus-rails"
 gem "solid_cache"
 gem "solid_queue"
 gem "solid_cable"
-# gem "mission_control-jobs"
+
+# Jobs Dashboard
+gem "mission_control-jobs", github: "rails/mission_control-jobs", branch: "main"
 
 # Other
 gem "jbuilder"

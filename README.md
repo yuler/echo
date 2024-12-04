@@ -13,15 +13,15 @@ This project is for learning English.
 
 ## Roadmap
 
-- [x] Save progress in cookie?
-- [ ] Posts 页面添加分页, Home page, footer
+- [-] Save progress in cookie?
+- [ ] Home page, footer
+- [ ] Generate poster for post
 - [ ] Post, #words, Create word table
 - [-] Polish custom audio player
 - [ ] Set web site host
 - [ ] Authorization, w/ email, password
 - [ ] 签到, Share Image
 - [ ] rails settings
-- [ ] mission_control-jobs
 
 ---
 

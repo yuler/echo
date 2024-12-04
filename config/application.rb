@@ -28,5 +28,10 @@ module Reads
     # Use proxy mode for Active Storage
     # Note: the default redirect mode will be cached by some apps, like WeChat, causing load failures
     config.active_storage.resolve_model_to_route = :rails_storage_proxy
+
+    # Solid Queue & Solid Cache
+    config.cache_store = :solid_cache_store
+    config.active_job.queue_adapter = :solid_queue
+    config.solid_queue.connects_to = { database: { writing: :queue } }
   end
 end
