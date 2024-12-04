@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby file: ".ruby-version"
 
-gem "rails", "~> 8.0.0.rc1"
+gem "rails", "~> 8.0.0"
 # gem "rails", github: "rails/rails", branch: "main"
 
 # Drivers
@@ -33,6 +33,7 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "image_processing", "~> 1.2"
 gem "faraday"
 gem "rails-settings-cached"
+gem "pagy"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"

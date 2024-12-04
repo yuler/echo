@@ -4,3 +4,8 @@
     <%= render "posts/post", post: post %>
   <% end %>
 </div>
+
+<% if @pagy.next %>
+  <a href="<%= pagy_next_url(@pagy) %>" class="more">See more post</a>
+<% end %>
+

@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "./bin/dev",
     "test": "./bin/rails test",
-    "deploy": "./bin/kamal deploy",
-    "server:console": "./bin/kamal console",
-    "server:logs": "./bin/kamal logs",
+    "open:dev:db": "open storage/development.sqlite3",
+    "app:deploy": "./bin/kamal deploy",
+    "app:console": "./bin/kamal console",
+    "app:logs": "./bin/kamal logs",
     "backup:download": "./bin/rake backup:download",
     "backup:import": "./bin/rake backup:import"
   }

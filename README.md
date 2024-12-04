@@ -15,12 +15,11 @@ This project is for learning English.
 
 - [x] Save progress in cookie?
 - [ ] Posts 页面添加分页, Home page, footer
-- [ ] Write a script to sync production database & storage
 - [ ] Post, #words, Create word table
 - [-] Polish custom audio player
-- [ ] 签到, Share Image
 - [ ] Set web site host
 - [ ] Authorization, w/ email, password
+- [ ] 签到, Share Image
 - [ ] rails settings
 - [ ] mission_control-jobs
 
@@ -41,9 +40,8 @@ web:
   password: <password>
 models:
   reads:
-    # schedule:
-    #   every: "1day"
-    #   at: "00:00"
+    schedule:
+      cron: "1 0 * * *"
     compress_with:
       type: tgz
     split_with:
@@ -57,11 +55,11 @@ models:
       reads_production:
         type: sqlite
         path: /home/reads_storage/production.sqlite3
-    archive:
-      includes:
-        - /home/reads_storage
-      excludes:
-        - /home/reads_storage/*.sqlite3*
+    # archive:
+    #   includes:
+    #     - /home/reads_storage
+    #   excludes:
+    #     - /home/reads_storage/*.sqlite3*
     notifiers:
       telegram:
         endpoint: proxy-telegram.deno.dev # proxy

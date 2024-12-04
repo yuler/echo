@@ -12,7 +12,7 @@ class Post < ApplicationRecord
   validates :title, :title_english, presence: true
   # validates :slug, presence: true, uniqueness: true
 
-  scope :newest, -> { order(created_at: :desc) }
+  scope :newest, -> { order(created_at: :desc, id: :desc) }
 
   alias_attribute :introduce, :guide
 

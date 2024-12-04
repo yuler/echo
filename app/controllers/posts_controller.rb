@@ -1,6 +1,8 @@
 class PostsController < ApplicationController
+  include Pagy::Backend
+
   def index
-    @posts = Post.newest.all
+    @pagy, @posts = pagy_keyset(Post.newest.with_attached_poster, params: ->(params) { params.except!(:limit) })
   end
 
   def show
