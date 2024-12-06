@@ -21,7 +21,7 @@ This project is for learning English.
 - [ ] Set web site host
 - [ ] Authorization, w/ email, password
 - [ ] 签到, Share Image
-- [ ] rails settings
+- [-] rails settings
 
 ---
 
