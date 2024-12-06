@@ -208,6 +208,11 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     logger (1.6.1)
+    lograge (0.14.0)
+      actionpack (>= 4)
+      activesupport (>= 4)
+      railties (>= 4)
+      request_store (~> 1.0)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -319,6 +324,8 @@ GEM
     regexp_parser (2.9.2)
     reline (0.5.10)
       io-console (~> 0.5)
+    request_store (1.7.0)
+      rack (>= 1.4)
     rexml (3.3.8)
     rubocop (1.67.0)
       json (~> 2.3)
@@ -456,6 +463,7 @@ DEPENDENCIES
   jbuilder
   kamal (>= 2.0.0.rc2)
   letter_opener
+  lograge
   mission_control-jobs!
   pagy
   propshaft
