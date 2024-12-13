@@ -70,6 +70,7 @@ builder:
   arch: amd64
   args:
     GIT_REVISION: <%= `git rev-parse HEAD`.chomp %>
+    BUILD_TIME: <%= `date -u +"%Y-%m-%dT%H:%M:%SZ"`.chomp %>
 
 logging:
   driver: json-file

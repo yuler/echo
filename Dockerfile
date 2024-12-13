@@ -68,9 +68,16 @@ USER 1000:1000
 ARG GIT_REVISION
 ENV GIT_REVISION=$GIT_REVISION
 
+# Set build time
+ARG BUILD_TIME
+ENV BUILD_TIME=$BUILD_TIME
+
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start server via Thruster by default, this can be overwritten at runtime
 EXPOSE 80
 CMD ["./bin/thrust", "./bin/rails", "server"]
+
+# RUN mkdir -p /rails/log && \
+#     chown -R rails:rails /rails/log
