@@ -29,7 +29,7 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          registry: registry.cn-hangzhou.aliyuncs.com
+          registry: ${{ secrets.KAMAL_REGISTRY_URL }}
           username: ${{ secrets.KAMAL_REGISTRY_USERNAME }}
           password: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
 
@@ -62,7 +62,10 @@ jobs:
           bundler-cache: true
 
       - name: Deploy command
-        run: bundle exec kamal deploy --skip-push
+        run: |
+          echo "${{ secrets.RAILS_MASTER_KEY }}" > config/master.key
+          echo "KAMAL_REGISTRY_PASSWORD=${{ secrets.KAMAL_REGISTRY_PASSWORD }}" > .env
+          bundle exec kamal deploy --skip-push
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
