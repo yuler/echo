@@ -53,13 +53,13 @@ class CrawlViraJob < ApplicationJob
 
   def crawlLatestPost
     response = client.get("api/v2/readings?size=1")
-    raise "response.status is not 200" if response.status != 200
-    response.body["items"].first # => json
+    raise "API request failed: response=#{response}" if response.status != 200
+    response.body["items"].first
   end
 
   def crawlPostDetail(id)
     response = client.get("api/v2/readings/#{id}/explanation")
-    raise "response.status is not 200" if response.status != 200
+    raise "API request failed: response=#{response}" if response.status != 200
     response.body
   end
 end
