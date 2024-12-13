@@ -50,6 +50,9 @@ jobs:
             "${{ secrets.KAMAL_REGISTRY_URL }}/${{ secrets.KAMAL_REGISTRY_REPO }}:${{ steps.tag.outputs.tag }}"
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            GIT_REVISION=${{ github.event.head_commit.id }}
+            BUILD_TIME=${{ github.event.head_commit.timestamp }}
 
       - name: Set up SSH agent
         uses: webfactory/ssh-agent@v0.7.0
@@ -66,6 +69,3 @@ jobs:
           echo "${{ secrets.RAILS_MASTER_KEY }}" > config/master.key
           echo "KAMAL_REGISTRY_PASSWORD=${{ secrets.KAMAL_REGISTRY_PASSWORD }}" > .env
           bundle exec kamal deploy --skip-push
-        env:
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
