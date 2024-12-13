@@ -40,7 +40,11 @@ module Reads
       # Broadcast to file log
       log_file = Rails.root.join("log", "#{Rails.env}.log")
       file_logger = Logger.new(log_file, 10, 10.megabytes)
-      config.logger.extend(ActiveSupport::Logger.broadcast(file_logger))
+
+      config.logger = ActiveSupport::BroadcastLogger.new(
+        config.logger,
+        file_logger
+      )
     end
   end
 end
