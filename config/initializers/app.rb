@@ -10,7 +10,7 @@ module ReadsApp
 
     def build_time
       time_str = ENV["BUILD_TIME"] || `git log -1 --format=%cI`.chomp
-      Time.parse(time_str).strftime("%Y-%m-%d %H:%M:%S %Z")
+      Time.parse(time_str).strftime("%Y-%m-%d %H:%M:%S %Z").chomp
     end
   end
 end
