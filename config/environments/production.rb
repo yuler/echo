@@ -35,7 +35,20 @@ Rails.application.configure do
 
   # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [ :request_id ]
-  config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
+  # config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
+  # Logs
+  config.lograge.enabled = true
+  if Rails.env.production?
+    stdout_logger = ActiveSupport::TaggedLogging.logger(STDOUT)
+
+    log_file = Rails.root.join("log", "#{Rails.env}.log")
+    file_logger = Logger.new(log_file, 10, 10.megabytes)
+
+    config.logger = ActiveSupport::BroadcastLogger.new(
+      stdout_logger,
+      file_logger
+    )
+  end
 
   # Change to "debug" to log everything (including potentially personally-identifiable information!)
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")

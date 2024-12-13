@@ -33,18 +33,5 @@ module Reads
     config.cache_store = :solid_cache_store
     config.active_job.queue_adapter = :solid_queue
     config.solid_queue.connects_to = { database: { writing: :queue } }
-
-    # Logs
-    config.lograge.enabled = true
-    if Rails.env.production?
-      # Broadcast to file log
-      log_file = Rails.root.join("log", "#{Rails.env}.log")
-      file_logger = Logger.new(log_file, 10, 10.megabytes)
-
-      config.logger = ActiveSupport::BroadcastLogger.new(
-        config.logger,
-        file_logger
-      )
-    end
   end
 end
