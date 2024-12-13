@@ -79,7 +79,7 @@ Pagy::DEFAULT[:limit]       = 10                    # default
 
 # Keyset extra: Paginate with the Pagy keyset pagination technique
 # See https://ddnexus.github.io/pagy/docs/extras/keyset
-require 'pagy/extras/keyset'
+require "pagy/extras/keyset"
 
 # Meilisearch extra: Paginate `Meilisearch` result objects
 # See https://ddnexus.github.io/pagy/docs/extras/meilisearch
@@ -123,7 +123,7 @@ require 'pagy/extras/keyset'
 # Pagy extra: Add the pagy styled versions of the javascript-powered navs
 # and a few other components to the Pagy::Frontend module.
 # See https://ddnexus.github.io/pagy/docs/extras/pagy
-require 'pagy/extras/pagy'
+require "pagy/extras/pagy"
 
 # Multi size var used by the *_nav_js helpers
 # See https://ddnexus.github.io/pagy/docs/extras/pagy#steps
@@ -141,7 +141,7 @@ require 'pagy/extras/pagy'
 
 # Limit extra: Allow the client to request a custom limit per page with an optional selector UI
 # See https://ddnexus.github.io/pagy/docs/extras/limit
-require 'pagy/extras/limit'
+require "pagy/extras/limit"
 # set to false only if you want to make :limit_extra an opt-in variable
 # Pagy::DEFAULT[:limit_extra] = false    # default true
 # Pagy::DEFAULT[:limit_param] = :limit   # default
