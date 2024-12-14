@@ -38,8 +38,7 @@ Rails.application.configure do
   # config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
   # Logs
   config.lograge.enabled = true
-  
-  stdout_logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+  stdout_logger = Logger.new(STDOUT)
 
   log_file = Rails.root.join("log", "#{Rails.env}.log")
   file_logger = Logger.new(log_file, 10, 10.megabytes)
