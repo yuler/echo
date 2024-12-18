@@ -1,8 +1,8 @@
 # refs: https://github.com/smartinez87/exception_notification/issues/429
 # refs: https://gist.github.com/bendangelo/dddb8135229979b47cbceec0025c1bb7
-require 'action_dispatch'
-require 'active_support/core_ext/time'
-require 'cgi'
+require "action_dispatch"
+require "active_support/core_ext/time"
+require "cgi"
 
 module ExceptionNotifier
   class TelegramNotifier
@@ -20,7 +20,7 @@ module ExceptionNotifier
       body[:message] = exception.message.inspect
       body[:backtrace] = exception.backtrace.first(options.delete(:backtrace_length) || 5)
 
-      body[:data] = (env && env['exception_notifier.exception_data'] || {}).merge(options[:data] || {})
+      body[:data] = (env && env["exception_notifier.exception_data"] || {}).merge(options[:data] || {})
 
       unless env.nil?
         request = ActionDispatch::Request.new(env)
@@ -67,7 +67,7 @@ module ExceptionNotifier
 end
 
 
-require 'exception_notification/rails'
+require "exception_notification/rails"
 
 
 
@@ -113,4 +113,3 @@ ExceptionNotification.configure do |config|
   # Custom Notifier
   config.add_notifier :telegram, {}
 end
-

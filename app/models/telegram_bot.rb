@@ -5,18 +5,18 @@ module TelegramBot
     payload = {
       chat_id: telegram_bot[:chat_id],
       message_thread_id: telegram_bot[:message_thread_id],
-      text: message,
+      text: message
     }
 
     payload[:parse_mode] = parse_mode if parse_mode
-    
+
     begin
       response = Net::HTTP.post(
         URI(url),
         payload.to_json,
         "Content-Type" => "application/json"
       )
-      
+
       unless response.code == "200"
         Rails.logger.error "Failed to send Telegram message: #{response.code} - #{response.body}"
       end
