@@ -41,7 +41,9 @@ export default class extends Controller {
 
     const progress = readCookie(this.#progressCookieName)
     if (progress) {
-      this.audioElementTarget.currentTime = progress
+      if (window.confirm(`Last progress: ${this.#formatSeconds(progress)}, continue?`)) {
+        this.audioElementTarget.currentTime = progress
+      }
     }
   }
 
