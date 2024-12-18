@@ -40,7 +40,7 @@ Rails.application.configure do
   config.lograge.enabled = true
   stdout_logger = Logger.new(STDOUT)
 
-  log_file = Rails.root.join("log", "#{Rails.env}.log")
+  log_file = Rails.root.join("log", "#{Rails.env}-#{Time.current.strftime('%Y-%m-%d')}.log")
   file_logger = Logger.new(log_file, 10, 10.megabytes)
 
   config.logger = ActiveSupport::BroadcastLogger.new(
