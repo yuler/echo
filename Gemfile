@@ -40,6 +40,9 @@ gem "pagy"
 # Logs
 gem "lograge"
 
+# Error
+gem "exception_notification"
+
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   # gem "faker", require: false

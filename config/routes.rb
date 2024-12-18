@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get "posts/:slug", to: "posts#show", as: :post
 
   get "about", to: "pages#about"
+  get "error", to: "pages#error"
 
   # Defines the root path route ("/")
   root "posts#index"
