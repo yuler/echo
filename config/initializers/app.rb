@@ -1,5 +1,7 @@
 module ReadsApp
   class << self
+    BOOT_TIME = Time.now
+
     def version
       "0.0.1"
     end
@@ -11,6 +13,10 @@ module ReadsApp
     def build_time
       time_str = ENV["BUILD_TIME"] || `git log -1 --format=%cI`.chomp
       Time.parse(time_str).strftime("%Y-%m-%d %H:%M:%S %Z").chomp
+    end
+
+    def boot_time
+      BOOT_TIME
     end
   end
 end
