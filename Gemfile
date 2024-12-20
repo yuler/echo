@@ -17,6 +17,7 @@ gem "kamal", ">= 2.0.0.rc2", require: false
 # Front-end
 gem "propshaft"
 gem "importmap-rails"
+gem "tailwindcss-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
 

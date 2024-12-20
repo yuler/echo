@@ -22,6 +22,7 @@
     <link rel="apple-touch-icon" href="/favicon.png">
 
     <%# Includes all stylesheet files in app/views/stylesheets %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
