@@ -20,3 +20,7 @@ export function readCookie(name) {
 
   return null
 }
+
+export function removeCookie(name) {
+  setCookie(name, "", -1)
+}

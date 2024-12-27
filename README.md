@@ -13,7 +13,6 @@ This project is for learning English.
 
 ## Roadmap
 
-- [-] Save progress in cookie?
 - [ ] Home page, footer
 - [ ] Generate poster for post
 - [ ] Post, #words, Create word table

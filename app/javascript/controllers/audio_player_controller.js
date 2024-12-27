@@ -1,6 +1,6 @@
 import { Controller } from '@hotwired/stimulus'
-import { nextEventLoopTick, throttle } from 'helpers/timing_helpers'
-import { readCookie, setCookie } from "helpers/cookie_helpers"
+import { nextEventLoopTick, throttle, delay } from 'helpers/timing_helpers'
+import { readCookie, setCookie, removeCookie } from "helpers/cookie_helpers"
 
 // Connects to data-controller="audio-player"
 export default class extends Controller {
@@ -33,23 +33,23 @@ export default class extends Controller {
     window.alert(JSON.stringify(event))
   }
 
-  setup() {
+  async setup() {
     this.playerElementTarget.classList.remove('player--hidden')
-    setTimeout(() => {
-      this.playerElementTarget.classList.add('player--visible')
-    }, 50)
-
+    await delay(100)
+    this.playerElementTarget.classList.add('player--visible')
     const progress = readCookie(this.#progressCookieName)
-    if (progress) {
-      if (window.confirm(`Last progress: ${this.#formatSeconds(progress)}, continue?`)) {
-        this.audioElementTarget.currentTime = progress
-      }
-    }
+    if (!progress) return
+
+    if (!window.confirm(`Find your last progress: ${this.#formatSeconds(progress)}, Continue?`)) return
+    this.audioElementTarget.currentTime = progress
+    this.#setCurrentTimeForiOS(progress)
+    this.update()
   }
 
-  load() {
-    this.playerTotalTimeTarget.innerText = this.#formatSeconds(this.audioElementTarget.duration)
+  loaded() {
+    this.updateDuration()
   }
+
   update() {
     let r = (this.audioElementTarget.currentTime / this.audioElementTarget.duration) * 100
     this.playerProgressTarget.style.width = `${r}%`
@@ -57,10 +57,14 @@ export default class extends Controller {
     this.playerCurrentTimeTarget.textContent = this.#formatSeconds(this.audioElementTarget.currentTime)
 
     // Save progress to cookie
-    setCookie(this.#progressCookieName, Math.trunc(this.audioElementTarget.currentTime), 7)
+    const seconds = Math.trunc(this.audioElementTarget.currentTime)
+    if (seconds > 10) setCookie(this.#progressCookieName, seconds, 7)
+  }
+  ended() {
+    removeCookie(this.#progressCookieName)
   }
 
-  // drag
+  // drag, TODO: remove
   down(event) {
     this.dragging = true
     const rect = this.playerKnobTarget.getBoundingClientRect()
@@ -79,7 +83,12 @@ export default class extends Controller {
   }
   seek() { }
 
+  updateDuration() {
+    if (!this.audioElementTarget?.duration) return
+    this.playerTotalTimeTarget.innerText = this.#formatSeconds(this.audioElementTarget.duration)
+  }
   updateControls() {
+    this.updateDuration()
     if (this.audioElementTarget.paused) {
       this.playerPlayButtonTarget.classList.remove("player__play--playing")
     } else {
@@ -127,5 +136,13 @@ export default class extends Controller {
     const minutes = Math.floor(duration / 60)
     const seconds = Math.floor(duration % 60)
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+  }
+
+  // Note: for iOS safari, need call load before set current time
+  #setCurrentTimeForiOS(seconds) {
+    if (window.navigator.userAgent.match(/iPhone|iPad/i)) {
+      this.audioElementTarget.load()
+      this.audioElementTarget.currentTime = seconds
+    }
   }
 }

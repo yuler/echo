@@ -12,10 +12,12 @@
 		controls
 		data-audio-player-target="audioElement"
 		data-action="
-			loadedmetadata->audio-player#load
+			loadedmetadata->audio-player#loaded
 			timeupdate->audio-player#update
 			play->audio-player#updateControls
 			pause->audio-player#updateControls
+			timeupdate->audio-player#update
+			ended->audio-player#ended
 		"
 	>
 		<source data-audio-player-target="sourceElement" src="<%= src %>" type="audio/mp3" data-action="error->audio-player#error"/>
