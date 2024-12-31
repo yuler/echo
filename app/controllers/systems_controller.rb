@@ -11,6 +11,9 @@ class SystemsController < ApplicationController
       build_time: ReadsApp.build_time,
       boot_time: ReadsApp.boot_time,
     }
+    @settings = {
+      vira_token: Setting.vira_token
+    }
   end
 
   private
