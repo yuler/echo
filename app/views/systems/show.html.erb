@@ -42,26 +42,27 @@
       <% end %>
     </tbody>
   </table>
+</div>
 
-  <h2 class="text-lg font-bold">Settings</h2>
-  <div class="mt-8 relative overflow-x-auto border rounded">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      <tbody>
-        <% @settings.each_with_index  do |(key, value), index| %>
-          <% if index === @settings.size - 1 %>
-          <tr class="bg-white dark:bg-gray-800">
-          <% else %>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-          <% end %>
-            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              <%= key %>
-            </th>
-            <td class="px-6 py-4">
-              <%= value %>
-            </td>
-          </tr>
+<h2 class="text-lg font-bold">Settings</h2>
+
+<div class="mt-8 relative overflow-x-auto border rounded">
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <tbody>
+      <% @settings.each_with_index  do |(key, value), index| %>
+        <% if index === @settings.size - 1 %>
+        <tr class="bg-white dark:bg-gray-800">
+        <% else %>
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
         <% end %>
-        </tbody>
-    </table>
-  </div>
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <%= key %>
+          </th>
+          <td class="px-6 py-4">
+            <%= value %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+  </table>
 </div>
