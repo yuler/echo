@@ -1,3 +1,5 @@
+require 'open-uri'  
+
 class Post < ApplicationRecord
   before_save :generate_slug, if: :title_english_changed?
 
@@ -17,21 +19,21 @@ class Post < ApplicationRecord
   alias_attribute :introduce, :guide
 
   def download_poster
-    poster_data = URI.open(metadata["posterUrl"])
+    poster_data = URI.parse(metadata["posterUrl"]).open
     extension = extension(metadata["posterUrl"])
     filename = "#{id}.#{extension}"
     poster.attach(io: poster_data, filename: filename, content_type: "image/jpeg")
   end
 
   def download_cover
-    cover_data = URI.open(metadata["content"]["coverUrl"])
+    cover_data = URI.parse(metadata["content"]["coverUrl"]).open
     extension = extension(metadata["content"]["coverUrl"])
     filename = "#{id}.#{extension}"
     cover.attach(io: cover_data, filename: filename, content_type: "image/jpeg")
   end
 
   def download_audio
-    audio_data = URI.open(metadata["voice"]["url"])
+    audio_data = URI.parse(metadata["voice"]["url"]).open
     extension = extension(metadata["voice"]["url"])
     filename = "#{id}.#{extension}"
     audio.attach(io: audio_data, filename: filename, content_type: "audio/mpeg")
