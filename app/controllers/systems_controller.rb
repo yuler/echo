@@ -3,13 +3,13 @@ class SystemsController < ApplicationController
     @system = {
       # cpu_usage: cpu_usage,
       memory_usage: memory_usage,
-      storage_dir_size: storage_dir_size,
+      storage_dir_size: storage_dir_size
     }
     @app = {
       version: ReadsApp.version,
       git_revision: ReadsApp.git_revision,
       build_time: ReadsApp.build_time,
-      boot_time: ReadsApp.boot_time,
+      boot_time: ReadsApp.boot_time
     }
     @settings = {
       vira_token: Setting.vira_token
@@ -37,6 +37,6 @@ class SystemsController < ApplicationController
     end
 
     def storage_dir_size
-      `du -sh #{Rails.root.to_s}/storage`.split.first
+      `du -sh #{Rails.root}/storage`.split.first
     end
 end

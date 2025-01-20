@@ -1,4 +1,4 @@
-require 'open-uri'  
+require "open-uri"
 
 class Post < ApplicationRecord
   before_save :generate_slug, if: :title_english_changed?
