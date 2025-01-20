@@ -4,6 +4,7 @@ class Setting < RailsSettings::Base
 
   # For CrawlViraJob
   field :vira_token, type: :string
+  field :vira_refresh_token, type: :string
 
   # Define your fields
   # field :host, type: :string, default: "http://localhost:3000"

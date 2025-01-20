@@ -22,12 +22,36 @@ module Vira
     Setting.vira_token = value
   end
 
+  def self.refresh_token
+    Setting.vira_refresh_token
+  end
+
+  def self.refresh_token=(value)
+    Setting.vira_refresh_token = value
+  end
+
   def self.token_valid?
     client.get("api/v2/readings?size=1").status == 200
   end
 
-  # TODO:
-  def self.refresh_token
+  def self.refresh_access_token
+    payload = {
+      "appId" => "VIRA",
+      "poolId" => "1e129352364f7cf5544000ab2682fe23",
+      "clientPlatform" => "IOS",
+      "authFlow" => "REFRESH_TOKEN",
+      "refreshTokenParams" => {
+        "token" => self.token,
+        "refreshToken" => self.refresh_token
+      },
+      "deviceId" => DEVICE_ID
+    }
+    response = Faraday.post("https://account.llsapp.com/api/v2/initiate_auth", payload.to_json, "Content-Type" => "application/json; charset=utf-8")
+    raise "API request failed: response=#{response.body}" if response.status != 200
+
+    result = response.body["authenticationResult"]
+    self.token = result["accessToken"]
+    self.refresh_token = result["refreshToken"]
   end
 
   def self.crawl_latest_post
@@ -43,6 +67,7 @@ module Vira
 
     response = client.get("api/v2/readings/#{latest["id"]}/explanation")
     raise "API request failed: response=#{response}" if response.status != 200
+
     latest_detail = response.body
     post.update(
       guide: latest_detail["guide"],
