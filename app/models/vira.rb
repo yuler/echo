@@ -1,18 +1,6 @@
 module Vira
-  TOKEN = Setting.vira_token
   LOGIN_ID = "3485123782".freeze
   DEVICE_ID = "96b92b8800bc40a6a7421cc6fc25726e5decc7cb".freeze
-  HEADERS = {
-    "Accept" => "*/*",
-    "Accept-Language" => "zh;q=1",
-    "User-Agent" => "Vira/2.29.16 (iPhone; iOS 17.6.1; Scale/3.00)",
-    "X-App-Id" => "vira",
-    "Authorization" => "Bearer #{TOKEN}",
-    "token" => TOKEN,
-    "X-Login" => LOGIN_ID,
-    "X-Device-Id" => DEVICE_ID,
-    "X-S-Device-Id" => DEVICE_ID
-  }.freeze
 
   def self.token
     Setting.vira_token
@@ -49,7 +37,7 @@ module Vira
     response = Faraday.post("https://account.llsapp.com/api/v2/initiate_auth", payload.to_json, "Content-Type" => "application/json; charset=utf-8")
     raise "API request failed: response=#{response.body}" if response.status != 200
 
-    result = response.body["authenticationResult"]
+    result = JSON.parse(response.body)["authenticationResult"]
     self.token = result["accessToken"]
     self.refresh_token = result["refreshToken"]
   end
@@ -84,7 +72,17 @@ module Vira
   private
     def self.client
       @client ||= Faraday.new(url: "https://vira.llsapp.com") do |builder|
-        builder.headers = HEADERS
+        builder.headers = {
+          "Accept" => "*/*",
+          "Accept-Language" => "zh;q=1",
+          "User-Agent" => "Vira/2.29.16 (iPhone; iOS 17.6.1; Scale/3.00)",
+          "X-App-Id" => "vira",
+          "Authorization" => "Bearer #{token}",
+          "token" => token,
+          "X-Login" => LOGIN_ID,
+          "X-Device-Id" => DEVICE_ID,
+          "X-S-Device-Id" => DEVICE_ID
+        }.freeze
         builder.response :json
       end
     end
