@@ -44,7 +44,7 @@ module Vira
 
   def self.crawl_latest_post
     response = client.get("api/v2/readings?size=1")
-    raise "API request failed: response=#{response}" if response.status != 200
+    raise "API request failed: response=#{response.body}" if response.status != 200
     latest = response.body["items"].first
     post = Post.create(
       title: latest["title"],
@@ -54,7 +54,7 @@ module Vira
     )
 
     response = client.get("api/v2/readings/#{latest["id"]}/explanation")
-    raise "API request failed: response=#{response}" if response.status != 200
+    raise "API request failed: response=#{response.body}" if response.status != 200
 
     latest_detail = response.body
     post.update(
