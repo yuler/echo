@@ -37,6 +37,7 @@ gem "image_processing", "~> 1.2"
 gem "faraday"
 gem "rails-settings-cached"
 gem "pagy"
+gem "redcarpet"
 
 # Logs
 gem "lograge"

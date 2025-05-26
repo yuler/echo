@@ -7,6 +7,13 @@ module.exports = {
     './app/javascript/**/*.js',
     './app/views/**/*.{erb,haml,html,slim}'
   ],
+  safelist: [
+    'prose',
+    'prose-sm',
+    'prose-lg',
+    'prose-xl',
+    'prose-2xl',
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -18,5 +25,5 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/container-queries'),
-  ]
+  ],
 }
