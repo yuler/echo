@@ -13,6 +13,7 @@ This project is for learning English.
 
 ## Roadmap
 
+- [ ] !Change all UI, focus mobile device Design UI
 - [ ] Home page, footer
 - [ ] Generate poster for post
 - [ ] Post, #words, Create word table
@@ -24,7 +25,6 @@ This project is for learning English.
 
 ---
 
-- [ ] Design UI
 - [ ] 优化 Job 失败, 成功通知
 - [ ] Integration Telegram
 
