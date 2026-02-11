@@ -1,0 +1,51 @@
+default: &default
+  adapter: postgresql
+  host: <%= ENV.fetch("DB_HOST", "localhost") %>
+  port: <%= ENV.fetch("DB_PORT", 5432) %>
+  username: <%= ENV.fetch("DB_USERNAME", "postgres") %>
+  password: <%= ENV.fetch("DB_PASSWORD", "postgres") %>
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  primary:
+    <<: *default
+    database: <%= ENV.fetch("DB_NAME", "rails_starter_development") %>
+    schema_dump: schema.postgres.rb
+  cable:
+    <<: *default
+    database: <%= ENV.fetch("DB_NAME_CABLE", "rails_starter_development_cable") %>
+    migrations_paths: db/cable_migrate
+    schema_dump: cable_schema.postgres.rb
+
+test:
+  primary:
+    <<: *default
+    database: <%= ENV.fetch("DB_NAME_TEST", "rails_starter_test") %>
+    schema_dump: schema.postgres.rb
+  cable:
+    <<: *default
+    database: <%= ENV.fetch("DB_NAME_CABLE", "rails_starter_test_cable") %>
+    migrations_paths: db/cable_migrate
+    schema_dump: cable_schema.postgres.rb
+
+production:
+  primary:
+    <<: *default
+    database: <%= ENV.fetch("DB_NAME", "rails_starter_production") %>
+    schema_dump: schema.postgres.rb
+  cache:
+    <<: *default
+    database: <%= ENV.fetch("DB_NAME_CACHE", "rails_starter_production_cache") %>
+    migrations_paths: db/cache_migrate
+    schema_dump: cache_schema.postgres.rb
+  queue:
+    <<: *default
+    database: <%= ENV.fetch("DB_NAME_QUEUE", "rails_starter_production_queue") %>
+    migrations_paths: db/queue_migrate
+    schema_dump: queue_schema.postgres.rb
+  cable:
+    <<: *default
+    database: <%= ENV.fetch("DB_NAME_CABLE", "rails_starter_production_cable") %>
+    migrations_paths: db/cable_migrate
+    schema_dump: cable_schema.postgres.rb

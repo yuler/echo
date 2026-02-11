@@ -1,0 +1,16 @@
+<%
+  adapter = RailsStarter.db_adapter
+  
+  database_file = {
+    "postgres" => "database.postgres.yml",
+    "sqlite" => "database.sqlite.yml",
+    "mysql" => "database.mysql.yml",
+  }
+
+  unless database_file.key?(adapter)
+    raise "Unsupported DB_ADAPTER '#{adapter}'. Supported adapters: #{database_file.keys.join(', ')}"
+  end
+
+  config_path = File.join(__dir__, database_file[adapter])
+%>
+<%= ERB.new(File.read(config_path)).result %>
