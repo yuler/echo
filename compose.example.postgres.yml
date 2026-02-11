@@ -5,7 +5,7 @@
 x-db-env: &db_env
   POSTGRES_USER: ${DB_USERNAME:-postgres}
   POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
-  POSTGRES_DB: ${DB_NAME:-rails_starter_production}
+  POSTGRES_DB: ${DB_NAME:-echo_production}
 
 x-rails-env: &rails_env
   <<: *db_env
@@ -31,7 +31,7 @@ services:
       db:
         condition: service_healthy
     networks:
-      - rails_starter_net
+      - echo_net
 
   worker:
     image: ghcr.io/yuler/rails-starter:main
@@ -47,7 +47,7 @@ services:
     environment:
       <<: *rails_env
     networks:
-      - rails_starter_net
+      - echo_net
 
   db:
     image: postgres:16
@@ -62,12 +62,12 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - rails_starter_net
+      - echo_net
 
 volumes:
   rails-storage:
   postgres-data:
 
 networks:
-  rails_starter_net:
+  echo_net:
     driver: bridge

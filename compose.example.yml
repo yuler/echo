@@ -19,7 +19,7 @@ services:
     environment:
       <<: *rails_env
     networks:
-      - rails_starter_net
+      - echo_net
 
   worker:
     image: ghcr.io/yuler/rails-starter:main
@@ -32,7 +32,7 @@ services:
     environment:
       <<: *rails_env
     networks:
-      - rails_starter_net
+      - echo_net
 
 volumes:
   rails-storage:
@@ -43,5 +43,5 @@ volumes:
     #   device: ${PWD}/storage
 
 networks:
-  rails_starter_net:
+  echo_net:
     driver: bridge

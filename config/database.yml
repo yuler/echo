@@ -1,5 +1,5 @@
 <%
-  adapter = RailsStarter.db_adapter
+  adapter = Echo.db_adapter
   
   database_file = {
     "postgres" => "database.postgres.yml",
