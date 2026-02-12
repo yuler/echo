@@ -17,6 +17,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -39,14 +40,17 @@ html {
     opacity: 0;
     transform: translateY(50%);
   }
+
   15% {
     opacity: 1;
     transform: translateY(0);
   }
+
   85% {
     opacity: 1;
     transform: translateY(0);
   }
+
   100% {
     opacity: 0;
     transform: translateY(-50%);
@@ -55,4 +59,22 @@ html {
 
 .btn-copied .copied-text {
   animation: copied-text 1s ease-in-out;
+}
+
+@layer utilities {
+  .bg-pops-black {
+    background-color: #111111;
+  }
+
+  .text-pops-black {
+    color: #111111;
+  }
+
+  .border-pops-black {
+    border-color: #111111;
+  }
+
+  .font-roboto-slab {
+    font-family: 'Roboto Slab', serif;
+  }
 }

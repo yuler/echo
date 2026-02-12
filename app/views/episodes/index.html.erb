@@ -1,0 +1,14 @@
+<div class="bg-pops-black py-24 mb-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+    <h1 class="font-roboto-slab text-5xl font-bold mb-6">Echo</h1>
+    <p class="text-xl text-gray-300 max-w-2xl mx-auto font-light">
+      Fine-tune your ears with our curated English listening practice.
+    </p>
+  </div>
+</div>
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+  <div class="space-y-8" data-turbo-action="advance">
+    <%= render partial: "episode", collection: @episodes %>
+  </div>
+</div>

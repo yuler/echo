@@ -1,0 +1,24 @@
+<%= link_to episode_path(episode[:id]), class: "block group h-full" do %>
+  <div class="bg-white p-8 border-2 border-pops-black hover:bg-gray-50 transition-colors duration-300 h-full flex flex-col">
+    <div class="flex items-center text-xs font-bold text-gray-400 uppercase tracking-wider mb-4 space-x-2">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+      <span>Pops Podcast</span>
+      <span>•</span>
+      <span><%= episode[:duration] %></span>
+    </div>
+
+    <h3 class="font-roboto-slab text-2xl font-bold text-pops-black mb-3 text-center group-hover:underline decoration-2 underline-offset-4">
+      <%= episode[:title] %>
+    </h3>
+
+    <p class="text-gray-600 leading-relaxed text-sm text-center mb-8 flex-grow">
+      <%= episode[:description] %>
+    </p>
+
+    <div class="mt-auto flex justify-center">
+        <div class="bg-pops-black text-white rounded-full p-3 hover:scale-110 transition-transform duration-200">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+        </div>
+    </div>
+  </div>
+<% end %>
