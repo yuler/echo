@@ -1,0 +1,56 @@
+<div class="posts-container">
+  <%# Title bar %>
+  <div class="flex items-center justify-between mb-10">
+    <h1 class="posts-page-title">Echo</h1>
+    <button class="posts-icon-btn posts-icon-btn-lg text-neutral-600">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+      </svg>
+    </button>
+  </div>
+
+  <% if @posts.any? %>
+    <%# Continue Listening %>
+    <div class="mb-10">
+      <div class="flex items-center justify-between mb-5">
+        <span class="posts-section-label">Recent</span>
+        <div class="flex gap-2">
+          <button class="posts-icon-btn posts-icon-btn-sm text-neutral-500" data-action="click->carousel#prev">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <button class="posts-icon-btn posts-icon-btn-sm text-neutral-500" data-action="click->carousel#next">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="posts-carousel">
+        <% @posts.limit(5).each do |post| %>
+          <%= render "posts/featured_card", post: post %>
+        <% end %>
+      </div>
+    </div>
+
+    <% if @posts.count > 5 %>
+    <%# Category tabs %>
+    <div class="flex gap-5 overflow-x-auto py-4 border-t border-b border-neutral-200 scrollbar-none">
+      <button class="posts-tab posts-tab-active">ALL</button>
+      <% all_topics = @posts.flat_map(&:topics_list).uniq.first(6) %>
+      <% all_topics.each do |topic| %>
+        <button class="posts-tab"><%= topic.upcase %></button>
+      <% end %>
+    </div>
+    <% end %>
+
+    <%# Episode list %>
+    <div class="divide-y divide-neutral-200">
+      <% @posts.each do |post| %>
+        <%= render "posts/post_row", post: post %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="py-20 text-center" style="color: #a3a3a3">
+      <p style="font-size: 1.125rem">No episodes yet</p>
+    </div>
+  <% end %>
+</div>

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resource :landing
   resources :home
-  resources :episodes, only: [:index, :show]
+  resources :posts, only: [ :index, :show ]
 
   resource :session do
     scope module: :sessions do

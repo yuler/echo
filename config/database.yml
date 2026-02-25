@@ -1,6 +1,6 @@
 <%
   adapter = Echo.db_adapter
-  
+
   database_file = {
     "postgres" => "database.postgres.yml",
     "sqlite" => "database.sqlite.yml",

@@ -2,9 +2,9 @@
 
 This file contains guidelines and commands for agentic coding agents working in this Rails 8.1 starter template repository.
 
-## Rails Starter
+## Echo
 
-TODO: Description about your app
+TODO: xxx
 
 ## Development Commands
 

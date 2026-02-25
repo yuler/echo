@@ -1,15 +1,13 @@
-# - Crawl article from [vira](https://m.liulishuo.com/en/vira.html) daily.
-
 class Vira
   LOGIN_ID = "3485123782".freeze
   DEVICE_ID = "96b92b8800bc40a6a7421cc6fc25726e5decc7cb".freeze
 
-  TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzI1OTU4ODEsInBvb2xfaWQiOiIxZTEyOTM1MjM2NGY3Y2Y1NTQ0MDAwYWIyNjgyZmUyMyIsInVzZXJfaWQiOjg0NTY3NDIwfQ.BBE6ZlmkJx1io4Pk9CNHfG6kRo6ucXa_ZW0RIByj0Xo".freeze
-  REFRESH_TOKEN = "b1bf5930-1d20-458f-8e6b-b7f9faee057b".freeze
+  TOKEN = ENV["VIRA_TOKEN"].freeze
+  REFRESH_TOKEN = ENV["VIRA_REFRESH_TOKEN"].freeze
 
   class << self
     def token
-      @token
+      @token ||= TOKEN
     end
 
     def token=(value)
@@ -17,20 +15,58 @@ class Vira
     end
 
     def refresh_token
-      @refresh_token
+      @refresh_token ||= REFRESH_TOKEN
     end
 
     def refresh_token=(value)
       @refresh_token = value
     end
 
+    def token_valid?
+      client.get("api/v2/user/info").status == 200
+    end
+
+    # TODO: test refresh access token flow
+    def refresh_access_token
+      payload = {
+        "authFlow" => "REFRESH_TOKEN",
+        "refreshTokenParams" => {
+          "token" => token,
+          "refreshToken" => refresh_token
+        },
+        "deviceId" => DEVICE_ID
+      }
+      response = Faraday.post("https://account.llsapp.com/api/v2/initiate_auth", payload.to_json, "Content-Type" => "application/json; charset=utf-8")
+      raise "API request failed: response=#{response.body}" if response.status != 200
+
+      result = JSON.parse(response.body)["authenticationResult"]
+      puts "result: #{result}"
+
+      token = result["accessToken"]
+      refresh_token = result["refreshToken"]
+      { token: token, refresh_token: refresh_token }
+    end
+
     def fetch_user_info
       client.get("api/v2/user/info").body
     end
 
+    def fetch_latest_post
+      json = {}
+      # fetch latest post
+      response = client.get("api/v2/readings?size=1")
+      json["reading"] = response.body["items"].first
 
-    def token_valid?
-      client.get("api/v2/readings?size=1").status == 200
+      # fetch audio details
+      response = client.get("api/v2/readings/#{json["reading"]["id"]}/audio")
+      json["audio"] = response.body
+
+      # fetch explanation details
+      response = client.get("api/v2/readings/#{json["reading"]["id"]}/explanation")
+      json["explanation"] = response.body
+      Rails.logger.debug json.to_json
+
+      json
     end
 
     private
@@ -54,50 +90,17 @@ class Vira
             "sDeviceId" => DEVICE_ID,
             "token" => token
           }
+          builder.use(Class.new(Faraday::Middleware) do
+            def on_complete(env)
+              status = env[:status]
+              return if status && status >= 200 && status < 300
+              raise "API request failed: status=#{status} response=#{env[:body]}"
+            end
+          end)
           builder.response :json
         end
       end
   end
-
-  # def self.token
-  #   Setting.vira_token
-  # end
-
-  # def self.token=(value)
-  #   Setting.vira_token = value
-  # end
-
-  # def self.refresh_token
-  #   Setting.vira_refresh_token
-  # end
-
-  # def self.refresh_token=(value)
-  #   Setting.vira_refresh_token = value
-  # end
-
-  # def self.token_valid?
-  #   client.get("api/v2/readings?size=1").status == 200
-  # end
-
-  # def self.refresh_access_token
-  #   payload = {
-  #     "appId" => "VIRA",
-  #     "poolId" => "1e129352364f7cf5544000ab2682fe23",
-  #     "clientPlatform" => "IOS",
-  #     "authFlow" => "REFRESH_TOKEN",
-  #     "refreshTokenParams" => {
-  #       "token" => self.token,
-  #       "refreshToken" => self.refresh_token
-  #     },
-  #     "deviceId" => DEVICE_ID
-  #   }
-  #   response = Faraday.post("https://account.llsapp.com/api/v2/initiate_auth", payload.to_json, "Content-Type" => "application/json; charset=utf-8")
-  #   raise "API request failed: response=#{response.body}" if response.status != 200
-
-  #   result = JSON.parse(response.body)["authenticationResult"]
-  #   self.token = result["accessToken"]
-  #   self.refresh_token = result["refreshToken"]
-  # end
 
   # def self.crawl_latest_post
   #   response = client.get("api/v2/readings?size=1")
@@ -125,27 +128,9 @@ class Vira
   #   post.download_cover
   #   post.download_audio
   # end
-
-  # private
-  #   def self.client
-  #     @client ||= Faraday.new(url: "https://vira.llsapp.com") do |builder|
-  #       builder.headers = {
-  #         "Accept" => "*/*",
-  #         "Accept-Language" => "zh;q=1",
-  #         "User-Agent" => "Vira/2.29.16 (iPhone; iOS 17.6.1; Scale/3.00)",
-  #         "X-App-Id" => "vira",
-  #         "Authorization" => "Bearer #{token}",
-  #         "token" => token,
-  #         "X-Login" => LOGIN_ID,
-  #         "X-Device-Id" => DEVICE_ID,
-  #         "X-S-Device-Id" => DEVICE_ID
-  #       }.freeze
-  #       builder.response :json
-  #     end
-  #   end
 end
 
-
+# TODO: Move this to `docs` folder, with some text describing the API request flow
 # # send sms
 # curl -X POST "https://account.llsapp.com/api/v2/initiate_auth" \
 #   -H "Host: account.llsapp.com" \

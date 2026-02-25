@@ -77,4 +77,263 @@ html {
   .font-roboto-slab {
     font-family: 'Roboto Slab', serif;
   }
+
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* View transitions */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
+
+/*
+ * Campfire-style responsive design
+ * Single breakpoint: @media (max-width: 100ch)
+ * Default = wide/PC layout, narrow override = mobile
+ * refs: https://dev.37signals.com/modern-css-patterns-and-techniques-in-campfire/#responsive-design
+ */
+
+/* ── Posts page container ── */
+.posts-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 2.5rem 3rem;
+}
+
+@media (max-width: 100ch) {
+  .posts-container {
+    max-width: 100%;
+    padding: 2rem 1rem 2rem;
+  }
+}
+
+/* ── Posts page title ── */
+.posts-page-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+@media (max-width: 100ch) {
+  .posts-page-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* ── Section heading (CONTINUE LISTENING, etc.) ── */
+.posts-section-label {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #737373;
+}
+
+/* ── Featured card typography ── */
+.posts-card-title {
+  font-family: 'Roboto Slab', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #171717;
+}
+
+.posts-card-desc {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: #737373;
+}
+
+.posts-card-meta {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.75rem;
+  color: #a3a3a3;
+}
+
+/* ── Episode row typography ── */
+.posts-row-title {
+  font-family: 'Roboto Slab', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #171717;
+}
+
+@media (max-width: 100ch) {
+  .posts-row-title {
+    font-size: 0.9375rem;
+  }
+}
+
+.posts-row-desc {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: #737373;
+}
+
+@media (max-width: 100ch) {
+  .posts-row-desc {
+    font-size: 0.8125rem;
+  }
+}
+
+.posts-row-meta {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #a3a3a3;
+}
+
+/* ── Category tabs ── */
+.posts-tab {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: #737373;
+  transition: color 0.15s;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.posts-tab:hover {
+  color: #171717;
+}
+
+.posts-tab-active {
+  color: #171717;
+}
+
+/* ── Featured carousel ── */
+.posts-carousel {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (max-width: 100ch) {
+  .posts-carousel {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+.posts-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.posts-featured-card {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  width: 320px;
+}
+
+@media (max-width: 100ch) {
+  .posts-featured-card {
+    width: min(65vw, 260px);
+  }
+}
+
+.posts-featured-img {
+  position: relative;
+  overflow: hidden;
+  height: 200px;
+}
+
+@media (max-width: 100ch) {
+  .posts-featured-img {
+    height: 160px;
+  }
+}
+
+/* ── Episode list ── */
+.posts-episode-thumb {
+  width: 6.5rem;
+  height: 6.5rem;
+}
+
+@media (max-width: 100ch) {
+  .posts-episode-thumb {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+/* ── Circle icon buttons ── */
+.posts-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid #e5e5e5;
+  transition: background-color 0.15s;
+  background: none;
+  cursor: pointer;
+}
+
+.posts-icon-btn:hover {
+  background-color: #fafafa;
+}
+
+.posts-icon-btn-lg {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+@media (max-width: 100ch) {
+  .posts-icon-btn-lg {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+}
+
+.posts-icon-btn-sm {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* ── Hover effects (Campfire-style device capability queries) ── */
+@media (any-hover: hover) and (pointer: fine) {
+  .hover-reveal {
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .hover-parent:hover .hover-reveal {
+    opacity: 1;
+  }
+}
+
+@media (any-hover: none) and (pointer: coarse) {
+  .hover-reveal {
+    opacity: 1;
+  }
 }

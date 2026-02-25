@@ -1,0 +1,21 @@
+<%= link_to post_path(post), class: "posts-featured-card group block", style: "text-decoration: none; view-transition-name: post-#{post.id}" do %>
+  <div class="posts-featured-img bg-neutral-200 mb-3 rounded-xl shadow-sm">
+    <% if post.cover_url.present? %>
+      <img src="<%= post.cover_url %>" alt="<%= post.title_en %>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+    <% else %>
+      <div class="w-full h-full bg-neutral-300"></div>
+    <% end %>
+    <div class="absolute bottom-2 right-2 w-9 h-9 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-md">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-neutral-900" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </div>
+  </div>
+  <h3 class="posts-card-title mb-1 line-clamp-2"><%= post.title_en.presence || post.title %></h3>
+  <p class="posts-card-desc line-clamp-1 mb-1"><%= post.guide.to_s.truncate(60) %></p>
+  <div class="posts-card-meta flex items-center gap-2">
+    <span class="font-semibold uppercase tracking-wide"><%= post.topics_list.first %></span>
+    <% if post.audio_duration.present? %>
+      <span>&middot;</span>
+      <span><%= post.minutes_left %> min</span>
+    <% end %>
+  </div>
+<% end %>
