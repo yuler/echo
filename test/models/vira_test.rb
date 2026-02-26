@@ -2,8 +2,8 @@ require "test_helper"
 
 class ViraTest < ActiveSupport::TestCase
   setup do
-    if ENV["CI"]
-      skip "Skipping ViraTest in CI environment"
+    if ENV["CI"] || ENV["VIRA_LOGIN_ID"].blank? || ENV["VIRA_DEVICE_ID"].blank? || ENV["VIRA_TOKEN"].blank?
+      skip "Skipping ViraTest due to missing Vira environment variables or CI environment"
     end
   end
 

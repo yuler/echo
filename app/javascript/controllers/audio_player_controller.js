@@ -168,10 +168,8 @@ export default class extends Controller {
   highlightSentences(currentTime) {
     if (this.currentMode === "explanation") {
       this.sentenceTargets.forEach(sentence => {
-        sentence.style.opacity = "1"
-        sentence.style.fontWeight = "normal"
-        sentence.style.color = "inherit"
-        sentence.classList.remove("cursor-pointer")
+        sentence.classList.remove("sentence-active", "sentence-past", "sentence-inactive", "cursor-pointer")
+        sentence.classList.add("sentence-explanation")
       })
       return
     }
@@ -180,6 +178,8 @@ export default class extends Controller {
 
     this.sentenceTargets.forEach((sentence, index) => {
       sentence.classList.add("cursor-pointer")
+      sentence.classList.remove("sentence-explanation") // Ensure explanation mode class is removed
+
       const time = parseFloat(sentence.dataset.time)
       const nextTime = this.sentenceTargets[index + 1]
         ? parseFloat(this.sentenceTargets[index + 1].dataset.time)
@@ -187,26 +187,14 @@ export default class extends Controller {
 
       if (currentTime >= time && currentTime < nextTime) {
         activeIndex = index
-        sentence.style.opacity = "1"
-        sentence.style.fontWeight = "bold"
-        sentence.style.color = "#000"
-        sentence.style.backgroundImage = "none"
-        sentence.style.webkitBackgroundClip = "initial"
-        sentence.style.webkitTextFillColor = "initial"
+        sentence.classList.add("sentence-active")
+        sentence.classList.remove("sentence-past", "sentence-inactive")
       } else if (currentTime >= nextTime) {
-        sentence.style.opacity = "0.8"
-        sentence.style.fontWeight = "normal"
-        sentence.style.color = "inherit"
-        sentence.style.backgroundImage = "none"
-        sentence.style.webkitBackgroundClip = "initial"
-        sentence.style.webkitTextFillColor = "initial"
+        sentence.classList.add("sentence-past")
+        sentence.classList.remove("sentence-active", "sentence-inactive")
       } else {
-        sentence.style.opacity = "0.4"
-        sentence.style.fontWeight = "normal"
-        sentence.style.color = "inherit"
-        sentence.style.backgroundImage = "none"
-        sentence.style.webkitBackgroundClip = "initial"
-        sentence.style.webkitTextFillColor = "initial"
+        sentence.classList.add("sentence-inactive")
+        sentence.classList.remove("sentence-active", "sentence-past")
       }
     })
 

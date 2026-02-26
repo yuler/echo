@@ -1,4 +1,4 @@
-<%= link_to post_path(post), class: "flex gap-4 py-5 hover:bg-neutral-50 transition-colors hover-parent", style: "text-decoration: none" do %>
+<%= link_to post_path(post), class: "flex gap-4 py-5 hover:bg-neutral-50 transition-colors hover-parent no-underline" do %>
   <div class="shrink-0 posts-episode-thumb overflow-hidden bg-neutral-200 rounded-lg shadow-sm" style="view-transition-name: thumb-<%= post.id %>">
     <% if post.cover_url.present? %>
       <img src="<%= post.cover_url %>" alt="" class="w-full h-full object-cover" loading="lazy">

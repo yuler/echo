@@ -241,3 +241,41 @@
   outline: 2px solid #171717;
   outline-offset: 2px;
 }
+
+/* ──── Sentence Highlighting States ──── */
+
+.sentence-active {
+  opacity: 1;
+  font-weight: 700;
+  color: #000;
+  background-image: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: initial;
+}
+
+.sentence-past {
+  opacity: 0.8;
+  font-weight: 400;
+  color: inherit;
+  background-image: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: initial;
+}
+
+.sentence-inactive {
+  opacity: 0.4;
+  font-weight: 400;
+  color: inherit;
+  background-image: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: initial;
+}
+
+.sentence-explanation {
+  opacity: 1;
+  font-weight: 400;
+  color: inherit;
+}

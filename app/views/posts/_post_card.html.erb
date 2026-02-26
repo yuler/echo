@@ -1,4 +1,4 @@
-<%= link_to post_path(post), class: "posts-featured-card group block", style: "text-decoration: none; view-transition-name: post-#{post.id}" do %>
+<%= link_to post_path(post), class: "posts-featured-card group block no-underline", style: "view-transition-name: post-#{post.id}" do %>
   <div class="posts-featured-img bg-neutral-200 mb-3 rounded-xl shadow-sm">
     <% if post.cover_url.present? %>
       <img src="<%= post.cover_url %>" alt="<%= post.title_en %>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
