@@ -5,7 +5,7 @@ export default class extends Controller {
     "audio", "sentence", "translation",
     "playIcon", "pauseIcon", "progress", "progressBar", "progressInner",
     "currentTime", "totalTime", "speedBtn",
-    "simpleBtn", "explanationBtn", "toggleIndicator"
+    "simpleBtn", "explanationBtn", "toggleIndicator", "header"
   ]
 
   static values = {

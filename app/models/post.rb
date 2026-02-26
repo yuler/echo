@@ -81,7 +81,7 @@ class Post < ApplicationRecord
 
   def self.crawl_vira_latest_post
     json = Vira.fetch_latest_post
-    if post = Post.find_by(third_id: json["id"])
+    if post = Post.find_by(third_id: json["reading"]["id"])
       return post
     end
 

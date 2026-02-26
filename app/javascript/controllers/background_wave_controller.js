@@ -18,14 +18,15 @@ export default class extends Controller {
 
     // Performance optimization
     this.resize()
-    window.addEventListener('resize', () => this.resize())
+    this.boundResize = this.resize.bind(this)
+    window.addEventListener('resize', this.boundResize)
 
     this.start()
   }
 
   disconnect() {
     this.stop()
-    window.removeEventListener('resize', () => this.resize())
+    window.removeEventListener('resize', this.boundResize)
   }
 
   generateWavePoints() {
@@ -166,7 +167,7 @@ export default class extends Controller {
 
       // Dynamic bar height
       const barHeight = baseHeight * (0.4 + point.base * 0.6) *
-                      (0.5 + Math.sin(this.time * point.speed * 1.2 + point.phase) * 0.25)
+        (0.5 + Math.sin(this.time * point.speed * 1.2 + point.phase) * 0.25)
 
       const barY = height - barHeight
 
@@ -187,7 +188,7 @@ export default class extends Controller {
 
       // Expanding radius
       const radius = (Math.sin(this.time * droplet.speed + droplet.phase) * 0.5 + 0.5) *
-                     width * droplet.maxRadius
+        width * droplet.maxRadius
 
       // Fading opacity
       const opacity = droplet.opacity * (Math.cos(this.time * droplet.speed + droplet.phase) * 0.5 + 0.5)

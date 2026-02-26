@@ -13,7 +13,6 @@ class ViraTest < ActiveSupport::TestCase
 
   test "fetch user info" do
     json = Vira.fetch_user_info
-    p json.to_json
     assert_not(json.key?("error"), "Error returned from API: #{json}")
   end
 end

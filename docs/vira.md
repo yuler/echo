@@ -7,9 +7,9 @@ Fetch daily content from [Vira](https://m.liulishuo.com/en/vira.html).
 Generate URL
 
 ```bash
-LOGIN=270001585
-DEVICE_ID=96b92b8800bc40a6a7421cc6fc25726e5decc7cb
-TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzI1OTU4ODEsInBvb2xfaWQiOiIxZTEyOTM1MjM2NGY3Y2Y1NTQ0MDAwYWIyNjgyZmUyMyIsInVzZXJfaWQiOjg0NTY3NDIwfQ.BBE6ZlmkJx1io4Pk9CNHfG6kRo6ucXa_ZW0RIByj0Xo
+LOGIN=<YOUR_LOGIN_ID>
+DEVICE_ID=<YOUR_DEVICE_ID>
+TOKEN=<YOUR_VIRA_TOKEN>
 
 # echo ""
 # echo ""

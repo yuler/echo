@@ -1,13 +1,15 @@
 class Vira
-  LOGIN_ID = ENV["VIRA_LOGIN_ID"].freeze
-  DEVICE_ID = ENV["VIRA_DEVICE_ID"].freeze
-
-  TOKEN = ENV["VIRA_TOKEN"].freeze
-  REFRESH_TOKEN = ENV["VIRA_REFRESH_TOKEN"].freeze
-
   class << self
+    def login_id
+      ENV["VIRA_LOGIN_ID"]
+    end
+
+    def device_id
+      ENV["VIRA_DEVICE_ID"]
+    end
+
     def token
-      @token ||= TOKEN
+      @token ||= ENV["VIRA_TOKEN"]
     end
 
     def token=(value)
@@ -15,7 +17,7 @@ class Vira
     end
 
     def refresh_token
-      @refresh_token ||= REFRESH_TOKEN
+      @refresh_token ||= ENV["VIRA_REFRESH_TOKEN"]
     end
 
     def refresh_token=(value)
@@ -34,10 +36,10 @@ class Vira
           "token" => token,
           "refreshToken" => refresh_token
         },
-        "deviceId" => DEVICE_ID
+        "deviceId" => device_id
       }
       response = Faraday.post("https://account.llsapp.com/api/v2/initiate_auth", payload.to_json, "Content-Type" => "application/json; charset=utf-8")
-      raise "API request failed: response=#{response.body}" if response.status != 200
+      raise "API request failed: status=#{response.status}" if response.status != 200
 
       result = JSON.parse(response.body)["authenticationResult"]
 
@@ -78,22 +80,15 @@ class Vira
             "X-App-Id" => "vira",
             "Authorization" => "Bearer #{token}",
             "token" => token,
-            "X-Login" => LOGIN_ID,
-            "X-Device-Id" => DEVICE_ID,
-            "X-S-Device-Id" => DEVICE_ID
+            "X-Login" => login_id,
+            "X-Device-Id" => device_id,
+            "X-S-Device-Id" => device_id
           }.freeze
-          builder.params = {
-            "appId" => "vira",
-            "login" => LOGIN_ID,
-            "deviceId" => DEVICE_ID,
-            "sDeviceId" => DEVICE_ID,
-            "token" => token
-          }
           builder.use(Class.new(Faraday::Middleware) do
             def on_complete(env)
               status = env[:status]
               return if status && status >= 200 && status < 300
-              raise "API request failed: status=#{status} response=#{env[:body]}"
+              raise "API request failed: status=#{status}"
             end
           end)
           builder.response :json
