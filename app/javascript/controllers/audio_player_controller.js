@@ -209,7 +209,7 @@ export default class extends Controller {
 
     const sentence = this.sentenceTargets[activeIndex]
     const headerHeight = this.hasHeaderTarget ? this.headerTarget.offsetHeight : 0
-    const padding = 80 // Top padding for visibility
+    const PADDING_TOP = 80 // Top padding for visibility
 
     const rect = sentence.getBoundingClientRect()
     const viewportHeight = window.innerHeight
