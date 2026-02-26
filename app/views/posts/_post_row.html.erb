@@ -7,9 +7,9 @@
     <% end %>
   </div>
   <div class="flex-1 min-w-0 py-0.5">
-    <h3 class="posts-row-title mb-1.5 line-clamp-2"><%= post.title_en.presence || post.title %></h3>
-    <p class="posts-row-desc line-clamp-2 mb-2"><%= post.guide.to_s.truncate(100) %></p>
-    <div class="posts-row-meta flex items-center gap-2">
+    <h3 class="text-heading-2 mb-1.5 line-clamp-2"><%= post.title_en.presence || post.title %></h3>
+    <p class="text-body line-clamp-2 mb-2"><%= post.guide.to_s.truncate(100) %></p>
+    <div class="text-caption flex items-center gap-2">
       <span><%= post.topics_list.first %></span>
       <% if post.audio_duration.present? %>
         <span>&middot;</span>

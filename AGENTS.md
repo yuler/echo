@@ -1,10 +1,10 @@
 # AGENTS.md
 
-This file contains guidelines and commands for agentic coding agents working in this Rails 8.1 starter template repository.
+This file contains guidelines and commands for agentic coding agents working in this Rails
 
 ## Echo
 
-TODO: xxx
+Fine-tune your ears — a free platform for practicing English listening skills.
 
 ## Development Commands
 

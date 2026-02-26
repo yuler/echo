@@ -3,9 +3,6 @@ class Sessions::MagicLinksController < ApplicationController
   rate_limit to: 10, within: 15.minutes, only: :create, with: :rate_limit_exceeded
   before_action :ensure_that_email_pending_authentication_exists
 
-  # TODO: layout
-  # layout "public"
-
   def show
   end
 
@@ -18,6 +15,7 @@ class Sessions::MagicLinksController < ApplicationController
   end
 
   private
+
     def ensure_that_email_pending_authentication_exists
       unless email_pending_authentication.present?
         alert_message = "Enter your email address to sign in."

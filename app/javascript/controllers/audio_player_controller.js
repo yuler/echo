@@ -2,10 +2,10 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = [
-    "audio", "sentence", "word", "translation",
+    "audio", "sentence", "translation",
     "playIcon", "pauseIcon", "progress", "progressBar", "progressInner",
     "currentTime", "totalTime", "speedBtn",
-    "simpleBtn", "explanationBtn"
+    "simpleBtn", "explanationBtn", "toggleIndicator"
   ]
 
   static values = {
@@ -15,6 +15,7 @@ export default class extends Controller {
   }
 
   connect() {
+    this.currentMode = "simple"
     this.speeds = [0.75, 1, 1.25, 1.5, 2]
     this.speedIndex = 1
     this.boundSync = this.sync.bind(this)
@@ -58,6 +59,7 @@ export default class extends Controller {
   }
 
   seek(event) {
+    if (this.currentMode === "explanation") return
     const time = parseFloat(event.currentTarget.dataset.time)
     this.audioTarget.currentTime = time
     if (this.audioTarget.paused) this.audioTarget.play()
@@ -108,23 +110,27 @@ export default class extends Controller {
   }
 
   _setActiveMode(mode) {
-    const activeClasses = ["bg-neutral-900", "text-white"]
-    const inactiveClasses = ["text-neutral-500", "hover:bg-neutral-100"]
-
+    this.currentMode = mode
     if (this.hasSimpleBtnTarget && this.hasExplanationBtnTarget) {
       const simpleBtn = this.simpleBtnTarget
       const expBtn = this.explanationBtnTarget
 
       if (mode === "simple") {
-        simpleBtn.classList.add(...activeClasses)
-        simpleBtn.classList.remove(...inactiveClasses)
-        expBtn.classList.remove(...activeClasses)
-        expBtn.classList.add(...inactiveClasses)
+        simpleBtn.classList.add("text-white")
+        simpleBtn.classList.remove("text-neutral-500")
+        expBtn.classList.remove("text-white")
+        expBtn.classList.add("text-neutral-500")
+        if (this.hasToggleIndicatorTarget) {
+          this.toggleIndicatorTarget.style.transform = "translateX(0)"
+        }
       } else {
-        expBtn.classList.add(...activeClasses)
-        expBtn.classList.remove(...inactiveClasses)
-        simpleBtn.classList.remove(...activeClasses)
-        simpleBtn.classList.add(...inactiveClasses)
+        expBtn.classList.add("text-white")
+        expBtn.classList.remove("text-neutral-500")
+        simpleBtn.classList.remove("text-white")
+        simpleBtn.classList.add("text-neutral-500")
+        if (this.hasToggleIndicatorTarget) {
+          this.toggleIndicatorTarget.style.transform = "translateX(100%)"
+        }
       }
     }
   }
@@ -160,9 +166,20 @@ export default class extends Controller {
   }
 
   highlightSentences(currentTime) {
+    if (this.currentMode === "explanation") {
+      this.sentenceTargets.forEach(sentence => {
+        sentence.style.opacity = "1"
+        sentence.style.fontWeight = "normal"
+        sentence.style.color = "inherit"
+        sentence.classList.remove("cursor-pointer")
+      })
+      return
+    }
+
     let activeIndex = -1
 
     this.sentenceTargets.forEach((sentence, index) => {
+      sentence.classList.add("cursor-pointer")
       const time = parseFloat(sentence.dataset.time)
       const nextTime = this.sentenceTargets[index + 1]
         ? parseFloat(this.sentenceTargets[index + 1].dataset.time)
@@ -171,45 +188,32 @@ export default class extends Controller {
       if (currentTime >= time && currentTime < nextTime) {
         activeIndex = index
         sentence.style.opacity = "1"
+        sentence.style.fontWeight = "bold"
+        sentence.style.color = "#000"
+        sentence.style.backgroundImage = "none"
+        sentence.style.webkitBackgroundClip = "initial"
+        sentence.style.webkitTextFillColor = "initial"
       } else if (currentTime >= nextTime) {
-        sentence.style.opacity = "0.7"
+        sentence.style.opacity = "0.8"
+        sentence.style.fontWeight = "normal"
+        sentence.style.color = "inherit"
+        sentence.style.backgroundImage = "none"
+        sentence.style.webkitBackgroundClip = "initial"
+        sentence.style.webkitTextFillColor = "initial"
       } else {
-        sentence.style.opacity = "0.3"
+        sentence.style.opacity = "0.4"
+        sentence.style.fontWeight = "normal"
+        sentence.style.color = "inherit"
+        sentence.style.backgroundImage = "none"
+        sentence.style.webkitBackgroundClip = "initial"
+        sentence.style.webkitTextFillColor = "initial"
       }
     })
 
-    this.highlightWords(activeIndex, currentTime)
     this.scrollToActive(activeIndex)
   }
 
-  highlightWords(activeIndex, currentTime) {
-    this.wordTargets.forEach(w => {
-      w.style.backgroundColor = ""
-      w.style.color = ""
-    })
 
-    if (activeIndex === -1) return
-
-    const sentence = this.sentenceTargets[activeIndex]
-    const words = sentence.querySelectorAll('[data-audio-player-target="word"]')
-    if (!words.length) return
-
-    const sentenceStart = parseFloat(sentence.dataset.time)
-    const nextSentence = this.sentenceTargets[activeIndex + 1]
-    const sentenceEnd = nextSentence
-      ? parseFloat(nextSentence.dataset.time)
-      : sentenceStart + 5
-
-    const progress = (currentTime - sentenceStart) / (sentenceEnd - sentenceStart)
-    const highlightCount = Math.ceil(progress * words.length)
-
-    words.forEach((word, i) => {
-      if (i < highlightCount) {
-        word.style.backgroundColor = "#fef9c3"
-        word.style.color = "#111"
-      }
-    })
-  }
 
   scrollToActive(activeIndex) {
     if (activeIndex === -1 || activeIndex === this.lastActiveIndex) return
@@ -223,7 +227,6 @@ export default class extends Controller {
     const viewportHeight = window.innerHeight
     const sentenceTop = rect.top + window.scrollY
 
-    // Player is now at bottom, so check if sentence is too close to top or bottom
     if (rect.top < padding || rect.bottom > viewportHeight - headerHeight - 40) {
       window.scrollTo({
         top: sentenceTop - padding,

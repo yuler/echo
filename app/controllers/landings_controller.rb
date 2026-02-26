@@ -2,6 +2,10 @@ class LandingsController < ApplicationController
   allow_unauthenticated_access
 
   def show
-    render "home/index" unless authenticated?
+    if authenticated?
+    else
+      @posts = Post.order(published_at: :desc).limit(10)
+      render "home/index"
+    end
   end
 end

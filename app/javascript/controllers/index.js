@@ -10,6 +10,9 @@ application.register("audio-player", AudioPlayerController)
 import AutoSubmitController from "./auto_submit_controller"
 application.register("auto-submit", AutoSubmitController)
 
+import BackgroundWaveController from "./background_wave_controller"
+application.register("background-wave", BackgroundWaveController)
+
 import ButtonLoadingController from "./button_loading_controller"
 application.register("button-loading", ButtonLoadingController)
 

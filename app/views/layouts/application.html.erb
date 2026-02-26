@@ -2,14 +2,17 @@
 <html data-theme="light">
   <%= render "shared/head" %>
 
-  <body class="h-screen grid grid-rows-[auto_1fr_auto] bg-neutral-50 text-neutral-900">
+  <body class="min-h-screen flex flex-col text-neutral-900 relative">
+    <%= render "shared/background_wave" %>
+
     <%= render "shared/header" %>
 
     <%= render "shared/flash" %>
 
     <main id="main" class="flex-1 overflow-auto">
       <%= yield %>
+
+      <%= render "shared/footer" %>
     </main>
-    <%= render "shared/footer" %>
   </body>
 </html>

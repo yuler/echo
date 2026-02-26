@@ -12,28 +12,70 @@ class Post < ApplicationRecord
     end
   end
 
+  def audio_sentences_with_translation
+    return [] unless raw_json && raw_json["audio"] && raw_json["audio"]["content"]
+
+    audio_items = raw_json["audio"]["content"]
+    chinese_paras = bilingual_paragraphs.select { |p| p[:chinese] }
+
+    grouped = []
+    current_para = []
+    para_index = 0
+
+    audio_items.each do |item|
+      if item["paragraph"] && current_para.any?
+        grouped << {
+          sentences: current_para,
+          chinese: chinese_paras[para_index] ? chinese_paras[para_index][:text] : nil
+        }
+        current_para = []
+        para_index += 1
+      end
+      current_para << item
+    end
+
+    if current_para.any?
+      grouped << {
+        sentences: current_para,
+        chinese: chinese_paras[para_index] ? chinese_paras[para_index][:text] : nil
+      }
+    end
+
+    grouped
+  end
+
   def english_paragraphs
     paragraphs.reject { |p| p.match?(/\p{Han}/) }
   end
 
   def formatted_duration
-    return "0:00" unless audio_duration
-    minutes = audio_duration / 60
-    seconds = audio_duration % 60
-    "#{minutes}:#{seconds.to_s.rjust(2, '0')}"
+    if audio_duration
+      total_seconds = audio_duration / 1000
+      minutes = total_seconds / 60
+      seconds = total_seconds % 60
+      "#{minutes}:#{seconds.to_s.rjust(2, '0')}"
+    else
+      "0:00"
+    end
   end
 
   def minutes_left
-    return 0 unless audio_duration
-    (audio_duration / 60.0).ceil
+    if audio_duration
+      (audio_duration / 60_000.0).round
+    else
+      0
+    end
   end
 
   def topics_list
-    return [] unless topics
-    if topics.is_a?(String)
-      topics.split(",").map(&:strip)
+    if topics
+      if topics.is_a?(String)
+        topics.split(",").map(&:strip)
+      else
+        Array(topics)
+      end
     else
-      Array(topics)
+      []
     end
   end
 
