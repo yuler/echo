@@ -16,8 +16,6 @@ export default class extends Controller {
 
   connect() {
     this.currentMode = "simple"
-    this.speeds = [0.75, 1, 1.25, 1.5, 2]
-    this.speedIndex = 1
     this.boundSync = this.sync.bind(this)
 
     const audio = this.audioTarget
@@ -30,8 +28,6 @@ export default class extends Controller {
     this.syncWaveformWidth()
     this.boundResize = this.syncWaveformWidth.bind(this)
     window.addEventListener("resize", this.boundResize)
-
-    audio.play().catch(() => { })
   }
 
   disconnect() {
@@ -71,11 +67,12 @@ export default class extends Controller {
     this.audioTarget.currentTime = ratio * this.audioTarget.duration
   }
 
-  cycleSpeed() {
-    this.speedIndex = (this.speedIndex + 1) % this.speeds.length
-    const speed = this.speeds[this.speedIndex]
+  setSpeed(event) {
+    const speed = parseFloat(event.currentTarget.dataset.speed)
     this.audioTarget.playbackRate = speed
-    this.speedBtnTarget.textContent = speed === 1 ? "1x" : `${speed}x`
+    this.speedBtnTargets.forEach(btn => {
+      btn.classList.toggle("active", parseFloat(btn.dataset.speed) === speed)
+    })
   }
 
   toggleTranslation() {
@@ -209,13 +206,15 @@ export default class extends Controller {
 
     const sentence = this.sentenceTargets[activeIndex]
     const headerHeight = this.hasHeaderTarget ? this.headerTarget.offsetHeight : 0
-    const PADDING_TOP = 80 // Top padding for visibility
+    const styles = getComputedStyle(document.documentElement)
+    const padding = parseInt(styles.getPropertyValue("--audio-scroll-padding")) || 80
+    const playerHeight = parseInt(styles.getPropertyValue("--audio-player-height")) || 40
 
     const rect = sentence.getBoundingClientRect()
     const viewportHeight = window.innerHeight
     const sentenceTop = rect.top + window.scrollY
 
-    if (rect.top < padding || rect.bottom > viewportHeight - headerHeight - 40) {
+    if (rect.top < padding || rect.bottom > viewportHeight - headerHeight - playerHeight) {
       window.scrollTo({
         top: sentenceTop - padding,
         behavior: "smooth"

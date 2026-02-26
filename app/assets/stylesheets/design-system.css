@@ -289,22 +289,3 @@
   font-weight: 400;
   color: inherit;
 }
-
-/* ── Utility Classes (formerly inline styles) ── */
-.bg-pops-black {
-  background-color: var(--color-pops-black);
-}
-
-.text-pops-black {
-  color: var(--color-pops-black);
-}
-
-.border-pops-black {
-  border-color: var(--color-pops-black);
-  border-width: 2px;
-  border-style: solid;
-}
-
-.font-roboto-slab {
-  font-family: 'Roboto Slab', serif;
-}

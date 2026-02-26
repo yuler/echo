@@ -1,5 +1,5 @@
 <section>
-  <div class="container-main pt-16!">
+  <div class="container-main pt-16">
     <h1 class="text-display mb-6">
       Echo
     </h1>
@@ -19,7 +19,7 @@
         <h2 class="text-overline mb-6">Latest</h2>
 
         <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <% @posts.limit(3).each do |post| %>
+          <% @posts.each do |post| %>
             <%= render "posts/post_card", post: post %>
           <% end %>
         </div>

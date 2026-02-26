@@ -2,6 +2,7 @@
 @import "./reset.css";
 @import "./flash.css";
 @import "./design-system.css";
+@import "./audio-player.css";
 
 @plugin "@tailwindcss/typography";
 
@@ -87,6 +88,12 @@ html {
   .scrollbar-none::-webkit-scrollbar {
     display: none;
   }
+}
+
+/* Audio player scroll padding */
+:root {
+  --audio-scroll-padding: 80px;
+  --audio-player-height: 40px;
 }
 
 /* View transitions */

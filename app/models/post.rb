@@ -13,35 +13,17 @@ class Post < ApplicationRecord
   end
 
   def audio_sentences_with_translation
-    return [] unless raw_json && raw_json["audio"] && raw_json["audio"]["content"]
+    return [] unless raw_json&.dig("audio", "content")
 
     audio_items = raw_json["audio"]["content"]
     chinese_paras = bilingual_paragraphs.select { |p| p[:chinese] }
 
-    grouped = []
-    current_para = []
-    para_index = 0
-
-    audio_items.each do |item|
-      if item["paragraph"] && current_para.any?
-        grouped << {
-          sentences: current_para,
-          chinese: chinese_paras[para_index] ? chinese_paras[para_index][:text] : nil
-        }
-        current_para = []
-        para_index += 1
-      end
-      current_para << item
-    end
-
-    if current_para.any?
-      grouped << {
-        sentences: current_para,
-        chinese: chinese_paras[para_index] ? chinese_paras[para_index][:text] : nil
+    audio_items.slice_before { |item| item["paragraph"] }.map.with_index do |sentences, index|
+      {
+        sentences: sentences,
+        chinese: chinese_paras[index] ? chinese_paras[index][:text] : nil
       }
     end
-
-    grouped
   end
 
   def english_paragraphs
@@ -81,26 +63,25 @@ class Post < ApplicationRecord
 
   def self.crawl_vira_latest_post
     json = Vira.fetch_latest_post
-    if post = Post.find_by(third_id: json["reading"]["id"])
-      return post
-    end
 
-    Post.create!(
-      third_id: json["reading"]["id"],
-      title: json["reading"]["title"],
-      title_en: json["reading"]["engTitle"],
-      topics: json["reading"]["topics"].map { |topic| topic["name"] }.join(","),
-      poster_url: json["explanation"]["posterUrl"],
-      cover_url: json["explanation"]["shareImgUrl"] || json["explanation"]["imgUrl"],
-      audio_url: json["audio"]["url"],
-      audio_duration: json["audio"]["duration"],
-      explanation_audio_url: json["explanation"]["voice"]["url"],
-      explanation_audio_duration: json["explanation"]["voice"]["durationMs"],
-      guide: json["explanation"]["guide"],
-      content: json["explanation"]["content"]["text"],
-      notes: json["explanation"]["notes"].flatten.join,
-      published_at: json["reading"]["publishTime"],
-      raw_json: json
-    )
+    find_or_create_by(third_id: json.dig("reading", "id")) do |post|
+      post.title = json.dig("reading", "title")
+      post.title_en = json.dig("reading", "engTitle")
+      post.topics = json.dig("reading", "topics")&.map { |topic| topic["name"] }&.join(",")
+      post.poster_url = json.dig("explanation", "posterUrl")
+      post.cover_url = json.dig("explanation", "shareImgUrl") || json.dig("explanation", "imgUrl")
+      post.audio_url = json.dig("audio", "url")
+      post.audio_duration = json.dig("audio", "duration")
+      post.explanation_audio_url = json.dig("explanation", "voice", "url")
+      post.explanation_audio_duration = json.dig("explanation", "voice", "durationMs")
+      post.guide = json.dig("explanation", "guide")
+      post.content = json.dig("explanation", "content", "text")
+      post.notes = json.dig("explanation", "notes")&.flatten&.join
+      post.published_at = json.dig("reading", "publishTime")
+      post.raw_json = json
+    end
+  rescue Faraday::Error => e
+    Rails.logger.error "Failed to crawl Vira post: #{e.message}"
+    raise
   end
 end

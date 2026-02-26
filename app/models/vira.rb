@@ -39,13 +39,16 @@ class Vira
         "deviceId" => device_id
       }
       response = Faraday.post("https://account.llsapp.com/api/v2/initiate_auth", payload.to_json, "Content-Type" => "application/json; charset=utf-8")
-      raise "API request failed: status=#{response.status}" if response.status != 200
+      raise "API request failed: status=#{response.status}" unless response.success?
 
-      result = JSON.parse(response.body)["authenticationResult"]
+      result = response.body["authenticationResult"]
 
       token = result["accessToken"]
       refresh_token = result["refreshToken"]
       { token: token, refresh_token: refresh_token }
+    rescue Faraday::Error => e
+      Rails.logger.error "Vira token refresh failed: #{e.message}"
+      raise
     end
 
     def fetch_user_info
@@ -65,7 +68,7 @@ class Vira
       # fetch explanation details
       response = client.get("api/v2/readings/#{json["reading"]["id"]}/explanation")
       json["explanation"] = response.body
-      Rails.logger.debug json.to_json
+      Rails.logger.debug "Vira post fetched: #{json.dig('reading', 'id')}"
 
       json
     end
@@ -84,13 +87,7 @@ class Vira
             "X-Device-Id" => device_id,
             "X-S-Device-Id" => device_id
           }.freeze
-          builder.use(Class.new(Faraday::Middleware) do
-            def on_complete(env)
-              status = env[:status]
-              return if status && status >= 200 && status < 300
-              raise "API request failed: status=#{status}"
-            end
-          end)
+          builder.response :raise_error
           builder.response :json
         end
       end

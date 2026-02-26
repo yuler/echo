@@ -54,6 +54,10 @@ bin/jobs
 bin/kamal deploy
 ```
 
+### Assets (CSS/JS)
+- **Local dev**: `bin/dev` runs `build:css --watch`; CSS is served from `app/assets/builds/application.css` via Propshaft (digest in URL).
+- **If /assets/application-*.css content doesn’t match `app/assets/builds/application.css`**: Old precompiled files in `public/assets` are being served. Remove them with `rm -rf public/assets` (or `bin/rails assets:clobber`), then restart the server and hard-refresh. For production/CI, run `bin/rails assets:precompile` after building CSS.
+
 ## Architecture Overview
 
 ### Multi-Tenancy (URL-Based)
