@@ -4,14 +4,20 @@
 
 import { application } from "./application"
 
+import AudioPlayerController from "./audio_player_controller"
+application.register("audio-player", AudioPlayerController)
+
 import AutoSubmitController from "./auto_submit_controller"
 application.register("auto-submit", AutoSubmitController)
 
-import ElementRemovalController from "./element_removal_controller"
-application.register("element-removal", ElementRemovalController)
+import BackgroundWaveController from "./background_wave_controller"
+application.register("background-wave", BackgroundWaveController)
+
+import ButtonLoadingController from "./button_loading_controller"
+application.register("button-loading", ButtonLoadingController)
 
 import CopyToClipboardController from "./copy_to_clipboard_controller"
 application.register("copy-to-clipboard", CopyToClipboardController)
 
-import ButtonLoadingController from "./button_loading_controller"
-application.register("button-loading", ButtonLoadingController)
+import ElementRemovalController from "./element_removal_controller"
+application.register("element-removal", ElementRemovalController)

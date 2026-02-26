@@ -1,0 +1,20 @@
+<%= link_to post_path(post), class: "flex gap-4 py-5 hover:bg-neutral-50 transition-colors hover-parent no-underline" do %>
+  <div class="shrink-0 posts-episode-thumb overflow-hidden bg-neutral-200 rounded-lg shadow-sm" style="view-transition-name: thumb-<%= post.id %>">
+    <% if post.cover_url.present? %>
+      <img src="<%= post.cover_url %>" alt="" class="w-full h-full object-cover" loading="lazy">
+    <% else %>
+      <div class="w-full h-full bg-neutral-300"></div>
+    <% end %>
+  </div>
+  <div class="flex-1 min-w-0 py-0.5">
+    <h3 class="text-heading-2 mb-1.5 line-clamp-2"><%= post.title_en.presence || post.title %></h3>
+    <p class="text-body line-clamp-2 mb-2"><%= post.guide.to_s.truncate(100) %></p>
+    <div class="text-caption flex items-center gap-2">
+      <span><%= post.topics_list.first %></span>
+      <% if post.audio_duration.present? %>
+        <span>&middot;</span>
+        <span><%= post.formatted_duration %></span>
+      <% end %>
+    </div>
+  </div>
+<% end %>

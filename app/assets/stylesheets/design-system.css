@@ -1,0 +1,291 @@
+/**
+ * Unified Design System for Echo
+ * Consistent container widths, font sizes, spacing, and typography
+ */
+
+/* ── Color Variables ── */
+:root {
+  --color-heading: #171717;
+  --color-body: #404040;
+  --color-body-muted: #737373;
+  --color-caption: #a3a3a3;
+  --color-pops-black: #111111;
+  --color-focus: #171717;
+}
+
+/* ── Container Widths ── */
+/* Single breakpoint approach: @media (max-width: 100ch) */
+
+/* Main content container - used for most pages */
+.container-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 100ch) {
+  .container-main {
+    padding: 0 2.5rem;
+  }
+}
+
+/* Wide container - for hero sections, dashboards */
+.container-wide {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 100ch) {
+  .container-wide {
+    padding: 0 2rem;
+  }
+}
+
+/* Narrow container - for focused content, forms, single columns */
+.container-narrow {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 100ch) {
+  .container-narrow {
+    padding: 0 2rem;
+  }
+}
+
+/* Compact container - for dialogs, cards */
+.container-compact {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 100ch) {
+  .container-compact {
+    padding: 0 2rem;
+  }
+}
+
+/* ── Spacing ── */
+.section-padding {
+  padding: 3rem 0;
+}
+
+@media (max-width: 100ch) {
+  .section-padding {
+    padding: 2rem 0;
+  }
+}
+
+.section-padding-lg {
+  padding: 6rem 0;
+}
+
+@media (max-width: 100ch) {
+  .section-padding-lg {
+    padding: 4rem 0;
+  }
+}
+
+/* ── Typography Scale ── */
+/* Base font size: 16px (1rem) */
+
+/* Display - for page titles, hero headings */
+.text-display {
+  font-family: 'Roboto Slab', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 100ch) {
+  .text-display {
+    font-size: 2.25rem;
+  }
+}
+
+/* Heading 1 - for major section headings */
+.text-heading-1 {
+  font-family: 'Roboto Slab', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 100ch) {
+  .text-heading-1 {
+    font-size: 1.875rem;
+  }
+}
+
+/* Heading 2 - for card titles, subsection headings */
+.text-heading-2 {
+  font-family: 'Roboto Slab', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-heading);
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 100ch) {
+  .text-heading-2 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Heading 3 - for list item titles */
+.text-heading-3 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+}
+
+@media (max-width: 100ch) {
+  .text-heading-3 {
+    font-size: 1.125rem;
+  }
+}
+
+/* Body - main content text */
+.text-body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: var(--color-body);
+}
+
+@media (max-width: 100ch) {
+  .text-body {
+    font-size: 1.0625rem;
+  }
+}
+
+/* Body large - emphasized content */
+.text-body-lg {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.375rem;
+  line-height: 1.6;
+  color: var(--color-body);
+}
+
+@media (max-width: 100ch) {
+  .text-body-lg {
+    font-size: 1.125rem;
+  }
+}
+
+/* Body small - metadata, captions */
+.text-body-sm {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--color-body-muted);
+}
+
+@media (max-width: 100ch) {
+  .text-body-sm {
+    font-size: 0.9375rem;
+  }
+}
+
+/* Caption - small labels, metadata */
+.text-caption {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-caption);
+}
+
+@media (max-width: 100ch) {
+  .text-caption {
+    font-size: 0.8125rem;
+  }
+}
+
+/* Overline - section labels, tags */
+.text-overline {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-body-muted);
+}
+
+@media (max-width: 100ch) {
+  .text-overline {
+    font-size: 0.8125rem;
+  }
+}
+
+/* ── Focus States (Web Design Guidelines) ── */
+/* Interactive elements need visible focus states */
+.focus-ring {
+  outline: none;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* ──── Utility Classes ──── */
+/* Flex helpers for preventing text overflow */
+.flex-truncate {
+  min-width: 0;
+}
+
+/* Focus-within for compound controls */
+.focus-within-ring:focus-within {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* ──── Sentence Highlighting States ──── */
+
+.sentence-active {
+  opacity: 1;
+  font-weight: 700;
+  color: #000;
+  background-image: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: initial;
+}
+
+.sentence-past {
+  opacity: 0.8;
+  font-weight: 400;
+  color: inherit;
+  background-image: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: initial;
+}
+
+.sentence-inactive {
+  opacity: 0.4;
+  font-weight: 400;
+  color: inherit;
+  background-image: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: initial;
+}
+
+.sentence-explanation {
+  opacity: 1;
+  font-weight: 400;
+  color: inherit;
+}

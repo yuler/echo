@@ -1,7 +1,6 @@
 ---
-alwaysApply: true
+alwaysApply: false
 ---
-
 # Commit message Rules
 
 - Commit message must a simple sentence, First word must be a verb.

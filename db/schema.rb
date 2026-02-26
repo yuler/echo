@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.2].define(version: 2026_01_21_102009) do
+ActiveRecord::Schema[8.2].define(version: 2026_02_26_090813) do
   create_table "account_charges", id: :uuid, force: :cascade do |t|
     t.uuid "account_id", null: false
     t.integer "amount", null: false
@@ -157,6 +157,25 @@ ActiveRecord::Schema[8.2].define(version: 2026_01_21_102009) do
     t.index ["code"], name: "index_magic_links_on_code", unique: true
     t.index ["expires_at"], name: "index_magic_links_on_expires_at"
     t.index ["identity_id"], name: "index_magic_links_on_identity_id"
+  end
+
+  create_table "posts", id: :uuid, force: :cascade do |t|
+    t.integer "audio_duration"
+    t.string "audio_url"
+    t.string "cover_url"
+    t.datetime "created_at", null: false
+    t.integer "explanation_audio_duration"
+    t.string "explanation_audio_url"
+    t.string "guide"
+    t.json "notes"
+    t.string "poster_url"
+    t.datetime "published_at"
+    t.json "raw_json"
+    t.string "third_id"
+    t.string "title"
+    t.string "title_en"
+    t.json "topics"
+    t.datetime "updated_at", null: false
   end
 
   create_table "sessions", id: :uuid, force: :cascade do |t|

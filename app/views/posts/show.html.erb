@@ -1,0 +1,95 @@
+<div data-controller="audio-player"
+     data-audio-player-simple-url-value="<%= @post.audio_url %>"
+     data-audio-player-explanation-url-value="<%= @post.explanation_audio_url %>"
+     class="min-h-screen relative">
+
+  <%# Audio element %>
+  <audio data-audio-player-target="audio" src="<%= @post.audio_url %>" preload="auto"></audio>
+
+  <%# Main content container %>
+  <main class="container-main pb-64!">
+
+    <%# Post title %>
+    <div class="mb-4">
+      <h1 class="text-heading-1" style="view-transition-name: post-<%= @post.id %>">
+        <%= @post.title_en.presence || @post.title %>
+      </h1>
+      <% if @post.title_en.present? && @post.title.present? && @post.title_en != @post.title %>
+        <h2 data-audio-player-target="translation" class="hidden text-heading-3 text-neutral-500 mt-2">
+          <%= @post.title %>
+        </h2>
+      <% end %>
+    </div>
+
+    <%# Post metadata %>
+    <div class="mt-4 flex items-center gap-3 mb-8 pb-6 border-b border-neutral-200">
+      <% if @post.topics_list.first.present? %>
+        <span class="inline-flex items-center px-3 py-1 rounded-full border border-neutral-200 bg-white text-caption text-neutral-600 shadow-sm"><%= @post.topics_list.first %></span>
+      <% end %>
+      <% if @post.audio_duration.present? %>
+        <div class="flex items-center gap-1.5 text-body-sm font-medium text-neutral-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span><%= @post.minutes_left %> min read</span>
+        </div>
+      <% end %>
+    </div>
+
+    <%# Mode toggle — Simple / Explanation (switch toggle) %>
+    <% if @post.explanation_audio_url.present? %>
+      <div class="mb-8 flex">
+        <div class="relative inline-grid grid-cols-2 items-center bg-neutral-100/80 rounded-full p-1 border border-neutral-200/60 shadow-inner">
+          <button class="relative z-10 px-5 py-2 rounded-full text-caption tracking-wide transition-colors text-white focus-ring"
+                  data-audio-player-target="simpleBtn"
+                  data-action="click->audio-player#switchToSimple">Simple</button>
+          <button class="relative z-10 px-5 py-2 rounded-full text-caption tracking-wide transition-colors text-neutral-500 hover:text-neutral-800 focus-ring"
+                  data-audio-player-target="explanationBtn"
+                  data-action="click->audio-player#switchToExplanation">Explanation</button>
+          <%# Sliding indicator %>
+          <div class="absolute top-1 left-1 h-[calc(100%-8px)] w-[calc(50%-4px)] bg-neutral-900 rounded-full shadow-md transition-transform duration-300 ease-out"
+               data-audio-player-target="toggleIndicator"
+               style="transform: translateX(0)"></div>
+        </div>
+      </div>
+    <% end %>
+
+    <%# Guide section %>
+    <% if @post.guide.present? %>
+      <fieldset class="mb-8 border border-neutral-200/60 rounded-lg p-4 pt-2 pb-5">
+        <legend class="text-overline tracking-widest text-neutral-400 px-2 ml-2">Guide</legend>
+        <div class="px-1 text-neutral-600 leading-relaxed">
+          <%= @post.guide %>
+        </div>
+      </fieldset>
+    <% end %>
+
+    <%# Transcript content %>
+    <article class="space-y-6 pt-4 pb-8">
+      <% @post.audio_sentences_with_translation.each do |group| %>
+        <div class="space-y-1">
+          <%# English sentences block %>
+          <p class="text-body leading-relaxed">
+            <% group[:sentences].each do |sentence| %>
+              <% time_offset = sentence['frames'][0] / 1000.0 %>
+              <span data-audio-player-target="sentence"
+                    data-time="<%= time_offset %>"
+                    data-action="click->audio-player#seek"
+                    class="sentence-inactive cursor-pointer focus-ring rounded transition-all duration-300"><%= sentence['text'].strip %></span>
+            <% end %>
+          </p>
+
+          <%# Chinese translation - hidden by default %>
+          <% if group[:chinese].present? %>
+            <p data-audio-player-target="translation" class="hidden text-body text-neutral-500 pl-3 border-l-2 border-neutral-200 mt-2">
+              <%= group[:chinese] %>
+            </p>
+          <% end %>
+        </div>
+      <% end %>
+    </article>
+
+  </main>
+
+  <%= render "posts/audio_player", post: @post %>
+</div>

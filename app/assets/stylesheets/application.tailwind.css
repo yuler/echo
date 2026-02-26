@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "./reset.css";
 @import "./flash.css";
+@import "./design-system.css";
+@import "./audio-player.css";
 
 @plugin "@tailwindcss/typography";
 
@@ -17,6 +19,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -39,14 +42,17 @@ html {
     opacity: 0;
     transform: translateY(50%);
   }
+
   15% {
     opacity: 1;
     transform: translateY(0);
   }
+
   85% {
     opacity: 1;
     transform: translateY(0);
   }
+
   100% {
     opacity: 0;
     transform: translateY(-50%);
@@ -55,4 +61,202 @@ html {
 
 .btn-copied .copied-text {
   animation: copied-text 1s ease-in-out;
+}
+
+@layer utilities {
+  .bg-pops-black {
+    background-color: #111111;
+  }
+
+  .text-pops-black {
+    color: #111111;
+  }
+
+  .border-pops-black {
+    border-color: #111111;
+  }
+
+  .font-roboto-slab {
+    font-family: 'Roboto Slab', serif;
+  }
+
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Audio player scroll padding */
+:root {
+  --audio-scroll-padding: 80px;
+  --audio-player-height: 40px;
+}
+
+/* View transitions */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
+
+/*
+ * Campfire-style responsive design
+ * Single breakpoint: @media (max-width: 100ch)
+ * Default = wide/PC layout, narrow override = mobile
+ * refs: https://dev.37signals.com/modern-css-patterns-and-techniques-in-campfire/#responsive-design
+ */
+
+/* ── Category tabs ── */
+.posts-tab {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: #737373;
+  transition: color 0.15s;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+@media (max-width: 100ch) {
+  .posts-tab {
+    font-size: 0.8125rem;
+  }
+}
+
+.posts-tab:hover {
+  color: #171717;
+}
+
+.posts-tab-active {
+  color: #171717;
+}
+
+/* ── Featured carousel ── */
+.posts-carousel {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (max-width: 100ch) {
+  .posts-carousel {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+.posts-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.posts-featured-card {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  width: 320px;
+}
+
+@media (max-width: 100ch) {
+  .posts-featured-card {
+    width: min(65vw, 260px);
+  }
+}
+
+.posts-featured-img {
+  position: relative;
+  overflow: hidden;
+  height: 200px;
+}
+
+@media (max-width: 100ch) {
+  .posts-featured-img {
+    height: 160px;
+  }
+}
+
+/* ── Episode list ── */
+.posts-episode-thumb {
+  width: 6.5rem;
+  height: 6.5rem;
+}
+
+@media (max-width: 100ch) {
+  .posts-episode-thumb {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+/* ── Circle icon buttons ── */
+.posts-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid #e5e5e5;
+  transition: background-color 0.15s;
+  background: none;
+  cursor: pointer;
+}
+
+.posts-icon-btn:hover {
+  background-color: #fafafa;
+}
+
+.posts-icon-btn-lg {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+@media (max-width: 100ch) {
+  .posts-icon-btn-lg {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+}
+
+.posts-icon-btn-sm {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* ── Hover effects (Campfire-style device capability queries) ── */
+@media (any-hover: hover) and (pointer: fine) {
+  .hover-reveal {
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .hover-parent:hover .hover-reveal {
+    opacity: 1;
+  }
+}
+
+@media (any-hover: none) and (pointer: coarse) {
+  .hover-reveal {
+    opacity: 1;
+  }
+}
+
+/* ── Background Wave Animation ── */
+canvas[data-background-wave-target] {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
