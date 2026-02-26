@@ -14,7 +14,8 @@
     "format": "rubocop --fix",
     "icon:download": "ruby ./script/icon_download.rb",
     "app:rename": "ruby ./script/rename.rb",
-    "db:schema:fresh": "ruby ./script/db_schema_fresh.rb"
+    "db:schema:fresh": "ruby ./script/db_schema_fresh.rb",
+    "rails:console:production": "./bin/rails-console-production"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
