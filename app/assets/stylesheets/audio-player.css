@@ -99,12 +99,25 @@
   justify-content: space-between;
 }
 
-.audio-player-transport {
+.audio-player-actions-left {
   flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.audio-player-transport {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1.25rem;
+}
+
+.audio-player-actions-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 @media (min-width: 100ch) {
@@ -192,44 +205,12 @@
   transform: scale(0.95);
 }
 
-/* ── Actions widget (translation toggle + speed) ── */
-.audio-player-actions-widget {
-  position: fixed;
-  bottom: 7rem;
-  left: 1rem;
-  right: 1rem;
-  margin: 0 auto;
-  max-width: 36rem;
-  z-index: 50;
-  display: flex;
-  justify-content: center;
-  pointer-events: none;
-  /* so clicking through empty space works */
-}
-
-.audio-player-actions-inner {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.5rem 0.875rem;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(229, 229, 229, 0.5);
-  border-radius: 9999px;
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.04),
-    0 2px 8px rgba(0, 0, 0, 0.02);
-  pointer-events: auto;
-}
-
 .audio-player-icon-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 2.25rem;
+  height: 2.25rem;
   border-radius: 9999px;
   border: none;
   background: none;
@@ -239,8 +220,8 @@
 }
 
 .audio-player-icon-btn svg {
-  width: 1rem;
-  height: 1rem;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .audio-player-icon-btn:hover {
@@ -248,18 +229,23 @@
   color: #171717;
 }
 
+.audio-player-icon-btn.active {
+  background-color: #171717;
+  color: #fff;
+}
+
 .audio-player-speed-btn {
-  padding: 0.125rem 0.5rem;
-  min-width: 2rem;
+  padding: 0.375rem 0.875rem;
+  min-width: 3.5rem;
   border-radius: 9999px;
   border: 1px solid #e5e5e5;
   background: none;
   font-family: 'Roboto', sans-serif;
-  font-size: 0.625rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: #525252;
   cursor: pointer;
-  transition: background-color 0.15s, color 0.15s;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
   line-height: 1.2;
 }
 

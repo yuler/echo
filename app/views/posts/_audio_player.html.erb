@@ -28,6 +28,17 @@
 
     <%# Playback controls %>
     <div class="audio-player-controls">
+      <%# Action buttons (left align) %>
+      <div class="audio-player-actions-left">
+        <%# Bilingual toggle %>
+        <button class="audio-player-icon-btn" data-action="click->audio-player#toggleTranslation" data-audio-player-target="translationBtn" title="Toggle Chinese translation" aria-label="Toggle translation">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/>
+            <path d="m22 22-5-10-5 10"/><path d="M14 18h6"/>
+          </svg>
+        </button>
+      </div>
+
       <%# Main transport group (centered) %>
       <div class="audio-player-transport">
         <%# 15s rewind %>
@@ -56,41 +67,33 @@
           </svg>
         </button>
       </div>
+
+      <%# Right action buttons %>
+      <div class="audio-player-actions-right">
+        <%# Speed control %>
+        <div class="audio-player-speed-group">
+          <button class="audio-player-speed-btn"
+                  data-action="click->audio-player#setSpeed"
+                  data-audio-player-target="speedBtn"
+                  data-speed="0.75">
+            Slow
+          </button>
+          <button class="audio-player-speed-btn active"
+                  data-action="click->audio-player#setSpeed"
+                  data-audio-player-target="speedBtn"
+                  data-speed="1">
+            Normal
+          </button>
+          <button class="audio-player-speed-btn"
+                  data-action="click->audio-player#setSpeed"
+                  data-audio-player-target="speedBtn"
+                  data-speed="1.25">
+            Quick
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<%# Actions widget — rendered as a fixed row above the main player %>
-<div class="audio-player-actions-widget">
-  <div class="audio-player-actions-inner">
-    <%# Bilingual toggle %>
-    <button class="audio-player-icon-btn" data-action="click->audio-player#toggleTranslation" title="Toggle Chinese translation" aria-label="Toggle translation">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/>
-        <path d="m22 22-5-10-5 10"/><path d="M14 18h6"/>
-      </svg>
-    </button>
 
-    <%# Speed control %>
-    <div class="audio-player-speed-group">
-      <button class="audio-player-speed-btn"
-              data-action="click->audio-player#setSpeed"
-              data-audio-player-target="speedBtn"
-              data-speed="0.75">
-        Slow
-      </button>
-      <button class="audio-player-speed-btn active"
-              data-action="click->audio-player#setSpeed"
-              data-audio-player-target="speedBtn"
-              data-speed="1">
-        Normal
-      </button>
-      <button class="audio-player-speed-btn"
-              data-action="click->audio-player#setSpeed"
-              data-audio-player-target="speedBtn"
-              data-speed="1.25">
-        Quick
-      </button>
-    </div>
-  </div>
-</div>

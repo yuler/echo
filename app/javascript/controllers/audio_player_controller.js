@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = [
-    "audio", "sentence", "translation",
+    "audio", "sentence", "translation", "translationBtn",
     "playIcon", "pauseIcon", "progress", "progressBar", "progressInner",
     "currentTime", "totalTime", "speedBtn",
     "simpleBtn", "explanationBtn", "toggleIndicator", "header"
@@ -77,6 +77,9 @@ export default class extends Controller {
 
   toggleTranslation() {
     this.translationTargets.forEach(el => el.classList.toggle("hidden"))
+    if (this.hasTranslationBtnTarget) {
+      this.translationBtnTarget.classList.toggle("active")
+    }
   }
 
   switchToSimple() {
