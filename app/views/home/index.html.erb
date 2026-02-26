@@ -12,6 +12,10 @@
         A free platform for practicing English listening skills.
         We publish daily posts.
       </p>
+
+      <div class="font-sans text-base">
+        <%= link_to "Sign In", new_session_path, class: "inline-block font-medium text-neutral-900 underline hover:text-neutral-600 transition-colors" %>
+      </div>
     </div>
 
     <% if @posts.any? %>

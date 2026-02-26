@@ -1,5 +1,6 @@
 {
   "name": "app",
+  "versoin": "0.0.0",
   "private": true,
   "packageManager": "bun@1.3.3",
   "scripts": {

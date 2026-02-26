@@ -66,13 +66,6 @@
               <span><%= Current.identity.email %></span>
             </li>
             <li>
-              <%= link_to my_accounts_path, class: "w-full #{'menu-active' if current_page?(my_accounts_path)}" do %>
-                <%= image_tag 'users.svg', alt: '', class: 'h-4 w-4' %>
-                <span>My Accounts</span>
-              <% end %>
-            </li>
-
-           <li>
               <%= button_to sign_out_path, method: :delete, form_class: "flex", class: "link link-hover flex-1 flex items-center justify-start gap-2", data: { turbo: false } do %>
                 <%= image_tag 'log-out.svg', alt: '', class: 'h-4 w-4' %>
                 <span>Sign Out</span>

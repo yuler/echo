@@ -3,7 +3,11 @@ Rails.application.routes.draw do
 
   resource :landing
   resources :home
-  resources :posts, only: [ :index, :show ]
+  resources :posts, only: [ :index, :show ] do
+    collection do
+      post :crawl
+    end
+  end
 
   resource :session do
     scope module: :sessions do
