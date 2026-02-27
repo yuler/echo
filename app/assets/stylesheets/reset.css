@@ -83,6 +83,7 @@
 
   /* Remove all animations and transitions for people that prefer not to see them */
   @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {
@@ -105,5 +106,14 @@
     &:where(:focus-visible):active {
       outline: 0;
     }
+  }
+
+  /* hidden scrollbar */
+  * {
+    scrollbar-width: none;
+  }
+
+  *::-webkit-scrollbar {
+    display: none;
   }
 }

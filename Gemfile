@@ -29,6 +29,9 @@ gem "stimulus-rails"
 # Media handling
 gem "image_processing", "~> 1.2"
 
+# Features
+gem "commonmarker", "~> 2.6"
+
 # Some dashboard engines
 gem "mission_control-jobs"
 
