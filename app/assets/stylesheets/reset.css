@@ -107,13 +107,4 @@
       outline: 0;
     }
   }
-
-  /* hidden scrollbar */
-  * {
-    scrollbar-width: none;
-  }
-
-  *::-webkit-scrollbar {
-    display: none;
-  }
 }
