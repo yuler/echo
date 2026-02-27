@@ -21,3 +21,6 @@ application.register("copy-to-clipboard", CopyToClipboardController)
 
 import ElementRemovalController from "./element_removal_controller"
 application.register("element-removal", ElementRemovalController)
+
+import ShareController from "./share_controller"
+application.register("share", ShareController)
