@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   root "landings#show"
 
-  # static pages
+  resource :landing
+  resources :home
+
+  # Static pages
   PagesController::PAGES.each do |page|
     get page, to: "pages#show", defaults: { slug: page }, as: page
   end
