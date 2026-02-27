@@ -94,13 +94,13 @@ export default class extends Controller {
       })
 
       this.previewTarget.src = dataUrl
+      this.posterGenerated = true
     } catch (e) {
       console.error("Failed to generate poster", e)
+    } finally {
+      if (this.hasLoadingTarget) {
+        this.loadingTarget.classList.add("hidden")
+      }
     }
-
-    if (this.hasLoadingTarget) {
-      this.loadingTarget.classList.add("hidden")
-    }
-    this.posterGenerated = true
   }
 }
