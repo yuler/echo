@@ -20,7 +20,6 @@ A personal project for practicing English listening. Originally built last year,
 
 ## TODO
 
-- [ ] Post list 500 error
 - [ ] PWA
 - [ ] Static pages with markdown
 - [ ] Add share & check-in features
