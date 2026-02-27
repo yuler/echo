@@ -20,6 +20,9 @@ A personal project for practicing English listening. Originally built last year,
 
 ## TODO
 
-- [ ] Home page design, add collection
-- [ ] Split Vira docs, mock review in browser
+- [ ] Post list 500 error
+- [ ] PWA
+- [ ] Static pages with markdown
 - [ ] Add share & check-in features
+- [ ] User sign in OAuth
+- [ ] Home page design, add collection
