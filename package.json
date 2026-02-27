@@ -15,7 +15,8 @@
     "icon:download": "ruby ./script/icon_download.rb",
     "app:rename": "ruby ./script/rename.rb",
     "db:schema:fresh": "ruby ./script/db_schema_fresh.rb",
-    "rails:console:production": "./bin/rails-console-production"
+    "rails:console:production": "./bin/rails-console-production",
+    "github:secrets:set": "gh secret set -f .env"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
