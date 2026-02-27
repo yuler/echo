@@ -42,6 +42,7 @@
 
   html {
     /* scroll-behavior: smooth; */
+    scrollbar-gutter: stable;
   }
 
   /* Set core body defaults */
