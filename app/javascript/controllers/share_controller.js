@@ -36,7 +36,7 @@ export default class extends Controller {
         url: this.urlValue
       })
     } catch (err) {
-      console.log("Share failed", err)
+      console.error("Share failed", err)
     }
   }
 
