@@ -1,6 +1,12 @@
 <footer id="footer" class="max-w-6xl mx-auto px-4 py-2 mt-8">
-    <div class="flex gap-2 text-sm text-gray-600 dark:text-gray-400">
-        <span>Version:</span> <%= app_version_badge %>
-        <span>Git Revision:</span> <%= git_revision_badge %>
+    <div class="flex justify-between items-center text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex gap-2">
+            <span>Version:</span> <%= app_version_badge %>
+            <span>Git Revision:</span> <%= git_revision_badge %>
+        </div>
+        <div class="flex gap-4">
+            <%= link_to "About", about_path, class: "hover:underline hover:text-black" %>
+            <%= link_to "Changelog", changelog_path, class: "hover:underline hover:text-black" %>
+        </div>
     </div>
 </footer>

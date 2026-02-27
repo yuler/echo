@@ -3,6 +3,12 @@ Rails.application.routes.draw do
 
   resource :landing
   resources :home
+
+  # Static pages
+  PagesController::PAGES.each do |page|
+    get page, to: "pages#show", defaults: { slug: page }, as: page
+  end
+
   resources :posts, only: [ :index, :show ]
 
   resource :session do
