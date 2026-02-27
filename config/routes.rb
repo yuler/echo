@@ -2,8 +2,7 @@ Rails.application.routes.draw do
   root "landings#show"
 
   # static pages
-  pages = %w[about changelog]
-  pages.each do |page|
+  PagesController::PAGES.each do |page|
     get page, to: "pages#show", defaults: { slug: page }, as: page
   end
 
