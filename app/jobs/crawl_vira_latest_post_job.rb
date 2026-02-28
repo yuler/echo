@@ -1,5 +1,5 @@
 class CrawlViraLatestPostJob < ApplicationJob
-  queue_as :default
+  queue_as :backend
 
   def perform
     Post.crawl_vira_latest_post
