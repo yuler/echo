@@ -13,3 +13,7 @@ production:
   clear_solid_queue_finished_jobs:
     command: "SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)"
     schedule: every day at 00:00
+  # 22:00 UTC = 6:00 China (UTC+8)
+  crawl_vira_latest_post:
+    class: CrawlViraLatestPostJob
+    schedule: every day at 22:00
