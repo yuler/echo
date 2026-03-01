@@ -81,7 +81,7 @@
     <%# Poster section %>
     <% if @post.poster_url.present? %>
       <div class="mb-8 rounded-lg overflow-hidden shadow-sm aspect-auto w-full relative border border-neutral-200/60">
-        <%= image_tag @post.poster_url, class: "w-full h-auto object-cover", alt: "Poster", loading: "lazy", crossorigin: "anonymous" %>
+        <%= image_tag @post.poster_url, class: "w-full h-auto object-cover", alt: "Poster", loading: "lazy" %>
       </div>
     <% end %>
 
