@@ -51,8 +51,6 @@ export default class extends Controller {
         })
       ])
 
-      this.showToast("Poster image copied successfully!")
-
       this.copyDefaultTarget.classList.add("hidden")
       this.copyDefaultTarget.classList.remove("inline-flex")
       this.copySuccessTarget.classList.remove("hidden")
@@ -65,37 +63,7 @@ export default class extends Controller {
       }, 2000)
     } catch (err) {
       console.error("Failed to copy image", err)
-      this.showToast("Failed to copy image")
     }
-  }
-
-  showToast(message) {
-    const toast = document.createElement("div")
-    toast.className = "fixed top-6 left-1/2 -translate-x-1/2 z-[100] flex items-center gap-2 px-4 py-3 bg-neutral-900 border border-neutral-800 text-white rounded-xl shadow-2xl font-medium text-sm transition-all duration-300 transform translate-y-0 opacity-100"
-
-    toast.innerHTML = `
-      <svg class="w-5 h-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-      </svg>
-      <span>${message}</span>
-    `
-    // Append to dialog so it is part of the top layer, rendering over the overlay.
-    if (this.hasDialogTarget && this.dialogTarget.open) {
-      this.dialogTarget.appendChild(toast)
-    } else {
-      document.body.appendChild(toast)
-    }
-
-    // Trigger appear animation
-    requestAnimationFrame(() => {
-      toast.style.transform = "translate(-50%, 0)"
-    })
-
-    setTimeout(() => {
-      toast.classList.add("opacity-0", "-translate-y-4")
-      setTimeout(() => toast.remove(), 300)
-    }, 2500)
   }
 
   download() {
@@ -109,6 +77,9 @@ export default class extends Controller {
   async generatePoster() {
     if (this.hasLoadingTarget) {
       this.loadingTarget.classList.remove("hidden")
+      // Allow browser to render loading state before heavy DOM operations block the main thread
+      await new Promise(resolve => requestAnimationFrame(resolve))
+      await new Promise(resolve => setTimeout(resolve, 50))
     }
 
     try {
