@@ -24,3 +24,6 @@ application.register("element-removal", ElementRemovalController)
 
 import ShareController from "./share_controller"
 application.register("share", ShareController)
+
+import ConfettiController from "./confetti_controller"
+application.register("confetti", ConfettiController)

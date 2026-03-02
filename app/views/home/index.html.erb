@@ -12,6 +12,16 @@
         A free platform for practicing English listening skills.
         We publish daily posts.
       </p>
+
+      <% if Current.user %>
+        <p>
+          Hi <%= Current.user.name %>!
+        </p>
+      <% else %>
+        <p>
+          <%= link_to "Sign in", new_session_path, class: "underline" %> to record your check-ins.
+        </p>
+      <% end %>
     </div>
 
     <% if @posts.any? %>

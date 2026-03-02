@@ -1,0 +1,42 @@
+<%= turbo_frame_tag "check_in_button_#{post.id}" do %>
+  <% check_in = Current.user&.check_ins&.find_by(post: post) %>
+  <% if check_in %>
+    <!-- Check-in completed state -->
+    <div class="my-4 flex flex-col sm:flex-row gap-4 sm:gap-10 items-center sm:justify-between p-4 bg-neutral-100 border border-neutral-100 rounded-xl">
+      <div class="flex w-full items-center gap-3">
+        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600">
+          <%= inline_svg "check.svg", class: "w-4 h-4" %>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-body-sm text-neutral-900 font-medium">Checked in</span>
+          <span class="text-caption text-neutral-500"><%= l(check_in.created_at, format: :long) %></span>
+        </div>
+      </div>
+      <button type="button" data-action="click->share#open" class="btn bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-6 py-2 w-auto shrink-0 font-medium shadow-sm transition-all text-sm inline-flex items-center justify-center">
+        <%= inline_svg "share.svg", class: "w-4 h-4 opacity-70" %>
+        Share
+      </button>
+    </div>
+  <% elsif Current.user %>
+    <!-- Tip check-in UI -->
+    <div class="my-4 flex flex-col sm:flex-row gap-4 sm:gap-10 items-center sm:justify-between p-4 bg-neutral-100 border border-neutral-100 rounded-xl">
+      <div class="flex w-full items-center gap-3">
+        <div class="w-10 h-10 bg-white rounded-full shrink-0 flex items-center justify-center text-neutral-400 shadow-sm border border-neutral-100">
+          <%= inline_svg "check-badge.svg", class: "w-5 h-5 text-neutral-400" %>
+        </div>
+        <div>
+          <h3 class="text-body-sm font-medium text-neutral-900">Finished reading?</h3>
+          <p class="text-body-sm text-neutral-500">Check in to track your learning streak</p>
+        </div>
+      </div>
+      <%= button_to post_check_in_path(post), method: :post, class: "btn bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-6 py-2 w-auto shrink-0 whitespace-nowrap font-medium shadow-sm transition-all text-sm inline-flex items-center justify-center", data: { turbo: true } do %>
+        Check In
+      <% end %>
+    </div>
+  <% else %>
+    <div class="my-8 text-center p-4 border border-neutral-100 rounded-xl">
+      <p class="text-body-sm text-neutral-500 mb-3">Check in to track your reading streaks</p>
+      <%= link_to "Sign in to check in", new_session_path(return_to: request.original_url), data: { turbo_frame: "_top" }, class: "btn bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-6 py-2.5 transition-colors font-medium text-sm" %>
+    </div>
+  <% end %>
+<% end %>

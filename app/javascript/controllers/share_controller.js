@@ -40,18 +40,31 @@ export default class extends Controller {
     }
   }
 
-  async copyLink() {
+  async copyImage() {
+    if (!this.posterGenerated) return
     try {
-      await navigator.clipboard.writeText(this.urlValue)
-      this.copyDefaultTarget.classList.add("hidden")
-      this.copySuccessTarget.classList.remove("hidden")
+      const response = await fetch(this.previewTarget.src)
+      const blob = await response.blob()
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          [blob.type]: blob
+        })
+      ])
+
+      this.toggleCopyState(true)
       setTimeout(() => {
-        this.copyDefaultTarget.classList.remove("hidden")
-        this.copySuccessTarget.classList.add("hidden")
+        this.toggleCopyState(false)
       }, 2000)
     } catch (err) {
-      console.error("Failed to copy", err)
+      console.error("Failed to copy image", err)
     }
+  }
+
+  toggleCopyState(showSuccess) {
+    this.copyDefaultTarget.classList.toggle("inline-flex", !showSuccess);
+    this.copyDefaultTarget.classList.toggle("hidden", showSuccess);
+    this.copySuccessTarget.classList.toggle("inline-flex", showSuccess);
+    this.copySuccessTarget.classList.toggle("hidden", !showSuccess);
   }
 
   download() {
@@ -65,6 +78,9 @@ export default class extends Controller {
   async generatePoster() {
     if (this.hasLoadingTarget) {
       this.loadingTarget.classList.remove("hidden")
+      // Allow browser to render loading state before heavy DOM operations block the main thread
+      await new Promise(resolve => requestAnimationFrame(resolve))
+      await new Promise(resolve => setTimeout(resolve, 50))
     }
 
     try {
@@ -90,9 +106,7 @@ export default class extends Controller {
 
       const dataUrl = await toPng(this.posterTemplateTarget, {
         pixelRatio: 2,
-        backgroundColor: "#ffffff",
-        width: 1080,
-        height: 1920
+        width: 1080
       })
 
       this.previewTarget.src = dataUrl

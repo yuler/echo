@@ -10,3 +10,4 @@
 - [ ] Home page design, add collection
 - [ ] Add stage environment
 - [ ] Update AI relation docs(AGENTS.md, skills?, etc.)
+- [ ] Use dokploy while stop service

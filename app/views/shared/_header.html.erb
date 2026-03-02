@@ -54,7 +54,7 @@
         <div class="dropdown dropdown-end">
           <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
             <div class="w-10 rounded-full">
-              <div class="bg-primary text-primary-content flex items-center justify-center w-full h-full">
+              <div class="bg-neutral text-neutral-content flex items-center justify-center w-full h-full">
                 <span class="text-lg font-bold"><%= Current.identity.full_name.first.upcase %></span>
               </div>
             </div>
@@ -64,13 +64,6 @@
               <span><%= Current.identity.email %></span>
             </li>
             <li>
-              <%= link_to my_accounts_path, class: "w-full #{'menu-active' if current_page?(my_accounts_path)}" do %>
-                <%= inline_svg 'users.svg', class: 'h-4 w-4' %>
-                <span>My Accounts</span>
-              <% end %>
-            </li>
-
-           <li>
               <%= button_to sign_out_path, method: :delete, form_class: "flex", class: "link link-hover flex-1 flex items-center justify-start gap-2", data: { turbo: false } do %>
                 <%= inline_svg 'log-out.svg', class: 'h-4 w-4' %>
                 <span>Sign Out</span>
