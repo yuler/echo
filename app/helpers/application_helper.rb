@@ -39,7 +39,7 @@ module ApplicationHelper
         existing = svg["class"].to_s
         svg["class"] = [ existing, value ].reject(&:blank?).join(" ")
       when "style"
-        svg["style"] = [ svg["style"].to_s, value.to_s ].reject(&:blank?).join("; ")
+        svg["style"] = [ svg["style"].to_s, value.to_s ].map { |s| s.chomp(";").strip }.reject(&:blank?).join("; ")
       when "data"
         value.each { |k, v| svg["data-#{k.to_s.dasherize}"] = v.to_s }
       when "aria"
