@@ -65,6 +65,20 @@
         <p class="text-[36px] text-neutral-600 leading-[1.4] mb-[40px] whitespace-pre-wrap"><%= post.guide %></p>
       <% end %>
 
+      <% if Current.user && Current.user.check_ins.exists?(post: post) %>
+        <div class="mt-[20px] p-[40px] bg-[#ecfdf5] rounded-[30px] flex items-center gap-[40px] border-[3px] border-[#a7f3d0]">
+          <div class="w-[80px] h-[80px] bg-[#10b981] rounded-full flex items-center justify-center text-white shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div>
+            <div class="text-[36px] font-bold text-[#065f46] mb-[8px]">Daily Check-in Completed</div>
+            <div class="text-[28px] text-[#059669]">Current learning streak: <strong class="text-[#064e3b] text-[32px]"><%= Current.user.check_in_stats[:current_streak] %></strong> Days!</div>
+          </div>
+        </div>
+      <% end %>
+
       <div class="h-[60px] w-full flex-grow"></div>
 
       <%# Divider %>

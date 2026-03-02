@@ -1,0 +1,5 @@
+<%= turbo_stream.replace "check_in_button_#{@post.id}", partial: "check_ins/button", locals: { post: @post } %>
+
+<%= turbo_stream.append "body" do %>
+  <div data-controller="confetti"></div>
+<% end %>

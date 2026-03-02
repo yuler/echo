@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.2].define(version: 2026_02_26_090813) do
+ActiveRecord::Schema[8.2].define(version: 2026_03_02_022318) do
   create_table "account_charges", id: :uuid, force: :cascade do |t|
     t.uuid "account_id", null: false
     t.integer "amount", null: false
@@ -132,6 +132,18 @@ ActiveRecord::Schema[8.2].define(version: 2026_02_26_090813) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "check_ins", id: :uuid, force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.uuid "post_id", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "user_id", null: false
+    t.index ["post_id"], name: "index_check_ins_on_post_id"
+    t.index ["user_id", "created_at"], name: "index_check_ins_on_user_id_and_created_at"
+    t.index ["user_id", "post_id"], name: "index_check_ins_on_user_id_and_post_id", unique: true
+    t.index ["user_id"], name: "index_check_ins_on_user_id"
+  end
+
   create_table "identities", id: :uuid, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", null: false
@@ -200,4 +212,7 @@ ActiveRecord::Schema[8.2].define(version: 2026_02_26_090813) do
     t.index ["account_id", "role"], name: "index_users_on_account_id_and_role"
     t.index ["identity_id"], name: "index_users_on_identity_id"
   end
+
+  add_foreign_key "check_ins", "posts"
+  add_foreign_key "check_ins", "users"
 end

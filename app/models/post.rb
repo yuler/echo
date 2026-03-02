@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
   has_rich_text :content
+  has_many :check_ins, dependent: :destroy
 
   def paragraphs
     text = content&.to_plain_text.to_s

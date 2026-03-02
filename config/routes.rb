@@ -9,7 +9,9 @@ Rails.application.routes.draw do
     get page, to: "pages#show", defaults: { slug: page }, as: page
   end
 
-  resources :posts, only: [ :index, :show ]
+  resources :posts, only: [ :index, :show ] do
+    resources :check_ins, only: [ :create ]
+  end
 
   resource :session do
     scope module: :sessions do
