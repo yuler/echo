@@ -33,7 +33,7 @@
       <% end %>
       <% if @post.audio_duration.present? %>
         <div class="flex items-center gap-1.5 text-body-sm font-medium text-neutral-400">
-          <%= image_tag "clock.svg", alt: '', class: 'w-4 h-4 opacity-70' %>
+          <%= inline_svg "clock.svg", class: 'w-4 h-4 opacity-70' %>
           <span><%= @post.minutes_left %> min read</span>
         </div>
       <% end %>
@@ -41,7 +41,7 @@
 
       <%# Share Button %>
       <button type="button" class="flex items-center gap-1.5 text-body-sm font-medium text-neutral-400 hover:text-neutral-600 transition-colors focus-ring p-1.5 rounded-md" data-action="click->share#open">
-        <%= image_tag "share.svg", alt: '', class: 'w-5 h-5 opacity-70' %>
+        <%= inline_svg "share.svg", class: 'w-5 h-5 opacity-70' %>
         <span class="sr-only">Share</span>
       </button>
     </div>

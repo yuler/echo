@@ -15,7 +15,7 @@
         <div class="dropdown dropdown-end">
           <div tabindex="0" role="button" class="btn btn-circle">
             <div class="indicator">
-              <%= image_tag "bell.svg", alt: '', class: 'h-5 w-5', style: 'filter: currentColor;' %>
+              <%= inline_svg "bell.svg", class: 'h-5 w-5' %>
               <span class="badge badge-xs badge-error indicator-item">5</span>
             </div>
           </div>
@@ -65,14 +65,14 @@
             </li>
             <li>
               <%= link_to my_accounts_path, class: "w-full #{'menu-active' if current_page?(my_accounts_path)}" do %>
-                <%= image_tag 'users.svg', alt: '', class: 'h-4 w-4' %>
+                <%= inline_svg 'users.svg', class: 'h-4 w-4' %>
                 <span>My Accounts</span>
               <% end %>
             </li>
 
            <li>
               <%= button_to sign_out_path, method: :delete, form_class: "flex", class: "link link-hover flex-1 flex items-center justify-start gap-2", data: { turbo: false } do %>
-                <%= image_tag 'log-out.svg', alt: '', class: 'h-4 w-4' %>
+                <%= inline_svg 'log-out.svg', class: 'h-4 w-4' %>
                 <span>Sign Out</span>
               <% end %>
             </li>

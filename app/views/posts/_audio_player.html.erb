@@ -32,7 +32,7 @@
       <div class="audio-player-actions-left">
         <%# Bilingual toggle %>
         <button class="audio-player-icon-btn" data-action="click->audio-player#toggleTranslation" data-audio-player-target="translationBtn" title="Toggle Chinese translation" aria-label="Toggle translation">
-          <%= image_tag "languages.svg", alt: '', class: 'w-5 h-5' %>
+          <%= inline_svg "languages.svg", class: 'w-5 h-5' %>
         </button>
       </div>
 
@@ -48,8 +48,8 @@
 
         <%# Play / Pause %>
         <button class="audio-player-play-btn" data-action="click->audio-player#togglePlay" aria-label="Play or pause">
-          <%= image_tag "play.svg", alt: '', class: 'w-6 h-6', data: { audio_player_target: 'playIcon' } %>
-          <%= image_tag "pause.svg", alt: '', class: 'w-6 h-6 hidden', data: { audio_player_target: 'pauseIcon' } %>
+          <%= inline_svg "play.svg", class: 'w-6 h-6', data: { audio_player_target: 'playIcon' } %>
+          <%= inline_svg "pause.svg", class: 'w-6 h-6 hidden', data: { audio_player_target: 'pauseIcon' } %>
         </button>
 
         <%# 15s forward %>

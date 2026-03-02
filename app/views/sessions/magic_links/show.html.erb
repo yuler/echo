@@ -29,7 +29,7 @@
 
     <% if Rails.env.development? && flash[:magic_link_code].present? %>
       <div class="alert alert-info alert-soft max-w-md mt-4">
-        <%= image_tag "info.svg", alt: '', class: 'stroke-current shrink-0 w-6 h-6' %>
+        <%= inline_svg "info.svg", class: 'shrink-0 w-6 h-6' %>
         <div>
           <p class="font-semibold">Development Mode</p>
           <p class="font-mono text-lg"><%= flash[:magic_link_code] %></p>
