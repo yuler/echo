@@ -41,7 +41,7 @@ class User < ApplicationRecord
 
   private
     def calculate_check_in_stats
-      dates = check_ins.select("DISTINCT CAST(created_at AS DATE) AS d").order("d DESC").pluck(:d)
+      dates = check_ins.map { |ci| ci.created_at.to_date }.uniq.sort.reverse
       return { total: 0, current_streak: 0, longest_streak: 0, last_check_in_date: nil } if dates.empty?
 
       total = check_ins.count
