@@ -22,10 +22,14 @@ module ApplicationHelper
   #     style: "opacity: 0.8;", data: { controller: "icon" },
   #     aria: { hidden: true })
   def inline_svg(filename, options = {})
-    asset = Rails.application.assets.load_path.find(filename)
-    raise "SVG asset not found: #{filename}" if asset.nil?
+    file_path = Rails.root.join("app", "assets", "images", filename)
+    raise "SVG asset not found: #{filename}" unless File.exist?(file_path)
 
-    doc = Nokogiri::XML(asset.content)
+    content = Rails.cache.fetch("inline_svg/#{filename}", skip_nil: true) do
+      File.read(file_path)
+    end
+
+    doc = Nokogiri::XML(content)
     svg = doc.at_css("svg")
 
     options.each do |key, value|
