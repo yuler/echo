@@ -80,7 +80,7 @@ export default class extends Controller {
         osc.stop(ctx.currentTime + 0.5)
       }
     } catch (e) {
-      console.log("Audio not supported or disabled")
+      console.error("Audio not supported or disabled", e)
     }
   }
 }
