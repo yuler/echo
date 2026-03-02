@@ -90,7 +90,9 @@ export default class extends Controller {
 
       const dataUrl = await toPng(this.posterTemplateTarget, {
         pixelRatio: 2,
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff",
+        width: 1080,
+        height: 1920
       })
 
       this.previewTarget.src = dataUrl
