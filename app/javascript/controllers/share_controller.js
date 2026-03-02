@@ -61,18 +61,10 @@ export default class extends Controller {
   }
 
   toggleCopyState(showSuccess) {
-    const classes = {
-      default: { add: "hidden", remove: "inline-flex" },
-      success: { add: "inline-flex", remove: "hidden" }
-    }
-
-    const defaultAction = showSuccess ? "add" : "remove"
-    const successAction = showSuccess ? "remove" : "add"
-
-    this.copyDefaultTarget.classList.remove(classes.default[successAction])
-    this.copyDefaultTarget.classList.add(classes.default[defaultAction])
-    this.copySuccessTarget.classList.remove(classes.success[successAction])
-    this.copySuccessTarget.classList.add(classes.success[defaultAction])
+    this.copyDefaultTarget.classList.toggle("inline-flex", !showSuccess);
+    this.copyDefaultTarget.classList.toggle("hidden", showSuccess);
+    this.copySuccessTarget.classList.toggle("inline-flex", showSuccess);
+    this.copySuccessTarget.classList.toggle("hidden", !showSuccess);
   }
 
   download() {
