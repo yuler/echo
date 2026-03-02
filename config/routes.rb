@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   end
 
   resources :posts, only: [ :index, :show ] do
-    resources :check_ins, only: [ :create ]
+    resource :check_in, only: [ :create ]
   end
 
   resource :session do

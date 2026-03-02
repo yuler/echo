@@ -65,7 +65,7 @@
         <p class="text-[36px] text-neutral-600 leading-[1.4] mb-[40px] whitespace-pre-wrap"><%= post.guide %></p>
       <% end %>
 
-      <% if Current.user && Current.user.check_ins.exists?(post: post) %>
+      <% if Current.user&.checked_in?(post) %>
         <div class="mt-[20px] p-[40px] bg-[#ecfdf5] rounded-[30px] flex items-center gap-[40px] border-[3px] border-[#a7f3d0]">
           <div class="w-[80px] h-[80px] bg-[#10b981] rounded-full flex items-center justify-center text-white shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">

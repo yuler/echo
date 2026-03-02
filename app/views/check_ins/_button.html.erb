@@ -1,20 +1,16 @@
 <%= turbo_frame_tag "check_in_button_#{post.id}" do %>
-  <% if Current.user && Current.user.check_ins.exists?(post: post) %>
+  <% if Current.user&.checked_in?(post) %>
     <!-- Check-in completed state -->
     <div class="mt-8 mb-4 p-6 rounded-2xl bg-neutral-100 border border-neutral-200 text-center relative overflow-hidden group shadow-sm transition-all hover:shadow-md">
       <div class="relative z-10">
         <div class="mx-auto w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mb-3 text-white shadow-sm ring-4 ring-green-100">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
+            <%= inline_svg "check.svg", class: "h-6 w-6" %>
         </div>
         <h3 class="text-heading-3 text-neutral-900 mb-1 font-semibold tracking-tight">Check-in Completed</h3>
         <p class="text-body-sm text-neutral-500 mb-5">You're making great progress! Current streak: <strong class="text-neutral-900 font-semibold"><%= Current.user.check_in_stats[:current_streak] %></strong> days</p>
 
         <button type="button" data-action="click->share#open" class="btn bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-7 py-2.5 transition-all font-medium shadow-sm hover:shadow focus-ring text-sm tracking-wide inline-flex items-center gap-2 relative overflow-hidden group">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-70 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-          </svg>
+          <%= inline_svg "share.svg", class: "w-4 h-4 opacity-70 group-hover:scale-110 transition-transform" %>
           Share Progress Poster
         </button>
       </div>
@@ -22,11 +18,9 @@
   <% elsif Current.user %>
     <!-- Check in button -->
     <div class="my-8 text-center pt-6 pb-2">
-      <%= button_to post_check_ins_path(post), method: :post, class: "btn bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-3.5 w-full sm:w-auto font-medium shadow-sm hover:shadow-md transition-all group inline-flex items-center justify-center relative overflow-hidden focus-ring", data: { turbo: true } do %>
+      <%= button_to post_check_in_path(post), method: :post, class: "btn bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-3.5 w-full sm:w-auto font-medium shadow-sm hover:shadow-md transition-all group inline-flex items-center justify-center relative overflow-hidden focus-ring", data: { turbo: true } do %>
         <span class="relative z-10 flex items-center justify-center gap-2.5 text-[15px] tracking-wide">
-          <svg class="w-5 h-5 opacity-70 group-hover:rotate-[15deg] group-hover:scale-110 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-          </svg>
+          <%= inline_svg "check-badge.svg", class: "w-5 h-5 opacity-70 group-hover:rotate-[15deg] group-hover:scale-110 transition-all duration-300" %>
           Complete Check In
         </span>
       <% end %>
