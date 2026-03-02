@@ -80,7 +80,12 @@ export default class extends Controller {
       </svg>
       <span>${message}</span>
     `
-    document.body.appendChild(toast)
+    // Append to dialog so it is part of the top layer, rendering over the overlay.
+    if (this.hasDialogTarget && this.dialogTarget.open) {
+      this.dialogTarget.appendChild(toast)
+    } else {
+      document.body.appendChild(toast)
+    }
 
     // Trigger appear animation
     requestAnimationFrame(() => {

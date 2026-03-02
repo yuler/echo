@@ -41,47 +41,40 @@ class User < ApplicationRecord
 
   private
     def calculate_check_in_stats
-      check_ins_dates = check_ins.order(created_at: :desc).pluck(:created_at).map(&:to_date).uniq
+      # Optimized to fetch unique dates directly from the database.
+      dates = check_ins.select("DISTINCT CAST(created_at AS DATE) AS d").order("d DESC").pluck(:d)
+      return { total: 0, current_streak: 0, longest_streak: 0, last_check_in_date: nil } if dates.empty?
 
       total = check_ins.count
-      return { total: 0, current_streak: 0, longest_streak: 0, last_check_in_date: nil } if total == 0
+      today = Date.current
 
       current_streak = 0
       longest_streak = 0
-      current_temp_streak = 0
+      current_run = 0
       last_date = nil
 
-      today = Date.current
+      # A streak is "current" if it includes today or yesterday and is contiguous from the first check-in date.
+      is_part_of_current_streak = !dates.empty? && (dates.first == today || dates.first == today - 1.day)
 
-      if check_ins_dates.first == today || check_ins_dates.first == today - 1.day
-        expected_date = check_ins_dates.first
-        check_ins_dates.each do |date|
-          if date == expected_date
-            current_streak += 1
-            expected_date -= 1.day
-          else
-            break
-          end
-        end
-      end
-
-      expected_date = check_ins_dates.first
-      check_ins_dates.each do |date|
-        if last_date.nil? || date == last_date - 1.day
-          current_temp_streak += 1
+      dates.each do |date|
+        if last_date && date == last_date - 1.day
+          current_run += 1
         else
-          longest_streak = [ longest_streak, current_temp_streak ].max
-          current_temp_streak = 1
+          # A break in the streak.
+          is_part_of_current_streak = false # The first sequence is broken.
+          current_run = 1
         end
+
+        longest_streak = [ longest_streak, current_run ].max
+        current_streak = current_run if is_part_of_current_streak
         last_date = date
       end
-      longest_streak = [ longest_streak, current_temp_streak ].max
 
       {
         total: total,
         current_streak: current_streak,
         longest_streak: longest_streak,
-        last_check_in_date: check_ins_dates.first
+        last_check_in_date: dates.first
       }
     end
 end
