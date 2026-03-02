@@ -1,5 +1,9 @@
 <%= turbo_stream.replace "check_in_button_#{@post.id}", partial: "check_ins/button", locals: { post: @post } %>
 
-<%= turbo_stream.append "body" do %>
+<%= turbo_stream.append "confetti-container" do %>
   <div data-controller="confetti"></div>
+<% end %>
+
+<%= turbo_stream.replace "share_dialog_#{@post.id}" do %>
+  <%= render "posts/share_dialog", post: @post %>
 <% end %>

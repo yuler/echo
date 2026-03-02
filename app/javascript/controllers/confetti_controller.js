@@ -17,21 +17,40 @@ export default class extends Controller {
   fire() {
     const duration = 2.5 * 1000;
     const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
+    const defaults = { startVelocity: 45, spread: 70, ticks: 80, zIndex: 100 };
 
     const randomInRange = (min, max) => Math.random() * (max - min) + min;
 
-    const interval = setInterval(function () {
+    this.interval = setInterval(() => {
       const timeLeft = animationEnd - Date.now();
 
       if (timeLeft <= 0) {
-        return clearInterval(interval);
+        return clearInterval(this.interval);
       }
 
-      const particleCount = 50 * (timeLeft / duration);
-      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+      const particleCount = 40 * (timeLeft / duration);
+      const y = randomInRange(0.5, 0.8);
+
+      // Left side fires inward (angle 60° = upper-right direction)
+      confetti(Object.assign({}, defaults, {
+        particleCount,
+        angle: 60,
+        origin: { x: 0, y }
+      }));
+
+      // Right side fires inward (angle 120° = upper-left direction)
+      confetti(Object.assign({}, defaults, {
+        particleCount,
+        angle: 120,
+        origin: { x: 1, y }
+      }));
     }, 250);
+  }
+
+  disconnect() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 
   playAudio() {

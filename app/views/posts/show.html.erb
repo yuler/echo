@@ -11,7 +11,7 @@
   <audio data-audio-player-target="audio" src="<%= @post.audio_url %>" preload="auto"></audio>
 
   <%# Main content container %>
-  <main class="container-main pb-64!">
+  <main class="container-main">
 
     <%# Post title %>
     <div class="mb-4">
@@ -82,7 +82,7 @@
     <% end %>
 
     <%# Transcript content %>
-    <article class="space-y-6 pt-4 pb-8">
+    <article class="space-y-6 pt-4">
       <% @post.audio_sentences_with_translation.each do |group| %>
         <div class="space-y-1">
           <%# English sentences block %>
@@ -108,6 +108,8 @@
 
     <%# Check in button %>
     <%= render "check_ins/button", post: @post %>
+
+    <div class="w-full h-20"></div>
   </main>
 
   <%= render "posts/audio_player", post: @post %>

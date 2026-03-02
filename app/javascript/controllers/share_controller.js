@@ -51,19 +51,28 @@ export default class extends Controller {
         })
       ])
 
-      this.copyDefaultTarget.classList.add("hidden")
-      this.copyDefaultTarget.classList.remove("inline-flex")
-      this.copySuccessTarget.classList.remove("hidden")
-      this.copySuccessTarget.classList.add("inline-flex")
+      this.toggleCopyState(true)
       setTimeout(() => {
-        this.copyDefaultTarget.classList.remove("hidden")
-        this.copyDefaultTarget.classList.add("inline-flex")
-        this.copySuccessTarget.classList.add("hidden")
-        this.copySuccessTarget.classList.remove("inline-flex")
+        this.toggleCopyState(false)
       }, 2000)
     } catch (err) {
       console.error("Failed to copy image", err)
     }
+  }
+
+  toggleCopyState(showSuccess) {
+    const classes = {
+      default: { add: "hidden", remove: "inline-flex" },
+      success: { add: "inline-flex", remove: "hidden" }
+    }
+
+    const defaultAction = showSuccess ? "add" : "remove"
+    const successAction = showSuccess ? "remove" : "add"
+
+    this.copyDefaultTarget.classList.remove(classes.default[successAction])
+    this.copyDefaultTarget.classList.add(classes.default[defaultAction])
+    this.copySuccessTarget.classList.remove(classes.success[successAction])
+    this.copySuccessTarget.classList.add(classes.success[defaultAction])
   }
 
   download() {

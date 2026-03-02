@@ -15,7 +15,6 @@ class Sessions::MagicLinksController < ApplicationController
   end
 
   private
-
     def ensure_that_email_pending_authentication_exists
       unless email_pending_authentication.present?
         alert_message = "Enter your email address to sign in."

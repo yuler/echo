@@ -41,33 +41,18 @@ class User < ApplicationRecord
 
   private
     def calculate_check_in_stats
-      # Optimized to fetch unique dates directly from the database.
       dates = check_ins.select("DISTINCT CAST(created_at AS DATE) AS d").order("d DESC").pluck(:d)
       return { total: 0, current_streak: 0, longest_streak: 0, last_check_in_date: nil } if dates.empty?
 
       total = check_ins.count
       today = Date.current
 
+      streaks = dates.slice_when { |prev, curr| prev != curr + 1.day }.map(&:size)
+      longest_streak = streaks.max || 0
+
       current_streak = 0
-      longest_streak = 0
-      current_run = 0
-      last_date = nil
-
-      # A streak is "current" if it includes today or yesterday and is contiguous from the first check-in date.
-      is_part_of_current_streak = !dates.empty? && (dates.first == today || dates.first == today - 1.day)
-
-      dates.each do |date|
-        if last_date && date == last_date - 1.day
-          current_run += 1
-        else
-          # A break in the streak.
-          is_part_of_current_streak = false # The first sequence is broken.
-          current_run = 1
-        end
-
-        longest_streak = [ longest_streak, current_run ].max
-        current_streak = current_run if is_part_of_current_streak
-        last_date = date
+      if dates.first == today || dates.first == today - 1.day
+        current_streak = streaks.first || 0
       end
 
       {
