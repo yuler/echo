@@ -15,7 +15,7 @@
         <label class="form-control">
           <div class="relative mt-1">
             <span class="absolute inset-y-0 left-0 flex items-center pl-4">
-              <%= image_tag "email.svg", class: "w-5 h-5 text-gray-500 z-10" %>
+              <%= inline_svg "email.svg", class: "w-5 h-5 text-gray-500 z-10" %>
             </span>
             <%= form.email_field :email, value: Current.identity&.email, autofocus: true, autocomplete: "username", placeholder: "Your email", class: "input input-bordered w-full pl-12" %>
           </div>

@@ -3,7 +3,7 @@ import QRCode from "qrcode"
 import { toPng } from "html-to-image"
 
 export default class extends Controller {
-  static targets = ["dialog", "preview", "posterTemplate", "qrCodeImg", "loading", "webShareContainer"]
+  static targets = ["dialog", "preview", "posterTemplate", "qrCodeImg", "loading", "webShareContainer", "copyDefault", "copySuccess"]
   static values = {
     title: String,
     url: String
@@ -40,15 +40,15 @@ export default class extends Controller {
     }
   }
 
-  async copyLink(event) {
+  async copyLink() {
     try {
       await navigator.clipboard.writeText(this.urlValue)
-      const btn = event.currentTarget
-      if (btn) {
-        const originalText = btn.innerHTML
-        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg> Copied!`
-        setTimeout(() => { btn.innerHTML = originalText }, 2000)
-      }
+      this.copyDefaultTarget.classList.add("hidden")
+      this.copySuccessTarget.classList.remove("hidden")
+      setTimeout(() => {
+        this.copyDefaultTarget.classList.remove("hidden")
+        this.copySuccessTarget.classList.add("hidden")
+      }, 2000)
     } catch (err) {
       console.error("Failed to copy", err)
     }
