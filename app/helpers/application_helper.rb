@@ -22,7 +22,7 @@ module ApplicationHelper
   #     style: "opacity: 0.8;", data: { controller: "icon" },
   #     aria: { hidden: true })
   def inline_svg(filename, options = {})
-    file_path = Rails.root.join("app", "assets", "images", filename)
+    file_path = Rails.root.join("app", "assets", "images", Pathname.new(filename).basename.to_s)
     raise "SVG asset not found: #{filename}" unless File.exist?(file_path)
 
     content = Rails.cache.fetch("inline_svg/#{filename}", skip_nil: true) do
@@ -31,6 +31,7 @@ module ApplicationHelper
 
     doc = Nokogiri::XML(content)
     svg = doc.at_css("svg")
+    raise "SVG content in '#{filename}' is invalid or does not contain an svg tag." unless svg
 
     options.each do |key, value|
       case key.to_s
@@ -38,9 +39,7 @@ module ApplicationHelper
         existing = svg["class"].to_s
         svg["class"] = [ existing, value ].reject(&:blank?).join(" ")
       when "style"
-        existing = svg["style"].to_s.strip
-        existing += ";" if existing.present? && !existing.end_with?(";")
-        svg["style"] = [ existing, value ].reject(&:blank?).join(" ")
+        svg["style"] = [ svg["style"].to_s, value.to_s ].reject(&:blank?).join("; ")
       when "data"
         value.each { |k, v| svg["data-#{k.to_s.dasherize}"] = v.to_s }
       when "aria"

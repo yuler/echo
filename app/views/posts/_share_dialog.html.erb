@@ -18,8 +18,14 @@
         Download
       </button>
       <button type="button" data-action="click->share#copyLink" class="flex items-center justify-center gap-2 py-2.5 px-4 bg-white border border-neutral-200 text-neutral-800 rounded-xl text-body-sm font-medium hover:bg-neutral-50 transition-colors focus-ring shadow-sm">
-        <%= inline_svg "link.svg", class: 'w-4 h-4' %>
-        Copy Link
+        <span data-share-target="copyDefault" class="inline-flex items-center gap-2">
+          <%= inline_svg "link.svg", class: 'w-4 h-4' %>
+          Copy Link
+        </span>
+        <span data-share-target="copySuccess" class="hidden inline-flex items-center gap-2">
+          <%= inline_svg "circle-check.svg", class: 'w-4 h-4' %>
+          Copied!
+        </span>
       </button>
     </div>
     <%# Web share API fallback %>
