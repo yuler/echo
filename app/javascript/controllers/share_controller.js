@@ -18,8 +18,9 @@ export default class extends Controller {
     this.posterGenerated = false
   }
 
-  open() {
+  async open() {
     if (navigator.share) {
+      if (!this.posterGenerated) await this.generatePoster()
       this.webShare()
       return
     }
