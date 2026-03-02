@@ -32,10 +32,7 @@
       <div class="audio-player-actions-left">
         <%# Bilingual toggle %>
         <button class="audio-player-icon-btn" data-action="click->audio-player#toggleTranslation" data-audio-player-target="translationBtn" title="Toggle Chinese translation" aria-label="Toggle translation">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/>
-            <path d="m22 22-5-10-5 10"/><path d="M14 18h6"/>
-          </svg>
+          <%= image_tag "languages.svg", alt: '', class: 'w-5 h-5' %>
         </button>
       </div>
 
@@ -51,12 +48,8 @@
 
         <%# Play / Pause %>
         <button class="audio-player-play-btn" data-action="click->audio-player#togglePlay" aria-label="Play or pause">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" data-audio-player-target="playIcon">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-          <svg xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24" fill="currentColor" data-audio-player-target="pauseIcon">
-            <path d="M6 4h4v16H6zm8 0h4v16h-4z"/>
-          </svg>
+          <%= image_tag "play.svg", alt: '', class: 'w-6 h-6', data: { audio_player_target: 'playIcon' } %>
+          <%= image_tag "pause.svg", alt: '', class: 'w-6 h-6 hidden', data: { audio_player_target: 'pauseIcon' } %>
         </button>
 
         <%# 15s forward %>

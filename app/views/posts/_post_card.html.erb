@@ -6,7 +6,7 @@
       <div class="w-full h-full bg-neutral-300"></div>
     <% end %>
     <div class="absolute bottom-2 right-2 w-9 h-9 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-md">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-neutral-900" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      <%= image_tag "play.svg", alt: '', class: 'w-4 h-4 text-neutral-900' %>
     </div>
   </div>
   <h3 class="text-heading-2 mb-1 line-clamp-2"><%= post.title_en.presence || post.title %></h3>
