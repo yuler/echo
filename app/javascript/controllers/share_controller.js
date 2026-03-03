@@ -16,6 +16,25 @@ export default class extends Controller {
       }
     }
     this.posterGenerated = false
+    this.preloadPosterImages()
+  }
+
+  preloadPosterImages() {
+    if (!this.hasPosterTemplateTarget) return
+
+    // Silently load images in the background when the page opens
+    const imgs = this.posterTemplateTarget.querySelectorAll("img")
+    imgs.forEach(img => {
+      // Remove lazy loading to trigger download immediately
+      if (img.loading === "lazy") {
+        img.loading = "eager"
+      }
+
+      // Let the browser decode and cache the images
+      if (img.src && typeof img.decode === "function") {
+        img.decode().catch(() => { })
+      }
+    })
   }
 
   open() {
@@ -96,11 +115,20 @@ export default class extends Controller {
 
       // Ensure images are fully loaded before rendering
       const imgs = Array.from(this.posterTemplateTarget.querySelectorAll("img"))
+
       await Promise.all(imgs.map(img => {
+        if (img.loading === "lazy") img.loading = "eager"
+
+        // Use native decode API for robust load checking
+        if (img.src && typeof img.decode === "function") {
+          return img.decode().catch(() => { }) // proceed even if one image fails
+        }
+
+        // Fallback for older browsers
         if (img.complete) return Promise.resolve()
         return new Promise((resolve) => {
           img.onload = resolve
-          img.onerror = resolve // proceed even on error
+          img.onerror = resolve
         })
       }))
 
