@@ -41,7 +41,6 @@ PWA (Progressive Web App) is a web application that uses modern web capabilities
 The manifest file tells the browser how to install and display the app:
 
 - `name` - Full app name
-- `short_name` - Short name for home screen
 - `start_url` - URL to open when app launches
 - `display` - Set to `standalone` for app-like experience
 - `icons` - App icons for different contexts
@@ -78,7 +77,9 @@ The manifest is linked in `app/views/shared/_head.html.erb`.
 
 ### Q: App doesn't work offline
 
-**A:** The current service worker implementation is minimal. For full offline support, we need to:
+**A:** Please try the following steps:
+
+The current service worker implementation is minimal. For full offline support, we need to:
 1. Configure asset caching strategy
 2. Cache API responses
 3. Implement offline fallback pages
@@ -96,14 +97,17 @@ The manifest is linked in `app/views/shared/_head.html.erb`.
 
 ### Q: Can I receive push notifications?
 
-**A:** The manifest includes push notification code (commented out). To enable:
+**A:** Please try the following steps:
+
+The service worker includes push notification code (commented out). To enable:
 1. Uncomment the push event listener in `service-worker.js`
 2. Implement Web Push API on the server side
 3. Add user permission request UI
 
 ### Q: How to test PWA locally?
 
-**A:** 
+**A:** Please try the following steps:
+
 1. Run the development server
 2. Open Chrome DevTools (F12)
 3. Go to Application > Manifest to check manifest
