@@ -17,5 +17,7 @@
       <span>&middot;</span>
       <span><%= post.minutes_left %> min</span>
     <% end %>
+    <span>&middot;</span>
+    <span><%= post.created_at.strftime("%b %d, %Y") %></span>
   </div>
 <% end %>

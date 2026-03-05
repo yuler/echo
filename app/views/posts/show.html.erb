@@ -37,6 +37,11 @@
           <span><%= @post.minutes_left %> min read</span>
         </div>
       <% end %>
+      <% if @post.created_at.present? %>
+        <div class="flex items-center gap-1.5 text-body-sm font-medium text-neutral-400">
+          <span><%= @post.created_at.strftime("%b %d, %Y") %></span>
+        </div>
+      <% end %>
       </div>
 
       <%# Share Button %>
