@@ -6,7 +6,6 @@
 
 @plugin "@tailwindcss/typography";
 
-@plugin "daisyui";
 
 /* animations */
 @keyframes fade-in {

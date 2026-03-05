@@ -22,7 +22,6 @@
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.20",
     "canvas-confetti": "^1.9.4",
-    "daisyui": "^5.5.3",
     "html-to-image": "^1.11.13",
     "qrcode": "^1.5.4"
   },
