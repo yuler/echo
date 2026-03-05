@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   allow_unauthenticated_access
 
-  PAGES = %w[about changelog].freeze
+  PAGES = %w[about changelog pwa].freeze
 
   def show
     slug = params[:slug].to_s
