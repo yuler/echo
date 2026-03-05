@@ -18,6 +18,6 @@
       <span><%= post.minutes_left %> min</span>
     <% end %>
     <span>&middot;</span>
-    <span><%= post.created_at.strftime("%b %d, %Y") %></span>
+    <span><%= I18n.l(post.created_at, format: :short) %></span>
   </div>
 <% end %>
