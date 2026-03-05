@@ -1,35 +1,41 @@
 class Vira
   class << self
     def login_id
-      ENV["VIRA_LOGIN_ID"]
+      Setting.vira_login_id.presence || ENV["VIRA_LOGIN_ID"]
     end
 
     def device_id
-      ENV["VIRA_DEVICE_ID"]
+      Setting.vira_device_id.presence || ENV["VIRA_DEVICE_ID"]
     end
 
     def token
-      @token ||= ENV["VIRA_TOKEN"]
+      @token ||= Setting.vira_token.presence || ENV["VIRA_TOKEN"]
     end
 
     def token=(value)
       @token = value
+      Setting.vira_token = value
     end
 
     def refresh_token
-      @refresh_token ||= ENV["VIRA_REFRESH_TOKEN"]
+      @refresh_token ||= Setting.vira_refresh_token.presence || ENV["VIRA_REFRESH_TOKEN"]
     end
 
     def refresh_token=(value)
       @refresh_token = value
+      Setting.vira_refresh_token = value
     end
 
     def token_valid?
       client.get("api/v2/user/info").status == 200
+    rescue
+      false
     end
 
-    # TODO: test refresh access token flow
     def refresh_access_token
+      puts token
+      puts refresh_token
+
       payload = {
         "authFlow" => "REFRESH_TOKEN",
         "refreshTokenParams" => {
@@ -38,13 +44,17 @@ class Vira
         },
         "deviceId" => device_id
       }
-      response = Faraday.post("https://account.llsapp.com/api/v2/initiate_auth", payload.to_json, "Content-Type" => "application/json; charset=utf-8")
-      raise "API request failed: status=#{response.status}" unless response.success?
+      response = Faraday.new do |builder|
+        builder.response :raise_error
+        builder.response :json
+      end.post("https://account.llsapp.com/api/v2/initiate_auth", payload.to_json, "Content-Type" => "application/json; charset=utf-8")
+
+      Rails.logger.debug "Vira token refresh response: #{response.body}"
 
       result = response.body["authenticationResult"]
 
-      token = result["accessToken"]
-      refresh_token = result["refreshToken"]
+      self.token = result["accessToken"]
+      self.refresh_token = result["refreshToken"]
       { token: token, refresh_token: refresh_token }
     rescue Faraday::Error => e
       Rails.logger.error "Vira token refresh failed: #{e.message}"
