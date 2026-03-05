@@ -4,7 +4,7 @@
      data-share-title-value="<%= @post.title_en.presence || @post.title %>"
      data-share-url-value="<%= request.original_url %>"
      data-share-poster-url-value="<%= @post.poster_url %>"
-     data-share-date-value="<%= @post.created_at.strftime("%b %d, %Y") %>"
+     data-share-date-value="<%= l(@post.created_at.to_date, format: :short) %>"
      class="min-h-screen relative">
 
   <%# Audio element %>
@@ -39,7 +39,7 @@
       <% end %>
       <% if @post.created_at.present? %>
         <div class="flex items-center gap-1.5 text-body-sm font-medium text-neutral-400">
-          <span><%= @post.created_at.strftime("%b %d, %Y") %></span>
+          <span><%= l(@post.created_at.to_date, format: :short) %></span>
         </div>
       <% end %>
       </div>
