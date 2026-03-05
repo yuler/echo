@@ -121,3 +121,18 @@ Use Chrome MCP tools to interact with the running dev app for UI testing and deb
 ## Code Style Guidelines
 
 @STYLE.md
+
+## ⚠️ Important Rules for Agents
+
+### No Dark Mode Support
+
+**DO NOT add dark mode styles** to any UI components unless explicitly requested by the user. This project does not support dark mode.
+
+Example of what NOT to do:
+```erb
+<%# ❌ Wrong - do not add dark mode %>
+<%= link_to "About", about_path, class: "hover:underline dark:hover:text-white" %>
+
+<%# ✅ Correct %>
+<%= link_to "About", about_path, class: "hover:underline hover:text-black" %>
+```
