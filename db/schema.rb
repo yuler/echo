@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.2].define(version: 2026_03_02_022318) do
+ActiveRecord::Schema[8.2].define(version: 2026_03_05_015323) do
   create_table "account_charges", id: :uuid, force: :cascade do |t|
     t.uuid "account_id", null: false
     t.integer "amount", null: false
@@ -197,6 +197,14 @@ ActiveRecord::Schema[8.2].define(version: 2026_03_02_022318) do
     t.datetime "updated_at", null: false
     t.string "user_agent", limit: 4096
     t.index ["identity_id"], name: "index_sessions_on_identity_id"
+  end
+
+  create_table "settings", id: :uuid, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "value"
+    t.string "var", null: false
+    t.index ["var"], name: "index_settings_on_var", unique: true
   end
 
   create_table "users", id: :uuid, force: :cascade do |t|
