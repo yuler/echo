@@ -37,7 +37,12 @@ export default class extends Controller {
     })
   }
 
-  open() {
+  async open() {
+    if (navigator.share) {
+      if (!this.posterGenerated) await this.generatePoster()
+      this.webShare()
+      return
+    }
     this.dialogTarget.showModal()
     if (!this.posterGenerated) {
       this.generatePoster()
@@ -50,12 +55,16 @@ export default class extends Controller {
 
   async webShare() {
     try {
-      await navigator.share({
-        title: this.titleValue,
-        url: this.urlValue
-      })
+      const shareData = { title: this.titleValue, url: this.urlValue }
+      if (this.posterGenerated && this.previewTarget?.src) {
+        const res = await fetch(this.previewTarget.src)
+        const blob = await res.blob()
+        const file = new File([blob], "echo-poster.png", { type: "image/png" })
+        shareData.files = [file]
+      }
+      await navigator.share(shareData)
     } catch (err) {
-      console.error("Share failed", err)
+      if (err.name !== "AbortError") console.error("Share failed", err)
     }
   }
 
