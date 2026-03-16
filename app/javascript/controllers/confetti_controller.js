@@ -12,6 +12,24 @@ export default class extends Controller {
     if (!this.disableAudioValue) {
       this.playAudio()
     }
+
+    // Bind the clear method to maintain context when passing as event listener
+    this.clearElement = this.clearElement.bind(this)
+    document.addEventListener("turbo:before-cache", this.clearElement)
+  }
+
+  disconnect() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+    document.removeEventListener("turbo:before-cache", this.clearElement)
+    this.clearElement()
+  }
+
+  clearElement() {
+    if (this.element && this.element.parentNode) {
+      this.element.remove()
+    }
   }
 
   fire() {
@@ -25,7 +43,9 @@ export default class extends Controller {
       const timeLeft = animationEnd - Date.now();
 
       if (timeLeft <= 0) {
-        return clearInterval(this.interval);
+        clearInterval(this.interval);
+        this.clearElement();
+        return;
       }
 
       const particleCount = 40 * (timeLeft / duration);
@@ -45,12 +65,6 @@ export default class extends Controller {
         origin: { x: 1, y }
       }));
     }, 250);
-  }
-
-  disconnect() {
-    if (this.interval) {
-      clearInterval(this.interval);
-    }
   }
 
   playAudio() {

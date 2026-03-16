@@ -15,6 +15,9 @@ export default class extends Controller {
         this.webShareContainerTarget.classList.remove("hidden")
       }
     }
+  }
+
+  posterTemplateTargetConnected() {
     this.posterGenerated = false
     this.preloadPosterImages()
   }
