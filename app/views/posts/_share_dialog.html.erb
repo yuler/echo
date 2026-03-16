@@ -48,7 +48,7 @@
         <%# Left: Logo & Title %>
         <div class="flex flex-row items-center gap-[20px]">
           <div class="flex flex-col items-center shrink-0">
-            <img src="/icon.png" class="w-[88px] h-[88px] object-contain" />
+            <img src="/icon.png" class="w-[88px] h-[88px] object-contain" crossorigin="anonymous" />
           </div>
           <span class="text-[36px] font-bold tracking-[0.15em] text-neutral-900 leading-none pt-[8px]">ECHO</span>
         </div>
@@ -69,7 +69,7 @@
       <%# Poster %>
       <% if post.poster_url.present? %>
         <div class="mt-[20px] mb-[40px] w-full rounded-[20px] overflow-hidden relative border-[4px] border-neutral-800 bg-neutral-100 flex-shrink-0 shadow-sm">
-          <img src="<%= post.poster_url %>" class="w-full h-auto object-cover" />
+          <img src="<%= post.poster_url %>" class="w-full h-auto object-cover" crossorigin="anonymous" />
         </div>
       <% end %>
 

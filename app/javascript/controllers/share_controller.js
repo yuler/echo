@@ -99,7 +99,7 @@ export default class extends Controller {
       try {
         const blob = this.dataURLToBlob(this.previewTarget.src)
         const file = new File([blob], `echo-poster-${Date.now()}.png`, { type: blob.type })
-        
+
         if (navigator.canShare({ files: [file] })) {
           await navigator.share({
             files: [file]
