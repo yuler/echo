@@ -134,7 +134,11 @@ export default class extends Controller {
 
       const dataUrl = await toPng(this.posterTemplateTarget, {
         pixelRatio: 2,
-        width: 1080
+        width: 1080,
+        cacheBust: true,
+        fetchRequestInit: {
+          cache: "no-cache"
+        }
       })
 
       this.previewTarget.src = dataUrl
