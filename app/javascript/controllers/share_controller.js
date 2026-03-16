@@ -62,8 +62,7 @@ export default class extends Controller {
   async copyImage() {
     if (!this.posterGenerated) return
     try {
-      const response = await fetch(this.previewTarget.src)
-      const blob = await response.blob()
+      const blob = this.dataURLToBlob(this.previewTarget.src)
       await navigator.clipboard.write([
         new ClipboardItem({
           [blob.type]: blob
@@ -76,6 +75,7 @@ export default class extends Controller {
       }, 2000)
     } catch (err) {
       console.error("Failed to copy image", err)
+      alert("Copy failed: " + (err.message || err))
     }
   }
 
@@ -86,12 +86,55 @@ export default class extends Controller {
     this.copySuccessTarget.classList.toggle("hidden", !showSuccess);
   }
 
-  download() {
+  async download() {
     if (!this.posterGenerated) return
-    const link = document.createElement('a')
-    link.download = `echo-poster-${Date.now()}.png`
-    link.href = this.previewTarget.src
-    link.click()
+
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+    const isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone
+
+    if (isIOS && isPWA && navigator.canShare) {
+      try {
+        const blob = this.dataURLToBlob(this.previewTarget.src)
+        const file = new File([blob], `echo-poster-${Date.now()}.png`, { type: blob.type })
+        
+        if (navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            files: [file]
+          })
+          return
+        }
+      } catch (e) {
+        console.error("Share API failed, falling back to download", e)
+      }
+    }
+
+    try {
+      const blob = this.dataURLToBlob(this.previewTarget.src)
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.download = `echo-poster-${Date.now()}.png`
+      link.href = url
+      link.click()
+      setTimeout(() => URL.revokeObjectURL(url), 100)
+    } catch (e) {
+      console.error("Download failed, falling back to data URL", e)
+      const link = document.createElement('a')
+      link.download = `echo-poster-${Date.now()}.png`
+      link.href = this.previewTarget.src
+      link.click()
+    }
+  }
+
+  dataURLToBlob(dataUrl) {
+    const arr = dataUrl.split(',')
+    const mime = arr[0].match(/:(.*?);/)[1]
+    const bstr = atob(arr[1])
+    let n = bstr.length
+    const u8arr = new Uint8Array(n)
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n)
+    }
+    return new Blob([u8arr], { type: mime })
   }
 
   async generatePoster() {
