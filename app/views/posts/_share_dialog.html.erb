@@ -83,18 +83,36 @@
       <div class="h-[60px] w-full flex-grow"></div>
 
       <%# Bottom Area: Recommender & Date %>
-      <div class="flex flex-row items-end justify-between">
+      <div class="flex flex-row items-center justify-between w-full">
         <% if Current.user&.checked_in?(post) %>
           <div class="flex items-center gap-[24px]">
-            <div class="w-[96px] h-[96px] rounded-full bg-neutral-900 border-[4px] border-white ring-[4px] ring-neutral-100 flex items-center justify-center text-white overflow-hidden shrink-0 shadow-sm">
+            <div class="w-[96px] h-[96px] rounded-full bg-neutral-900 border-[4px] border-white ring-[4px] ring-neutral-100 flex items-center justify-center text-white overflow-hidden shrink-0 shadow-sm z-10">
               <% if Current.identity %>
                 <span class="text-[42px] font-bold"><%= Current.identity.full_name.first.upcase %></span>
               <% else %>
                 <span class="text-[42px] font-bold">U</span>
               <% end %>
             </div>
-            <div class="flex flex-col justify-center">
-              <span class="text-[40px] font-medium text-neutral-500">I've finished reading this post! ✨</span>
+            <div class="flex flex-col justify-center z-10">
+              <span class="text-[42px] font-bold text-neutral-900 mb-[4px]">Daily check-in completed! ✨</span>
+              <% encouragements = [
+                   "Consistency makes a difference.",
+                   "Every day is a step forward.",
+                   "Keep up the great work!",
+                   "Small habits lead to big changes.",
+                   "You're doing amazing!",
+                   "Another day, another step closer."
+                 ] %>
+              <span class="text-[28px] text-neutral-500"><%= encouragements.sample %></span>
+            </div>
+          </div>
+
+          <%# Circle Stamp (Watermark) %>
+          <div class="w-[45%] aspect-square rounded-full border-[16px] border-red-500 flex flex-col items-center justify-center text-red-500 bg-red-50/20 rotate-[-24deg] absolute right-[5%] bottom-[5%] opacity-70 pointer-events-none z-0">
+            <div class="absolute inset-[16px] rounded-full border-[6px] border-red-500 border-dashed flex flex-col items-center justify-center">
+              <span class="text-[60px] font-black uppercase tracking-widest mt-[16px]">Check-In</span>
+              <span class="text-[180px] font-black leading-none my-[4px]"><%= Current.user.check_in_stats[:total] %></span>
+              <span class="text-[48px] font-black uppercase tracking-widest">Days</span>
             </div>
           </div>
         <% end %>
