@@ -162,20 +162,39 @@ export default class extends Controller {
       // Ensure images are fully loaded before rendering
       const imgs = Array.from(this.posterTemplateTarget.querySelectorAll("img"))
 
-      await Promise.all(imgs.map(img => {
+      await Promise.all(imgs.map(async img => {
         if (img.loading === "lazy") img.loading = "eager"
 
-        // Use native decode API for robust load checking
-        if (img.src && typeof img.decode === "function") {
-          return img.decode().catch(() => { }) // proceed even if one image fails
+        // Wait for image to load using decode or onload
+        if (img.src && typeof img.decode === "function" && !img.src.startsWith("data:")) {
+          try {
+            await img.decode()
+          } catch (e) {
+            console.warn("Image decode failed", e)
+          }
+        } else if (!img.complete && !img.src.startsWith("data:")) {
+          await new Promise((resolve) => {
+            img.onload = resolve
+            img.onerror = resolve
+          })
         }
 
-        // Fallback for older browsers
-        if (img.complete) return Promise.resolve()
-        return new Promise((resolve) => {
-          img.onload = resolve
-          img.onerror = resolve
-        })
+        // Fix for iOS PWA Wi-Fi bug: manually convert image to base64 to avoid html-to-image fetch
+        if (img.src && !img.src.startsWith("data:")) {
+          try {
+            const canvas = document.createElement("canvas");
+            // handle cases where naturalWidth is 0
+            canvas.width = img.naturalWidth || img.width || 1080;
+            canvas.height = img.naturalHeight || img.height || 1080;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            img.src = canvas.toDataURL("image/png");
+            // Remove crossorigin to prevent any further security constraints
+            img.removeAttribute("crossorigin");
+          } catch (e) {
+            console.warn("Failed to convert image to base64, falling back to original src", e);
+          }
+        }
       }))
 
       const dataUrl = await toPng(this.posterTemplateTarget, {
