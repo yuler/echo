@@ -3,15 +3,28 @@ import QRCode from "qrcode"
 import { toPng } from "html-to-image"
 
 export default class extends Controller {
-  static targets = ["dialog", "preview", "posterTemplate", "qrCodeImg", "loading", "webShareContainer", "copyDefault", "copySuccess"]
+  static targets = ["dialog", "preview", "posterTemplate", "qrCodeImg", "loading", "webShareContainer", "copyDefault", "copySuccess", "downloadBtn", "shareBtn"]
   static values = {
     title: String,
     url: String
   }
 
   connect() {
-    if (navigator.share) {
+    const isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone
+
+    if (isPWA) {
+      if (this.hasDownloadBtnTarget) this.downloadBtnTarget.classList.add("hidden")
+      if (this.hasShareBtnTarget) this.shareBtnTarget.classList.remove("hidden")
+
+      // Hide the extra "Share via Device" in PWA mode since we already have the main share button
       if (this.hasWebShareContainerTarget) {
+        this.webShareContainerTarget.classList.add("hidden")
+      }
+    } else {
+      if (this.hasDownloadBtnTarget) this.downloadBtnTarget.classList.remove("hidden")
+      if (this.hasShareBtnTarget) this.shareBtnTarget.classList.add("hidden")
+
+      if (navigator.share && this.hasWebShareContainerTarget) {
         this.webShareContainerTarget.classList.remove("hidden")
       }
     }
@@ -59,6 +72,27 @@ export default class extends Controller {
       })
     } catch (err) {
       console.error("Share failed", err)
+    }
+  }
+
+  async shareFile() {
+    if (!this.posterGenerated) return
+
+    try {
+      const blob = this.dataURLToBlob(this.previewTarget.src)
+      const file = new File([blob], `echo-poster-${Date.now()}.png`, { type: blob.type })
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file]
+        })
+      } else {
+        // Fallback to download if sharing file is not supported
+        this.download()
+      }
+    } catch (e) {
+      console.error("Share API failed, falling back to download", e)
+      this.download()
     }
   }
 
@@ -179,20 +213,39 @@ export default class extends Controller {
           })
         }
 
-        // Fix for iOS PWA Wi-Fi bug: manually convert image to base64 to avoid html-to-image fetch
+        // Fix for iOS PWA Wi-Fi bug: fetch image as blob and convert to base64
+        // to avoid canvas tainting and html-to-image fetch issues
         if (img.src && !img.src.startsWith("data:")) {
           try {
-            const canvas = document.createElement("canvas");
-            // handle cases where naturalWidth is 0
-            canvas.width = img.naturalWidth || img.width || 1080;
-            canvas.height = img.naturalHeight || img.height || 1080;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            img.src = canvas.toDataURL("image/png");
-            // Remove crossorigin to prevent any further security constraints
-            img.removeAttribute("crossorigin");
+            // Fetch with cache busting to prevent Safari PWA Wi-Fi cache bugs
+            const fetchUrl = img.src + (img.src.includes('?') ? '&' : '?') + 'cb=' + Date.now();
+            const response = await fetch(fetchUrl, { mode: 'cors', cache: 'no-cache' });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const blob = await response.blob();
+
+            const reader = new FileReader();
+            await new Promise((resolve, reject) => {
+              reader.onloadend = () => {
+                img.src = reader.result;
+                img.removeAttribute("crossorigin");
+                resolve();
+              };
+              reader.onerror = reject;
+              reader.readAsDataURL(blob);
+            });
           } catch (e) {
-            console.warn("Failed to convert image to base64, falling back to original src", e);
+            console.warn("Failed to fetch image, falling back to canvas", e);
+            try {
+              const canvas = document.createElement("canvas");
+              canvas.width = img.naturalWidth || img.width || 1080;
+              canvas.height = img.naturalHeight || img.height || 1080;
+              const ctx = canvas.getContext("2d");
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              img.src = canvas.toDataURL("image/png");
+              img.removeAttribute("crossorigin");
+            } catch (canvasErr) {
+              console.warn("Failed to convert image via canvas as well", canvasErr);
+            }
           }
         }
       }))
