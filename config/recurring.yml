@@ -15,7 +15,7 @@ production:
     schedule: every day at 00:00
   refresh_vira_token:
     class: RefreshViraTokenJob
-    schedule: every day at 5:30 in Asia/Shanghai
+    schedule: every month at 5:30 in Asia/Shanghai
   crawl_vira_latest_post:
     class: CrawlViraLatestPostJob
     schedule: every day at 6:00 in Asia/Shanghai
