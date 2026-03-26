@@ -80,6 +80,27 @@ class Vira
       json
     end
 
+    def fetch_previous_post
+      json = {}
+      # fetch previous post
+      response = client.get("api/v2/readings?size=1&sort=publishTime,desc")
+      json["reading"] = response.body["items"].second
+
+      # fetch audio details
+      response = client.get("api/v2/readings/#{json["reading"]["id"]}/audio")
+      json["audio"] = response.body
+
+      # fetch explanation details
+      response = client.get("api/v2/readings/#{json["reading"]["id"]}/explanation")
+      json["explanation"] = response.body
+      Rails.logger.debug "Vira previous post fetched: #{json.dig('reading', 'id')}"
+
+      json
+    rescue Faraday::Error => e
+      Rails.logger.error "Vira previous post fetch failed: #{e.message}"
+      raise
+    end
+
     private
       def client
         @client ||= Faraday.new(url: "https://vira.llsapp.com") do |builder|
