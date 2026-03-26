@@ -65,24 +65,43 @@ class Post < ApplicationRecord
   def self.crawl_vira_latest_post
     json = Vira.fetch_latest_post
 
-    find_or_create_by(third_id: json.dig("reading", "id")) do |post|
-      post.title = json.dig("reading", "title")
-      post.title_en = json.dig("reading", "engTitle")
-      post.topics = json.dig("reading", "topics")&.map { |topic| topic["name"] }&.join(",")
-      post.poster_url = json.dig("explanation", "posterUrl")
-      post.cover_url = json.dig("explanation", "shareImgUrl") || json.dig("explanation", "imgUrl")
-      post.audio_url = json.dig("audio", "url")
-      post.audio_duration = json.dig("audio", "duration")
-      post.explanation_audio_url = json.dig("explanation", "voice", "url")
-      post.explanation_audio_duration = json.dig("explanation", "voice", "durationMs")
-      post.guide = json.dig("explanation", "guide")
-      post.content = json.dig("explanation", "content", "text")
-      post.notes = json.dig("explanation", "notes")&.flatten&.join
-      post.published_at = json.dig("reading", "publishTime")
-      post.raw_json = json
-    end
+    find_or_create_from_vira_json(json)
   rescue Faraday::Error => e
     Rails.logger.error "Failed to crawl Vira post: #{e.message}"
     raise
   end
+
+  def self.crawl_vira_previous_post
+    json = Vira.fetch_previous_post
+
+    find_or_create_from_vira_json(json)
+  rescue Faraday::Error => e
+    Rails.logger.error "Failed to crawl Vira post: #{e.message}"
+    raise
+  end
+
+  def self.find_or_create_from_vira_json(json)
+    find_or_create_by(third_id: json.dig("reading", "id")) do |post|
+      apply_vira_attributes(post, json)
+    end
+  end
+
+  def self.apply_vira_attributes(post, json)
+    post.title = json.dig("reading", "title")
+    post.title_en = json.dig("reading", "engTitle")
+    post.topics = json.dig("reading", "topics")&.map { |topic| topic["name"] }&.join(",")
+    post.poster_url = json.dig("explanation", "posterUrl")
+    post.cover_url = json.dig("explanation", "shareImgUrl") || json.dig("explanation", "imgUrl")
+    post.audio_url = json.dig("audio", "url")
+    post.audio_duration = json.dig("audio", "duration")
+    post.explanation_audio_url = json.dig("explanation", "voice", "url")
+    post.explanation_audio_duration = json.dig("explanation", "voice", "durationMs")
+    post.guide = json.dig("explanation", "guide")
+    post.content = json.dig("explanation", "content", "text")
+    post.notes = json.dig("explanation", "notes")&.flatten&.join
+    post.published_at = json.dig("reading", "publishTime")
+    post.raw_json = json
+  end
+
+  private_class_method :find_or_create_from_vira_json, :apply_vira_attributes
 end
