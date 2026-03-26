@@ -33,9 +33,6 @@ class Vira
     end
 
     def refresh_access_token
-      puts token
-      puts refresh_token
-
       payload = {
         "authFlow" => "REFRESH_TOKEN",
         "refreshTokenParams" => {
