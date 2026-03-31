@@ -110,7 +110,7 @@ GEM
     ast (2.4.3)
     base64 (0.3.0)
     bcrypt_pbkdf (1.1.2)
-    bigdecimal (4.0.1)
+    bigdecimal (4.1.0)
     bindex (0.8.1)
     bootsnap (1.23.0)
       msgpack (~> 1.2)
@@ -436,7 +436,7 @@ GEM
     thruster (0.1.19-arm64-darwin)
     thruster (0.1.19-x86_64-linux)
     timeout (0.6.1)
-    trilogy (2.10.0)
+    trilogy (2.11.1)
       bigdecimal
     tsort (0.2.0)
     turbo-rails (2.0.23)
@@ -505,7 +505,7 @@ DEPENDENCIES
   sqlite3 (>= 2.8)
   stimulus-rails
   thruster
-  trilogy (~> 2.9)
+  trilogy (~> 2.11)
   turbo-rails
   tzinfo-data
   web-console
