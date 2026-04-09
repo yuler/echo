@@ -74,15 +74,18 @@ class Post < ApplicationRecord
   def self.crawl_vira_previous_post(size = 1)
     json = Vira.fetch_previous_post(size)
 
-    find_or_create_from_vira_json(json)
+    find_or_create_from_vira_json(json, backfill_days: size)
   rescue Faraday::Error => e
     Rails.logger.error "Failed to crawl Vira post: #{e.message}"
     raise
   end
 
-  def self.find_or_create_from_vira_json(json)
+  def self.find_or_create_from_vira_json(json, backfill_days: nil)
     find_or_create_by(third_id: json.dig("reading", "id")) do |post|
       apply_vira_attributes(post, json)
+      if backfill_days
+        post.created_at = (Date.current - backfill_days.days).in_time_zone
+      end
     end
   end
 
