@@ -5,7 +5,7 @@
   </div>
 
   <div class="grid min-h-0 min-w-0 w-full grid-cols-1 gap-4 overflow-x-hidden pb-2 sm:gap-6 md:grid-cols-2 lg:grid-cols-3<%= " flex-1 overflow-y-auto" if filter_tabs %>">
-    <% @posts.limit(5).each do |post| %>
+    <% @posts.limit(30).each do |post| %>
       <%= render "posts/post_card", post: post %>
     <% end %>
   </div>
