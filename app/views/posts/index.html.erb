@@ -1,43 +1,45 @@
-<div class="container-main">
-  <%# Title bar %>
-  <div class="flex items-center justify-between mb-8">
-    <h1 class="text-display">Posts</h1>
+<% filter_tabs = @posts.any? && @posts.count > 5 %>
+<% recent_posts_inner = capture do %>
+  <div class="mb-5 shrink-0">
+    <span class="text-overline">Recent</span>
   </div>
 
+  <div class="grid min-h-0 min-w-0 w-full grid-cols-1 gap-4 overflow-x-hidden pb-2 sm:gap-6 md:grid-cols-2 lg:grid-cols-3<%= " flex-1 overflow-y-auto" if filter_tabs %>">
+    <% @posts.limit(5).each do |post| %>
+      <%= render "posts/post_card", post: post %>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="container-main<%= " flex min-h-0 flex-1 flex-col" if filter_tabs %>">
+  <%# Top row %>
+  <header class="mb-8 flex shrink-0 flex-row items-center justify-between">
+    <h1 class="text-display">Posts</h1>
+  </header>
+
   <% if @posts.any? %>
-    <%# Recent posts %>
-    <div class="mb-8" data-controller="carousel">
-      <div class="flex items-center justify-between mb-5">
-        <span class="text-overline flex-1">Recent</span>
-        <div class="flex gap-2">
-          <button class="posts-icon-btn posts-icon-btn-sm text-neutral-500 focus-ring" aria-label="Previous" data-action="click->carousel#prev">
-            <%= inline_svg "chevron-left.svg", class: 'w-3.5 h-3.5' %>
-          </button>
-          <button class="posts-icon-btn posts-icon-btn-sm text-neutral-500 focus-ring" aria-label="Next" data-action="click->carousel#next">
-            <%= inline_svg "chevron-right.svg", class: 'w-3.5 h-3.5' %>
-          </button>
-        </div>
-      </div>
+    <% if filter_tabs %>
+      <div class="flex min-h-0 min-w-0 flex-1 flex-col">
+        <section class="mb-8 flex min-h-0 min-w-0 flex-1 flex-col" aria-label="Recent posts">
+          <%= recent_posts_inner %>
+        </section>
 
-      <div class="posts-carousel">
-        <% @posts.limit(5).each do |post| %>
-          <%= render "posts/post_card", post: post %>
-        <% end %>
+        <%# Bottom row: topic filters %>
+        <nav class="scrollbar-none mt-auto flex shrink-0 flex-row gap-5 overflow-x-auto border-b border-t border-neutral-200 py-4" aria-label="Filter posts by topic">
+          <button type="button" class="posts-tab posts-tab-active">ALL</button>
+          <% all_topics = @posts.flat_map(&:topics_list).uniq.first(6) %>
+          <% all_topics.each do |topic| %>
+            <button type="button" class="posts-tab"><%= topic.upcase %></button>
+          <% end %>
+        </nav>
       </div>
-    </div>
-
-    <% if @posts.count > 5 %>
-    <%# Category tabs %>
-    <div class="flex gap-5 overflow-x-auto py-4 border-t border-b border-neutral-200 scrollbar-none">
-      <button class="posts-tab posts-tab-active">ALL</button>
-      <% all_topics = @posts.flat_map(&:topics_list).uniq.first(6) %>
-      <% all_topics.each do |topic| %>
-        <button class="posts-tab"><%= topic.upcase %></button>
-      <% end %>
-    </div>
+    <% else %>
+      <section class="mb-8" aria-label="Recent posts">
+        <%= recent_posts_inner %>
+      </section>
     <% end %>
   <% else %>
-    <div class="py-16 text-center" style="color: #a3a3a3">
+    <div class="flex flex-1 flex-col items-center justify-center py-16" style="color: #a3a3a3">
       <p class="text-body-lg">No posts yet</p>
     </div>
   <% end %>

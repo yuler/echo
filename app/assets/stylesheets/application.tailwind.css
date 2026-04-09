@@ -142,42 +142,6 @@ html {
   color: #171717;
 }
 
-/* ── Featured carousel ── */
-.posts-carousel {
-  display: flex;
-  gap: 1.25rem;
-  overflow-x: auto;
-  padding-bottom: 0.5rem;
-  scroll-snap-type: x mandatory;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-@media (max-width: 100ch) {
-  .posts-carousel {
-    margin-left: -1rem;
-    margin-right: -1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-}
-
-.posts-carousel::-webkit-scrollbar {
-  display: none;
-}
-
-.posts-featured-card {
-  flex-shrink: 0;
-  scroll-snap-align: start;
-  width: 320px;
-}
-
-@media (max-width: 100ch) {
-  .posts-featured-card {
-    width: min(65vw, 260px);
-  }
-}
-
 .posts-featured-img {
   position: relative;
   overflow: hidden;
