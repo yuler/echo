@@ -71,8 +71,8 @@ class Post < ApplicationRecord
     raise
   end
 
-  def self.crawl_vira_previous_post
-    json = Vira.fetch_previous_post
+  def self.crawl_vira_previous_post(size = 1)
+    json = Vira.fetch_previous_post(size)
 
     find_or_create_from_vira_json(json)
   rescue Faraday::Error => e

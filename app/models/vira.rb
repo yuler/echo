@@ -80,11 +80,11 @@ class Vira
       json
     end
 
-    def fetch_previous_post
+    def fetch_previous_post(size = 1)
       json = {}
       # fetch previous post
-      response = client.get("api/v2/readings?size=2")
-      json["reading"] = response.body["items"].second
+      response = client.get("api/v2/readings?size=#{size + 1}")
+      json["reading"] = response.body["items"].last
 
       # fetch audio details
       response = client.get("api/v2/readings/#{json["reading"]["id"]}/audio")
