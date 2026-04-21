@@ -30,7 +30,7 @@ gem "stimulus-rails"
 gem "image_processing", "~> 1.2"
 
 # Features
-gem "commonmarker", "~> 2.6"
+gem "commonmarker", "~> 2.8"
 
 # Some dashboard engines
 gem "mission_control-jobs"
