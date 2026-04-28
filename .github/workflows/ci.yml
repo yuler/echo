@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@v1.305.0
         with:
           bundler-cache: true
 
@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@v1.305.0
         with:
           bundler-cache: true
 
@@ -77,7 +77,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@v1.305.0
         with:
           bundler-cache: true
 
@@ -120,7 +120,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@v1.305.0
         with:
           bundler-cache: true
 
